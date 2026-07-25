@@ -1,5 +1,5 @@
-site_name: ML System Design Prep
-site_description: ML/LLM system design tutorials for the service-to-product-company transition plan (Track B).
+site_name: ML Systems Design Notes
+site_description: ML/LLM systems design notes covering MLOps, LLMOps, RAG, and production ML infrastructure.
 docs_dir: system_design
 site_dir: site-system-design
 
@@ -44,8 +44,8 @@ markdown_extensions:
 
 nav:
   - Overview: README.md
-  - DSA Prep (Track A): http://127.0.0.1:8000/
-  - Staff-Level System Design: http://127.0.0.1:8002/
+  - Algorithms & Data Structures: http://127.0.0.1:8000/
+  - Distributed Systems Design: http://127.0.0.1:8002/
   - 0. Interview Framework: 00_interview_framework/tutorial.md
   - 1. Fundamentals & Building Blocks: 01_fundamentals/tutorial.md
   - 2. High-Throughput Ingestion Pipelines:

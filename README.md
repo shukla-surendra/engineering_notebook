@@ -1,9 +1,11 @@
-# algo_exploration
+# engineering-notebook
 
-Prep material for `product-company-transition-plan_1.md`, split into two independent
-MkDocs sites:
+Personal notes on algorithms, ML/LLM systems, and distributed-systems design, organized as
+three independent MkDocs sites:
 
-- **`dsa_prep/`** — Track A (DSA). `make dsa-serve` / `make dsa-build`.
-- **`system_design/`** — Track B (ML/LLM System Design). `make sd-serve` / `make sd-build`.
+- **`dsa_prep/`** — Algorithms & Data Structures. `make dsa-serve` / `make dsa-build`.
+- **`system_design/`** — ML/LLM Systems Design. `make sd-serve` / `make sd-build`.
+- **`staff_system_design/`** — General Distributed Systems Design. `make staff-serve` / `make staff-build`.
 
-Run `make help` for the full command list.
+Run `make help` for the full command list, or `make mkdocs` to build and serve all three
+together.

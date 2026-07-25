@@ -1,5 +1,5 @@
-site_name: Staff-Level System Design Prep
-site_description: General distributed-systems design at staff-engineer depth — foundations and classic case studies, independent of the MLOps-specific track.
+site_name: Distributed Systems Design Notes
+site_description: General distributed-systems design foundations and classic case studies, independent of the ML/LLM-specific track.
 docs_dir: staff_system_design
 site_dir: site-staff-system-design
 
@@ -44,8 +44,8 @@ markdown_extensions:
 
 nav:
   - Overview: README.md
-  - DSA Prep (Track A): http://127.0.0.1:8000/
-  - ML System Design (Track B): http://127.0.0.1:8001/
+  - Algorithms & Data Structures: http://127.0.0.1:8000/
+  - ML Systems Design: http://127.0.0.1:8001/
   - 0. The Staff-Level Signal: 00_staff_level_signal/tutorial.md
   - 1. Distributed Systems Foundations: 01_distributed_systems_foundations/tutorial.md
   - "2. Design Twitter/X Feed": 02_design_twitter_feed/tutorial.md
