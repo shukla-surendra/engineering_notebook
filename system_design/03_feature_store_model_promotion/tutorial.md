@@ -1,8 +1,10 @@
 # Feature Store + Multi-Environment Model Promotion
 
-**Weeks 5-6 of Track B.** Anchor: your GRM-style platform (dev/qa/stage/prod/ml-prod,
+**Weeks 5-6 of Track B.** Anchor: your production ML platform (dev/qa/stage/prod/ml-prod,
 Unity Catalog, MLflow). Name **Feast** as the standard tool when asked "what would you use
-instead of hand-rolling this."
+instead of hand-rolling this." If you're weighing whether a feature store is worth building
+at all — especially when feature reuse across models looks low — see the
+[Is a Feature Store Worth It When Reuse Is Low?](is_a_feature_store_worth_it.md) deep-dive.
 
 ## Core Concepts
 
@@ -143,8 +145,9 @@ bugs in feature store design:
 
 ## Make It Yours
 
-- In GRM, what actually triggered a promotion from stage to ml-prod — an automated metric
-  threshold, a manual review, or both? What would you change?
+- In a production platform you've worked on, what actually triggered a promotion from
+  stage to ml-prod — an automated metric threshold, a manual review, or both? What would
+  you change?
 - Describe a specific training-serving skew (or near-miss) you've encountered — how was it
   caught, and how long did it take to catch?
 - What's the freshness SLA on your most latency-sensitive feature, and what happens when

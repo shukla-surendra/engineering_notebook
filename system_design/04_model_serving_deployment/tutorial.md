@@ -1,7 +1,7 @@
 # Model Serving Layer: Canary, Shadow & Safe Rollouts
 
-**Weeks 7-8 of Track B.** Anchor: extend GRM's XGBoost serving into a full serving-layer
-design. Name **KServe/Seldon** for rollout safety and autoscaling.
+**Weeks 7-8 of Track B.** Anchor: extend a production XGBoost serving setup into a full
+serving-layer design. Name **KServe/Seldon** for rollout safety and autoscaling.
 
 ## Core Concepts
 
@@ -127,8 +127,9 @@ roll back**, since a human watching a dashboard doesn't scale and doesn't work a
 
 ## Make It Yours
 
-- Describe how XGBoost serving was actually rolled out in GRM — was there a canary/shadow
-  step, or a direct cutover? What would adding one have caught?
+- Describe how XGBoost serving was actually rolled out in a production system you've
+  worked on — was there a canary/shadow step, or a direct cutover? What would adding one
+  have caught?
 - What's a specific latency or error-rate threshold you'd set as a guardrail for a model
   you've worked with, and why that number?
 - Have you seen (or can you construct) an example of a model that passed aggregate

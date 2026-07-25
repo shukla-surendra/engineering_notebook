@@ -88,4 +88,4 @@ frequently undermines the other silently until a real incident reveals it.
 
 ---
 
-**Previous:** [11. Serving Cost Doubled After a "Routine" Upgrade](11_serving_cost_doubled.md)  |  **Next:** [Back to System Design Overview](../README.md)
+**Previous:** [11. Serving Cost Doubled After a "Routine" Upgrade](11_serving_cost_doubled.md)  |  **Next:** [13. Eval Passed, Guardrail Bypassed in Production](13_eval_passed_guardrail_bypassed.md)

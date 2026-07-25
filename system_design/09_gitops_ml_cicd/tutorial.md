@@ -146,8 +146,8 @@ gates, and ArgoCD together into one coherent promotion story.
 
 ## Make It Yours
 
-- Was your GRM promotion pipeline push-based or pull-based (GitOps)? What would changing
-  that actually buy you?
+- Was a production promotion pipeline you've worked on push-based or pull-based (GitOps)?
+  What would changing that actually buy you?
 - Describe a specific "someone manually changed prod" incident (or near-miss) you've seen
   — how would ArgoCD's drift detection have caught it?
 - What data-versioning approach does your current stack actually use, and where would DVC

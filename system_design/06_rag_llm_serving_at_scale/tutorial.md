@@ -14,7 +14,11 @@ query time and injecting them into the prompt as context, so the model generates
 *current, attributable, domain-specific* information instead of (or in addition to) what
 it memorized during training. The core trade-off it introduces: retrieval quality now
 caps generation quality — a perfect LLM fed the wrong context still gives a wrong answer.
-This is why the tutorial below spends as much time on retrieval as on generation.
+This is why the tutorial below spends as much time on retrieval as on generation. RAG is one
+of three levers for changing what an LLM system knows or how it behaves — see
+[11. LLMOps](../11_llmops/tutorial.md#fine-tuning-vs-rag-vs-prompt-engineering-the-decision-framework)
+for the full decision framework against fine-tuning and prompt engineering, plus the eval
+and guardrail practices that gate any change to this pipeline before it ships.
 
 ### Chunking Strategy
 

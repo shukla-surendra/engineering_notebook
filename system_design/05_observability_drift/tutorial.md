@@ -1,7 +1,7 @@
 # ML/LLM Observability & Drift Detection
 
-**Weeks 9-10 of Track B.** Anchor: generalize GRM's drift/monitoring work to many models.
-Bring in **Prometheus/Grafana** for infra metrics and **Evidently or Arize Phoenix** for
+**Weeks 9-10 of Track B.** Anchor: generalize a single production system's drift/monitoring
+work to many models. Bring in **Prometheus/Grafana** for infra metrics and **Evidently or Arize Phoenix** for
 drift + hallucination metrics.
 
 ## Core Concepts
@@ -63,7 +63,9 @@ Beyond classical drift, LLM-serving systems need their own additional signals:
   LLM-as-judge scoring, or embedding-similarity between response claims and retrieved
   passages) — this is the LLM-era equivalent of "is the prediction correct," and it's a
   much harder problem than classical drift because there's rarely a simple ground-truth
-  label available at serving time.
+  label available at serving time. This is LLM-as-judge used *live*, for monitoring; the
+  same technique is used *offline*, pre-deployment, as a regression gate on prompt/model
+  changes — see [11. LLMOps](../11_llmops/tutorial.md#evaluation-golden-sets-llm-as-judge-regression-gates).
 - **Cost per request** — token-based pricing means cost isn't a fixed infra line item
   anymore, it's a per-request metric worth tracking and alerting on, especially after a
   prompt-template change.
@@ -150,9 +152,9 @@ system" — a strong deep-dive target.
 
 ## Make It Yours
 
-- What did GRM's drift/monitoring work actually check, and what would generalizing it to
-  "many models" require changing (per-model thresholds? a shared dashboard? per-model
-  runbooks)?
+- What did a production drift/monitoring setup you've worked on actually check, and what
+  would generalizing it to "many models" require changing (per-model thresholds? a shared
+  dashboard? per-model runbooks)?
 - Describe a specific alert threshold you've set (or would set) and the reasoning behind
   the specific number, not just "we monitor drift."
 - If you extended your Track C project with hallucination detection, what would the

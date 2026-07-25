@@ -113,7 +113,7 @@ this table" from "trained on the PII columns within this table."
 
 **Column-level lineage** tracks provenance per column, through every transformation —
 this is what actually answers the compliance-critical question, and it's what makes the
-[audit-lineage tricky scenario](../11_tricky_scenarios/10_audit_lineage_reconstruction.md)
+[audit-lineage tricky scenario](../12_tricky_scenarios/10_audit_lineage_reconstruction.md)
 answerable in minutes instead of days. Tools: Unity Catalog's built-in column-level
 lineage graph (if on Databricks), or OpenLineage/Marquez as an open-source, platform-
 agnostic alternative that instruments pipeline frameworks (Spark, Airflow, dbt) directly.
@@ -215,8 +215,8 @@ governance-specific documents worth naming concretely:
 
 ## Make It Yours
 
-- Pick one dataset you've actually worked with (in GRM or elsewhere) and walk through the
-  checklist above against it, honestly — where are the real gaps?
+- Pick one dataset you've actually worked with and walk through the checklist above
+  against it, honestly — where are the real gaps?
 - Has your team ever had to handle a deletion request against data already used in a
   trained model? What actually happened, and what would the documented policy above have
   changed?
@@ -235,4 +235,4 @@ governance-specific documents worth naming concretely:
 
 ---
 
-**See also:** [Cost, Security & Multi-Region Governance tutorial](tutorial.md) · [Reconstructing Model Lineage for an Audit](../11_tricky_scenarios/10_audit_lineage_reconstruction.md)
+**See also:** [Cost, Security & Multi-Region Governance tutorial](tutorial.md) · [Reconstructing Model Lineage for an Audit](../12_tricky_scenarios/10_audit_lineage_reconstruction.md)

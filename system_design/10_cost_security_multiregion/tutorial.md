@@ -156,8 +156,8 @@ A concrete, interview-friendly deep-dive that combines cost and multi-tenancy:
   as numbers, not "we want it to be reliable"? Has failover ever actually been tested?
 - Describe how PII was (or wasn't) handled in a pipeline you've built — what would you
   change knowing what you know now?
-- If GRM served multiple teams' models, how would you have attributed GPU cost between
-  them?
+- If a platform you've worked on served multiple teams' models, how would you have
+  attributed GPU cost between them?
 
 ## Practice Questions
 
@@ -170,4 +170,4 @@ A concrete, interview-friendly deep-dive that combines cost and multi-tenancy:
 
 ---
 
-**Previous:** [9. GitOps & CI/CD for ML](../09_gitops_ml_cicd/tutorial.md)  |  **Next:** [Tricky MLOps Scenarios](../11_tricky_scenarios/README.md)
+**Previous:** [9. GitOps & CI/CD for ML](../09_gitops_ml_cicd/tutorial.md)  |  **Next:** [11. LLMOps: Prompting, Fine-Tuning, Evals & Guardrails](../11_llmops/tutorial.md)

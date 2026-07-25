@@ -1,7 +1,7 @@
-.PHONY: help install docs sd-serve sd-build sd-clean dsa-serve dsa-build dsa-clean staff-serve staff-build staff-clean build clean
+.PHONY: help install docs mkdocs sd-serve sd-build sd-clean dsa-serve dsa-build dsa-clean staff-serve staff-build staff-clean build clean
 
 help:
-	@echo "  make docs        - build (--strict) then serve ALL THREE sites together, live-reloading:"
+	@echo "  make docs        - (alias: make mkdocs) build (--strict) then serve ALL THREE sites together, live-reloading:"
 	@echo "                       DSA                    -> http://127.0.0.1:8000"
 	@echo "                       ML System Design       -> http://127.0.0.1:8001"
 	@echo "                       Staff System Design    -> http://127.0.0.1:8002"
@@ -59,6 +59,8 @@ staff-clean:
 build: dsa-build sd-build staff-build
 
 clean: dsa-clean sd-clean staff-clean
+
+mkdocs: docs
 
 docs: build
 	@echo ""

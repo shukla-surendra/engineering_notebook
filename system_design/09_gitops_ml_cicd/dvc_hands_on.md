@@ -88,7 +88,7 @@ dvc checkout                    # pulls the OLD data version matching that point
 `git log -p data/train.csv.dvc` gives you a full audit trail of every data version ever
 committed — directly useful for the lineage/audit concerns in the
 [cost & governance tutorial](../10_cost_security_multiregion/tutorial.md#security-compliance-in-ml-pipelines)
-and the [audit-lineage tricky scenario](../11_tricky_scenarios/10_audit_lineage_reconstruction.md).
+and the [audit-lineage tricky scenario](../12_tricky_scenarios/10_audit_lineage_reconstruction.md).
 
 ## 6. Build a Reproducible Pipeline
 

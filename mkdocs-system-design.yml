@@ -48,8 +48,12 @@ nav:
   - Staff-Level System Design: http://127.0.0.1:8002/
   - 0. Interview Framework: 00_interview_framework/tutorial.md
   - 1. Fundamentals & Building Blocks: 01_fundamentals/tutorial.md
-  - 2. High-Throughput Ingestion Pipelines: 02_ingestion_pipeline/tutorial.md
-  - 3. Feature Store & Model Promotion: 03_feature_store_model_promotion/tutorial.md
+  - 2. High-Throughput Ingestion Pipelines:
+      - Tutorial: 02_ingestion_pipeline/tutorial.md
+      - "Deep-Dive: Lambda vs. EKS for Receipt Processing": 02_ingestion_pipeline/serverless_vs_eks_receipt_processing.md
+  - 3. Feature Store & Model Promotion:
+      - Tutorial: 03_feature_store_model_promotion/tutorial.md
+      - "Deep-Dive: Is a Feature Store Worth It When Reuse Is Low?": 03_feature_store_model_promotion/is_a_feature_store_worth_it.md
   - 4. Model Serving & Deployment: 04_model_serving_deployment/tutorial.md
   - 5. ML/LLM Observability & Drift: 05_observability_drift/tutorial.md
   - 6. RAG + LLM-Serving at Scale: 06_rag_llm_serving_at_scale/tutorial.md
@@ -62,17 +66,19 @@ nav:
   - 10. Cost, Security & Multi-Region Governance:
       - Tutorial: 10_cost_security_multiregion/tutorial.md
       - "Deep-Dive: Data Governance in Practice": 10_cost_security_multiregion/data_governance_deep_dive.md
+  - 11. LLMOps (Prompting, Fine-Tuning, Evals & Guardrails): 11_llmops/tutorial.md
   - Tricky MLOps Scenarios:
-      - Overview: 11_tricky_scenarios/README.md
-      - "1. Regional Feature Staleness": 11_tricky_scenarios/01_regional_feature_staleness.md
-      - "2. Canary Passed, P1 Two Days Later": 11_tricky_scenarios/02_canary_passed_p1_later.md
-      - "3. Silent Drift, No Alert": 11_tricky_scenarios/03_silent_drift_no_alert.md
-      - "4. Overnight GPU Cost Spike": 11_tricky_scenarios/04_gpu_cost_spike.md
-      - "5. Retrieval Looks Right, Answers Wrong": 11_tricky_scenarios/05_rag_retrieval_correct_answers_wrong.md
-      - "6. Silently Duplicated Training Data": 11_tricky_scenarios/06_duplicate_training_data.md
-      - "7. Multi-GPU Training Plateau": 11_tricky_scenarios/07_distributed_training_plateau.md
-      - "8. Stale Checkpoint After Preemption": 11_tricky_scenarios/08_stale_checkpoint_resume.md
-      - "9. GitOps Rollout, Wrong Predictions": 11_tricky_scenarios/09_gitops_rollout_wrong_predictions.md
-      - "10. Reconstructing Model Lineage for an Audit": 11_tricky_scenarios/10_audit_lineage_reconstruction.md
-      - "11. Serving Cost Doubled After a Routine Upgrade": 11_tricky_scenarios/11_serving_cost_doubled.md
-      - "12. DR Failover Took 8x Longer Than Planned": 11_tricky_scenarios/12_dr_failover_slow.md
+      - Overview: 12_tricky_scenarios/README.md
+      - "1. Regional Feature Staleness": 12_tricky_scenarios/01_regional_feature_staleness.md
+      - "2. Canary Passed, P1 Two Days Later": 12_tricky_scenarios/02_canary_passed_p1_later.md
+      - "3. Silent Drift, No Alert": 12_tricky_scenarios/03_silent_drift_no_alert.md
+      - "4. Overnight GPU Cost Spike": 12_tricky_scenarios/04_gpu_cost_spike.md
+      - "5. Retrieval Looks Right, Answers Wrong": 12_tricky_scenarios/05_rag_retrieval_correct_answers_wrong.md
+      - "6. Silently Duplicated Training Data": 12_tricky_scenarios/06_duplicate_training_data.md
+      - "7. Multi-GPU Training Plateau": 12_tricky_scenarios/07_distributed_training_plateau.md
+      - "8. Stale Checkpoint After Preemption": 12_tricky_scenarios/08_stale_checkpoint_resume.md
+      - "9. GitOps Rollout, Wrong Predictions": 12_tricky_scenarios/09_gitops_rollout_wrong_predictions.md
+      - "10. Reconstructing Model Lineage for an Audit": 12_tricky_scenarios/10_audit_lineage_reconstruction.md
+      - "11. Serving Cost Doubled After a Routine Upgrade": 12_tricky_scenarios/11_serving_cost_doubled.md
+      - "12. DR Failover Took 8x Longer Than Planned": 12_tricky_scenarios/12_dr_failover_slow.md
+      - "13. Eval Passed, Guardrail Bypassed in Production": 12_tricky_scenarios/13_eval_passed_guardrail_bypassed.md

@@ -1,9 +1,9 @@
 # Tricky MLOps Scenarios
 
-Twelve scenario-debugging problems — each a realistic, ambiguous production situation as
+Thirteen scenario-debugging problems — each a realistic, ambiguous production situation as
 it would actually be reported to you (a Slack message, a dashboard anomaly, an angry
 stakeholder), not a clean textbook question. This is where the trade-off vocabulary and
-failure modes from the ten tutorials in this section get exercised under the kind of
+failure modes from the eleven tutorials in this section get exercised under the kind of
 ambiguity a real incident actually has.
 
 ## Why This Format
@@ -50,7 +50,8 @@ same way:
 | 10 | [Reconstructing Model Lineage for an Audit](10_audit_lineage_reconstruction.md) | Governance |
 | 11 | [Serving Cost Doubled After a "Routine" Upgrade](11_serving_cost_doubled.md) | Cost |
 | 12 | [DR Failover Took 8x Longer Than Planned](12_dr_failover_slow.md) | Multi-Region/DR |
+| 13 | [Eval Passed, Guardrail Bypassed in Production](13_eval_passed_guardrail_bypassed.md) | LLMOps |
 
 ---
 
-**Previous:** [10. Cost, Security & Multi-Region Governance](../10_cost_security_multiregion/tutorial.md)  |  **Next:** [1. Regional Feature Staleness](01_regional_feature_staleness.md)
+**Previous:** [11. LLMOps: Prompting, Fine-Tuning, Evals & Guardrails](../11_llmops/tutorial.md)  |  **Next:** [1. Regional Feature Staleness](01_regional_feature_staleness.md)

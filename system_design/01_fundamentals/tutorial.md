@@ -141,8 +141,8 @@ since the limiter protecting availability shouldn't itself become the outage.
 Before your next mock interview, write two or three sentences (mentally or on paper)
 answering each:
 
-- Where in RAE or GRM did you actually choose between consistency and availability for a
-  component? What made you pick the side you picked?
+- Where in a production system you've built did you actually choose between consistency
+  and availability for a component? What made you pick the side you picked?
 - What's a hot-shard or hot-partition problem you've hit (or would expect) in a system
   you've built — how would you describe the mitigation?
 - Which caching invalidation strategy have you actually implemented, and what broke when

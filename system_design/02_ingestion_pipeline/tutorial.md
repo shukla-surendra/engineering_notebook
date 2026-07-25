@@ -1,8 +1,11 @@
 # High-Throughput Ingestion Pipelines for Unstructured Data
 
-**Weeks 3-4 of Track B.** Anchor: your RAE-style pipeline (Step Functions/Lambda/S3/
-Databricks). This tutorial covers the general design space that pipeline sits in, so you
-can reason about it beyond the specific tools you used.
+**Weeks 3-4 of Track B.** Anchor: your production-style ingestion pipeline (Step Functions/
+Lambda/S3/Databricks). This tutorial covers the general design space that pipeline sits in, so you
+can reason about it beyond the specific tools you used. For a worked, numbers-based version
+of one specific decision inside this space — Lambda vs. EKS pods for the actual processing
+step — see the
+[Serverless vs. EKS deep-dive](serverless_vs_eks_receipt_processing.md).
 
 ## Core Concepts
 
@@ -131,8 +134,8 @@ where most real ingestion outages actually originate.
 
 ## Make It Yours
 
-- What was the actual idempotency key (or equivalent) in your RAE pipeline — and what did
-  you do before you had one, if anything broke because of it?
+- What was the actual idempotency key (or equivalent) in an ingestion pipeline you've
+  built — and what did you do before you had one, if anything broke because of it?
 - Describe a specific retry storm or poison-pill incident you've seen or would expect —
   what was the fix?
 - What's your pipeline's actual latency requirement, and did you build for that number or

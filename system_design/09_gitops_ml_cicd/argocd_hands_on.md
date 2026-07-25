@@ -234,7 +234,7 @@ kubectl argo rollouts abort model-serving                 # abort and roll back
   or configure ArgoCD to ignore that field's differences.
 - **Sync succeeds but the app doesn't actually behave differently**: check whether the
   image tag is mutable (`:latest`) — per the
-  [tricky scenario on GitOps rollouts](../11_tricky_scenarios/09_gitops_rollout_wrong_predictions.md),
+  [tricky scenario on GitOps rollouts](../12_tricky_scenarios/09_gitops_rollout_wrong_predictions.md),
   a mutable tag can mean "synced" doesn't mean "the artifact you expect is running."
 
 ---

@@ -123,7 +123,7 @@ When a design question comes in cold, this ordering keeps you from freezing or r
 
 Each of the six topic tutorials is structured as: core concepts → reference architecture →
 a deep-dive walkthrough → a trade-off table → failure modes → a "Make It Yours" section
-prompting you to attach your own RAE/GRM specifics → practice questions. That structure
+prompting you to attach your own production-system specifics → practice questions. That structure
 *is* this framework, applied to one recurring ML-systems topic at a time.
 
 ---
