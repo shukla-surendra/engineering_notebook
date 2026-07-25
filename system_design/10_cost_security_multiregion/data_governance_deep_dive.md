@@ -233,6 +233,55 @@ governance-specific documents worth naming concretely:
   indirectly via a derived feature, to train a specific model — describe exactly how your
   system would answer this.
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Test-first (the default when 'data governance' comes up as a buzzword):** "I'd refuse to
+  answer in the abstract — governance means being able to point to a concrete artifact for
+  each question: a catalog entry, a classification tag, an access grant, a lineage graph. If
+  I can't point to the artifact, it's an intention, not governance."
+- **Hardest-problem framing (good for a deletion/GDPR follow-up):** "The genuinely hard part
+  isn't deleting a raw record, it's that a user's data may already be baked into a trained
+  model's weights, and you generally can't surgically remove one person's influence after
+  the fact. The artifact that actually satisfies an auditor is a documented maximum
+  data-influence retention window, not a promise."
+- **Granularity-first (good when asked why table-level isn't enough):** "Table-level lineage
+  can't answer 'was any PII used to train this,' because a table can be 90% clean and 10%
+  PII. Only column-level lineage, propagated through every transformation, actually answers
+  the compliance-critical question."
+
+### Vocabulary Builder
+
+**Technical shorthand — use these instead of over-explaining the concept every time:**
+
+- **column-level lineage** (n. phrase) — tracing provenance per column through every
+  transformation, as opposed to only tracking which table fed which table.
+- **RBAC / ABAC** (n.) — role-based access control (access tied to a role) versus
+  attribute-based access control (access computed from requester and data attributes at
+  query time); the second is finer-grained and harder to audit.
+- **machine unlearning** (n. phrase) — techniques for removing a specific record's
+  influence from an already-trained model, short of full retraining.
+- **data-influence retention window** (n. phrase) — the documented maximum time a deleted
+  user's data can still be influencing a live model, bounded by the retraining cadence.
+- **datasheet** (n.) — a structured document describing a dataset's collection method,
+  represented population, and known gaps — the dataset-level analogue of a model card.
+
+**Expressive phrases — for stating a trade-off fluently instead of listing pros/cons:**
+
+- **"…is an intention, not governance"** — a sharp, quotable line for distinguishing stated
+  policy from a verifiable artifact.
+- **propagate** (v.) — to automatically extend a property through downstream
+  transformations. *"Classification has to propagate to derived columns, not reset to
+  untagged because the column is technically new."*
+- **"…said out loud with no more content behind it, signals nothing"** — a direct way to
+  preempt a buzzword-only answer by naming the trap before falling into it.
+- **surgically** (adv.) — precisely, affecting only the intended target. *"You can't
+  surgically remove one user's influence from a trained model after the fact."*
+- **"…not the default operational-log retention"** — a precise phrasing habit: stating that
+  a compliance requirement must override a generic system default, rather than assuming
+  they align.
+
 ---
 
 **See also:** [Cost, Security & Multi-Region Governance tutorial](tutorial.md) · [Reconstructing Model Lineage for an Audit](../12_tricky_scenarios/10_audit_lineage_reconstruction.md)

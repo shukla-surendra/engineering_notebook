@@ -151,6 +151,55 @@ where most real ingestion outages actually originate.
 - Your ingestion pipeline's DLQ is growing steadily — walk through how you'd diagnose it
   live.
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Trade-off-first (the default for a senior round):** "Ingestion design is really three
+  nested decisions — batch versus streaming for latency, buffer-throttle-scale-shed for
+  backpressure, and schema-on-write versus schema-on-read for how much validation cost you
+  push upstream versus downstream. I answer each independently, because conflating them
+  produces a design that's over-engineered on one axis and under-engineered on another."
+- **Narrative-first (good for 'tell me about a production incident'):** "We had a DLQ that
+  had been silently growing for three days before anyone noticed, because we alerted on
+  DLQ *existence*, not DLQ *depth*. That incident is why I now treat 'alert on the trend,
+  not the event' as a non-negotiable part of any retry design I propose."
+- **First-principles framing (good for an interviewer probing 'why' repeatedly):** "Retries
+  will happen — that's not a design choice, it's a fact of distributed systems. So the real
+  question isn't 'how do I avoid retries,' it's 'how do I make every step safe to run
+  twice.' Idempotency isn't a nice-to-have here, it's the property the rest of the design
+  depends on."
+
+### Vocabulary Builder
+
+**Technical shorthand — use these instead of over-explaining the concept every time:**
+
+- **idempotency key** (n.) — a deterministic identifier that lets a retried operation
+  produce the same result as the original, instead of duplicating it.
+- **thundering herd** (n. phrase) — many clients retrying at the same synchronized moment,
+  overwhelming a recovering downstream dependency; the reason retries need jitter.
+- **poison pill** (n.) — a single malformed input that reliably fails processing and, left
+  unhandled, can block an entire queue or partition behind it.
+- **medallion architecture** (n.) — the bronze/silver/gold layering pattern (raw → cleaned →
+  curated) for progressively validating and transforming ingested data.
+- **shed load** (v. phrase) — deliberately dropping lower-priority work under sustained
+  overload, as the last resort in a backpressure chain.
+
+**Expressive phrases — for stating a trade-off fluently instead of listing pros/cons:**
+
+- **"This is rarely a clean binary…"** — a strong opener when an interviewer poses a
+  false-dichotomy question (batch vs. streaming, SQL vs. NoSQL); signals you'll reframe
+  before answering.
+- **brittle** (adj.) — breaks sharply under a small unexpected change. *"Schema-on-write is
+  brittle to upstream schema drift."*
+- **resilient** (adj.) — absorbs failure or change without breaking. *"Landing raw data
+  schema-on-read makes the ingestion layer resilient to upstream surprises."*
+- **"The failure mode I'd raise proactively is…"** — volunteering a risk before being asked
+  is a stronger signal than answering well when probed for it.
+- **exhaustively** (adv.) — thoroughly, leaving nothing out. *"I wouldn't retry
+  exhaustively without a circuit breaker — that just delays the failure, it doesn't
+  prevent it."*
+
 ---
 
 **Previous:** [1. Fundamentals & Building Blocks](../01_fundamentals/tutorial.md)  |  **Next:** [3. Feature Store & Model Promotion](../03_feature_store_model_promotion/tutorial.md)

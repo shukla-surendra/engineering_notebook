@@ -138,6 +138,56 @@ flowchart LR
   auditor needs to reconstruct exactly which pipeline version produced any historical
   model.
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Architecture-first (the default for a senior round):** "The real distinction isn't
+  features, it's where the scheduling decision lives. Airflow runs its own separate
+  scheduler service that has to be operated independently; Argo Workflows has no separate
+  scheduler at all — Kubernetes itself runs the DAG, because each step already is a pod."
+- **Layering-first (good for the Kubeflow vs. Argo naming question):** "I'd be precise
+  about the layering, not just the names: Argo Workflows is a general Kubernetes-native DAG
+  engine, and Kubeflow Pipelines is an ML-specific abstraction built on top of it, adding
+  typed components and pipeline versioning. Knowing that one sits on the other is what
+  separates a real answer from a name-drop."
+- **Decision-framework framing (good for 'so which would you pick'):** "This is genuinely
+  build-vs-buy-shaped, not strictly-better-or-worse. If the team is already living in
+  Kubernetes and GitOps with containerized steps, Argo removes an entire service to
+  operate. If pipelines need to reach non-Kubernetes systems with a Python-fluent team,
+  Airflow's ecosystem usually wins."
+
+### Vocabulary Builder
+
+**Technical shorthand — use these instead of over-explaining the concept every time:**
+
+- **DAG (directed acyclic graph)** (n.) — the dependency structure an orchestrator
+  schedules: tasks with defined order and no cycles.
+- **CRD (Custom Resource Definition)** (n.) — how Kubernetes is extended with new resource
+  types; the mechanism that lets a workflow itself be "just" a Kubernetes object in Argo.
+- **feature parity** (n. phrase) — confirming a migration preserves every capability of the
+  old system, not just the obvious ones; the checklist that prevents a silent functionality
+  loss when moving off Airflow's sensors or SLA features.
+- **reconciliation** (n.) — continuously comparing actual state against declared state and
+  correcting the difference; the core mechanism underneath both orchestration and GitOps.
+
+**Expressive phrases — for stating a trade-off fluently instead of listing pros/cons:**
+
+- **"It's not that one is strictly better — it's where the scheduling decision lives…"** —
+  reframes a "which tool is better" question toward the actual architectural axis.
+- **ergonomic** (adj.) — comfortable and efficient to use, especially for a specific
+  audience. *"Airflow's plain-Python DAGs are more ergonomic for data scientists than
+  Argo's YAML/CRD definitions."*
+- **"…this is usually mechanical"** vs. **"…this is where it silently breaks"** — a paired
+  phrase pattern for distinguishing the easy parts of a migration from the parts that need
+  real scrutiny.
+- **native** (adj.) — built into a system's core design, not bolted on. *"Argo is
+  Kubernetes-native; Airflow's Kubernetes Executor narrows the gap but doesn't eliminate
+  the separate scheduler."*
+- **"Be honest about the actual answer…"** — a useful self-directed phrase when an
+  interviewer asks you to evaluate your own team's fit for a tool, signaling you won't just
+  say what sounds good.
+
 ---
 
 **Previous:** [7. Distributed Training & Ray/Ray Serve](../07_distributed_training_serving/tutorial.md)  |  **Next:** [9. GitOps & CI/CD for ML](../09_gitops_ml_cicd/tutorial.md)

@@ -154,6 +154,59 @@ answering each:
 - Design a distributed rate limiter (walked through above — try it yourself first).
 - Design a key-value store that needs to survive a single data-center failure.
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Trade-off-first (the default for a senior round):** "Every one of these primitives is a
+  dial, not a switch — load balancing trades simplicity for fairness, caching trades
+  freshness for speed, sharding trades cross-shard query power for horizontal scale.
+  I never pick a technique in isolation; I state which axis I'm trading against and why
+  that's the right trade for this system's actual read/write pattern."
+- **Narrative-first (good for behavioral-adjacent follow-ups, "tell me about a time…"):**
+  "We had a feature cache that looked healthy on every dashboard, but recommendations were
+  quietly stale for one region because our invalidation was TTL-only and that region's
+  write volume was ten times the rest. The fix wasn't a bigger cache — it was switching that
+  one path to write-through. That's when 'the hard problem isn't caching, it's
+  invalidation' stopped being a slogan for me."
+- **Business-impact-first (good when the interviewer is a hiring manager, not just an
+  engineer):** "A hot shard doesn't just show up as a metric — it shows up as one customer
+  segment getting a degraded experience while your aggregate p50 looks fine. I frame
+  capacity decisions in terms of *which users* are exposed to the failure mode, not just
+  *whether* the system as a whole is up."
+
+### Vocabulary Builder
+
+**Technical shorthand — use these instead of over-explaining the concept every time:**
+
+- **hot shard / hot key** (n.) — a single partition or key absorbing disproportionate
+  traffic, so the system looks fine on average while one path is overloaded.
+- **write amplification** (n.) — one logical write triggering multiple physical writes (to
+  a cache, an index, a replica); worth naming when justifying a "why is this slower than it
+  looks" question.
+- **fail open / fail closed** (v. phrase) — a system's behavior when a dependency is down:
+  *fail open* keeps serving (riskier, more available), *fail closed* stops serving (safer,
+  less available). Naming which one a component does is a strong senior signal.
+- **backpressure** (n.) — a system signaling upstream producers to slow down because a
+  downstream consumer can't keep up; the alternative to silently dropping or crashing.
+- **graceful degradation** (n. phrase) — losing functionality in a controlled, prioritized
+  way under load, rather than failing outright.
+
+**Expressive phrases — for stating a trade-off fluently instead of listing pros/cons:**
+
+- **"This hinges on…"** — introduces the one variable the whole decision actually turns on.
+  *"This hinges on whether stale reads are merely annoying or actively dangerous."*
+- **"The crux of it is…"** — signals you've found the essential tension, not a side detail.
+- **"Counterintuitively, …"** — flags a non-obvious result before you explain it, which
+  keeps the interviewer's attention. *"Counterintuitively, adding a cache here made p99
+  worse, because…"*
+- **granular** (adj.) — fine-grained, detailed. *"We need a more granular eviction policy
+  than a single global TTL."*
+- **brittle** (adj.) — the opposite of resilient; fails sharply rather than degrading.
+  *"A fixed-window counter is brittle at window boundaries."*
+- **arbitrate** (v.) — to resolve a conflict between competing claims. *"In a multi-leader
+  setup, something has to arbitrate concurrent writes to the same key."*
+
 ---
 
 **Previous:** [0. The Interview Framework](../00_interview_framework/tutorial.md)  |  **Next:** [2. High-Throughput Ingestion Pipelines](../02_ingestion_pipeline/tutorial.md)

@@ -197,6 +197,56 @@ shed backpressure chain from the [ingestion tutorial](tutorial.md#backpressure).
 - A Lambda-based version of this pipeline works fine in staging (100 receipts/test run) but
   falls over in production during a real burst — walk through your live debugging process.
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Trade-off-first (the default for a senior round):** "Most candidates answer 'Lambda or
+  EKS' with vibes. I answer it with two levers: traffic shape and utilization. Lambda wins
+  when load is spiky and idle-cost is the enemy; EKS wins when load is steady enough that
+  utilization stays high, because idle EKS capacity is capacity you're still paying for."
+- **Numbers-first (good when the interviewer wants rigor, not intuition):** "At 1M
+  receipts a month, Lambda is roughly half the cost of EKS because EKS's fixed control-plane
+  and warm-node floor dominates at low volume. That crossover flips by 50M receipts a month,
+  where EKS's falling $/receipt overtakes Lambda's perfectly linear pricing. I'd state my
+  assumptions — utilization, request duration — before quoting either number, since the
+  framework matters more than the exact figure."
+- **Pragmatic/hybrid framing (good for 'so which would you actually pick'):** "In practice
+  I wouldn't pick one — I'd run a steady-state EKS pool sized to the predictable baseline,
+  with Lambda absorbing overflow above a queue-depth threshold. That's not fence-sitting;
+  it's naming that most real systems get the best economics by using each platform for the
+  traffic shape it's actually good at."
+
+### Vocabulary Builder
+
+**Technical shorthand — use these instead of over-explaining the concept every time:**
+
+- **crossover point** (n.) — the volume or condition where one option's cost/latency
+  advantage flips to the other's.
+- **cold start** (n.) — the latency penalty of spinning up a fresh execution environment
+  (Lambda) versus a pod that's already warm and pulling work.
+- **burst-absorption** (n. phrase) — how quickly a platform can add capacity when a traffic
+  spike lands, as distinct from its steady-state throughput.
+- **I/O-bound vs. CPU-bound** (adj. phrase) — whether a workload spends most of its time
+  waiting on external calls versus doing its own computation; the single biggest lever on
+  which compute platform actually fits.
+- **fixed cost vs. marginal cost** (n. phrase) — cost that doesn't scale with usage (an idle
+  EKS control plane) versus cost that scales linearly with it (Lambda's per-invocation
+  price).
+
+**Expressive phrases — for stating a trade-off fluently instead of listing pros/cons:**
+
+- **"State your assumptions before the number…"** — the fluent way to give a cost estimate
+  without sounding like you're quoting a memorized figure.
+- **"The crux of it isn't platform, it's utilization…"** — reframes a binary-sounding
+  question around the variable that actually drives the answer.
+- **naive** (adj.) — a design that ignores a known failure mode. *"A naive Lambda
+  implementation blocks on the async Textract call, which quietly doubles your bill."*
+- **"This isn't either/or in practice…"** — signals a hybrid answer is coming, without
+  sounding like you're dodging the question.
+- **illustrative** (adj.) — meant to show the shape of an answer, not an exact quote.
+  *"These numbers are illustrative, order-of-magnitude — real pricing varies by region."*
+
 ---
 
 **See also:** [2. High-Throughput Ingestion Pipelines](tutorial.md) ·

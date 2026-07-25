@@ -160,6 +160,57 @@ improved — why?"* Walk through the diagnostic order:
 - Design a checkpointing strategy for a multi-day training run on spot instances that can
   be preempted with only a 2-minute warning.
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Trade-off-first (the default for a senior round):** "Every distributed training
+  strategy is an answer to the same two questions — what do you split, and how do you
+  resynchronize it. Data parallelism splits the data and pays a communication cost; model
+  parallelism splits the model and pays an idle-GPU cost. I'd pick between them by asking
+  one question first: does the model fit on a single GPU?"
+- **Diagnostic-framing (good for the near-universal 'you added GPUs and throughput didn't
+  improve' follow-up):** "I'd work through it in order — is it actually compute-bound, is
+  communication overhead dominating as the shard shrinks, is the network topology the
+  bottleneck, is data loading starving the GPUs, or is one straggler capping the whole
+  synchronous run. Naming the order, not just the list, is what makes this sound like a
+  diagnosis instead of a checklist."
+- **Cost-framing (good for spot-instance / checkpointing questions):** "Checkpointing
+  engineering isn't optional overhead here, it's the price of admission for cheap spot
+  capacity — frequent, barrier-synced, cheap-to-write checkpoints are what make an
+  interruptible instance economically worth using at all."
+
+### Vocabulary Builder
+
+**Technical shorthand — use these instead of over-explaining the concept every time:**
+
+- **all-reduce** (n.) — the communication step where every worker's gradients are combined
+  and redistributed so all replicas update in lockstep.
+- **straggler** (n.) — the slowest worker in a synchronous job, which caps the throughput of
+  every other worker waiting on it.
+- **stale gradient** (n. phrase) — a gradient computed against weights that have since been
+  updated elsewhere, the correctness cost of asynchronous training.
+- **pipeline bubble** (n. phrase) — idle GPU time caused by a sequential dependency between
+  pipeline-parallel stages.
+- **barrier** (n./v.) — a synchronization point where every worker must arrive before any
+  proceeds; the mechanism that keeps a checkpoint internally consistent.
+
+**Expressive phrases — for stating a trade-off fluently instead of listing pros/cons:**
+
+- **"The question that reveals which one you need is…"** — a strong opener for collapsing a
+  three-way comparison (data/model/pipeline parallelism) down to the one variable that
+  actually decides it.
+- **sublinear** (adj.) — growing more slowly than proportionally. *"Scaling efficiency
+  becomes sublinear past a certain worker count, once communication overhead dominates."*
+- **"…is a performance cliff worth knowing about"** — precise phrasing for a non-obvious,
+  sudden degradation (Ray's object-store spill-to-disk) rather than a gradual slowdown.
+- **amortize** (v.) — to spread a fixed cost across more units so its per-unit impact
+  shrinks. *"Pipeline parallelism amortizes the bubble overhead better than plain model
+  parallelism."*
+- **"…is the price of admission for…"** — a fluent way to frame required engineering effort
+  (robust checkpointing) as the cost of unlocking a benefit (cheap spot capacity), not as
+  incidental overhead.
+
 ---
 
 **Previous:** [6. RAG + LLM-Serving at Scale](../06_rag_llm_serving_at_scale/tutorial.md)  |  **Next:** [8. ML Orchestration: Kubeflow/Argo Workflows vs Airflow](../08_ml_orchestration/tutorial.md)

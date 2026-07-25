@@ -162,6 +162,57 @@ gates, and ArgoCD together into one coherent promotion story.
 - A production model was updated without a corresponding Git commit — walk through how
   you'd detect this happened and prevent recurrence.
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Principle-first (the default for a senior round):** "The core GitOps idea, stated
+  precisely, is that live state should always be a reconciled copy of what's declared in
+  Git — not whatever's left over from the last manual change. Applying that to ML means
+  'promote a model' becomes 'merge a PR,' which is auditable and revertible with tools
+  every engineer already knows."
+- **Narrative-first (good for 'why does this matter for ML specifically'):** "Model
+  deployment used to mean SSHing in and restarting a service — exactly the imperative,
+  manual pattern that caused untraceable prod drift. GitOps doesn't just make that
+  faster, it makes 'who changed this and why' answerable by reading Git history instead of
+  asking around."
+- **Systems-first framing (good for the model-promotion deep-dive):** "I'd separate two
+  concerns that are easy to conflate: the model registry is the ML-specific source of truth
+  for 'which version passed evaluation'; ArgoCD is the mechanism that makes that version
+  live in the cluster. Promotion is a PR merge, full stop — nobody applies a model update
+  directly."
+
+### Vocabulary Builder
+
+**Technical shorthand — use these instead of over-explaining the concept every time:**
+
+- **drift** (n.) — divergence between live infrastructure state and what's declared in Git;
+  the specific problem ArgoCD's reconciliation loop exists to catch and correct.
+  (Distinct from *model* drift — worth disambiguating out loud if both come up in the same
+  conversation.)
+- **self-heal** (v. phrase) — ArgoCD automatically reverting a manually-made change back to
+  match Git, rather than merely flagging it.
+- **progressive delivery** (n. phrase) — rolling out a change gradually with automated
+  checks at each stage (canary, blue-green), as opposed to an all-at-once deploy.
+- **audit trail** (n. phrase) — a reviewable record of who changed what and when; the
+  property GitOps preserves even during an automated rollback, unlike an out-of-band patch.
+
+**Expressive phrases — for stating a trade-off fluently instead of listing pros/cons:**
+
+- **"…is auditable, reviewable, and revertible"** — a compact triplet worth using whenever
+  arguing for a Git-mediated process over a manual one.
+- **imperative vs. declarative** (adj.) — describing *how* to do something step by step,
+  versus describing *what* the end state should be and letting a controller get there.
+  *"GitOps replaces imperative deploy scripts with a declarative desired state."*
+- **"…keeping the audit trail intact even during an automated revert"** — a precise way to
+  argue that even emergency actions (rollback) shouldn't bypass the system's core
+  discipline.
+- **out-of-band** (adj.) — happening outside the normal, tracked process. *"An out-of-band
+  patch to prod is exactly what drift detection is designed to catch."*
+- **"…is a separate concern from…"** — a clean way to explicitly decouple two things that
+  are easy to conflate (data-pipeline promotion vs. model promotion; deployment state vs.
+  model-registry state).
+
 ---
 
 **Previous:** [8. ML Orchestration: Kubeflow/Argo Workflows vs Airflow](../08_ml_orchestration/tutorial.md)  |  **Next:** [10. Cost, Security & Multi-Region Governance](../10_cost_security_multiregion/tutorial.md)

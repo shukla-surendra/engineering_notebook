@@ -170,6 +170,55 @@ most candidates can describe RAG at a high level; fewer can explain *why* vLLM i
 - A RAG system's retrieval looks correct in testing but users report irrelevant answers in
   production — walk through your live debugging process, including what you'd check first.
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Constraint-first (the default for a senior round):** "RAG's core trade-off is that
+  retrieval quality caps generation quality — a perfect LLM fed the wrong context still
+  gives a wrong answer. I spend most of my design time on retrieval, not generation,
+  because that's actually the bottleneck most teams underinvest in."
+- **Mechanism-first (good for the 'why is vLLM fast' technical deep-dive):** "Naive LLM
+  serving reserves GPU memory for the worst-case sequence length on every request, which
+  wastes most of it most of the time. PagedAttention borrows the OS's virtual-memory idea —
+  non-contiguous, on-demand memory blocks — and continuous batching lets new requests join
+  a running batch the moment capacity frees up. Together they're why vLLM fits far more
+  concurrent requests per GPU than static batching."
+- **Build-vs-buy framing (good for vector DB or serving-backend choices):** "I wouldn't say
+  Pinecone is better than Milvus — I'd say it depends on team size and ops maturity: managed
+  if you want to ship fast and not run infra, self-hosted if you're cost-sensitive at scale
+  and already operating Kubernetes."
+
+### Vocabulary Builder
+
+**Technical shorthand — use these instead of over-explaining the concept every time:**
+
+- **parametric knowledge** (n. phrase) — what an LLM learned during training, frozen at
+  that point in time and uncitable; the gap RAG is designed to fill.
+- **hybrid search** (n. phrase) — combining dense vector similarity with sparse keyword
+  matching (BM25), catching exact-match signals that pure vector search can miss.
+- **KV cache** (n. phrase) — the per-token memory the attention mechanism needs during
+  generation; the resource PagedAttention manages more efficiently.
+- **continuous batching** (n. phrase) — a scheduling approach where new requests join an
+  in-flight batch as soon as GPU capacity frees up, instead of waiting for the whole batch
+  to finish together.
+- **agentic RAG** (n. phrase) — a multi-step retrieve → grade → re-retrieve → generate →
+  self-critique loop, as opposed to a single retrieve-then-generate call.
+
+**Expressive phrases — for stating a trade-off fluently instead of listing pros/cons:**
+
+- **"Retrieval quality caps generation quality…"** — a compact, quotable way to redirect a
+  RAG question toward retrieval design rather than model choice.
+- **"…worse than retrieving nothing"** — a striking way to describe irrelevant-but-confident
+  context, since it makes the failure mode memorable rather than abstract.
+- **dilute** (v.) — to weaken concentration or relevance. *"Larger chunks reduce retrieval
+  count but dilute relevance per chunk."*
+- **"…is the natural evolution when X isn't enough"** — a fluent way to introduce a more
+  complex technique (LangGraph, agentic RAG) as a response to a specific limitation, not
+  complexity for its own sake.
+- **runaway** (adj.) — growing uncontrolled, typically used for cost. *"Unbounded context
+  length is a real cost-runaway risk — I'd cap retrieved-context tokens explicitly."*
+
 ---
 
 **Previous:** [5. ML/LLM Observability & Drift](../05_observability_drift/tutorial.md)  |  **Next:** [7. Distributed Training & Ray/Ray Serve](../07_distributed_training_serving/tutorial.md)

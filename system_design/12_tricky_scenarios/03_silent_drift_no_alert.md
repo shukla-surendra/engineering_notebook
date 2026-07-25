@@ -74,6 +74,32 @@ three drift types — see the
 Prediction-drift monitoring is the cheapest additional signal (needs no ground truth) and
 should be considered a baseline requirement, not an enhancement, for exactly this reason.
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Coverage-first (the default for this scenario):** "'All dashboards green' only means
+  something if the dashboards cover the right things. Input-feature PSI monitoring catches
+  data drift by definition — it can't see concept drift, where the features look normal but
+  the model's relationship to them has changed."
+- **Cheapest-signal framing (good for 'what would you monitor first'):** "I'd treat
+  prediction-distribution drift as a baseline requirement, not an enhancement — it needs no
+  ground truth, which matters enormously here since credit outcomes have long label delay."
+- **Joint-vs-marginal framing (good for a sharper technical follow-up):** "Individual
+  feature marginals can each look perfectly stable while their joint distribution — who's
+  actually applying — has shifted. That's a subtler failure than any single-feature PSI
+  chart is built to catch."
+
+### Vocabulary Builder
+
+- **marginal distribution** (n. phrase) — a single feature's distribution viewed in
+  isolation, as opposed to its joint distribution with other features.
+- **leading indicator** (n. phrase) — a signal that moves before the outcome you actually
+  care about is measurable; prediction drift as an early warning ahead of ground-truth
+  labels.
+- **"…is necessary but catches only one of the…"** — a fluent way to credit a monitoring
+  layer's value while precisely scoping what it can't see.
+
 ---
 
 **Previous:** [2. Canary Passed, P1 Two Days Later](02_canary_passed_p1_later.md)  |  **Next:** [4. Overnight GPU Cost Spike](04_gpu_cost_spike.md)

@@ -75,6 +75,34 @@ deliberately checking version parity. See the embedding-model discussion in the
 [RAG tutorial](../06_rag_llm_serving_at_scale/tutorial.md#embedding-vector-search) and
 the retrieval-hallucination failure mode it calls out.
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Silent-failure framing (the default for this scenario):** "This is the class of bug
+  that doesn't throw an error — a broken embedding-space match doesn't fail loudly, it just
+  returns plausible-looking, wrong matches. I'd specifically distrust 'retrieval looks
+  fine' until I've checked version parity, because looking fine is exactly what this
+  failure mode does."
+- **Reproduction-gap framing (good for 'why didn't your manual test catch it'):** "My own
+  test queries aren't representative of real user phrasing, and if my test tooling happens
+  to pin an older embedding client, I've accidentally excluded myself from the exact bug
+  users are hitting. I'd pull real failing queries, not re-test with my own."
+- **Irreversibility framing (good for the fix discussion):** "There's no way to convert
+  old-embedding-space vectors into new-embedding-space compatibility after the fact — once
+  I confirm a version mismatch, the fix is roll back the embedding service or do a full
+  re-index, not a patch."
+
+### Vocabulary Builder
+
+- **embedding space** (n. phrase) — the coordinate system a model's embeddings live in;
+  two different model versions produce incompatible spaces even for the same text.
+- **version parity** (n. phrase) — confirming two dependent components (index-time and
+  query-time embeddings) are running the exact same version, the single highest-leverage
+  check in this scenario.
+- **"…doesn't fail, it just silently returns…"** — a reusable template for describing any
+  bug that degrades output quality without tripping an error path.
+
 ---
 
 **Previous:** [4. Overnight GPU Cost Spike](04_gpu_cost_spike.md)  |  **Next:** [6. Silently Duplicated Training Data](06_duplicate_training_data.md)

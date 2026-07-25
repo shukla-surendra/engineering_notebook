@@ -163,6 +163,55 @@ bugs in feature store design:
   underperforming the previous version — walk through how you'd diagnose training-serving
   skew live.
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Trade-off-first (the default for a senior round):** "A feature store's real job isn't
+  storage, it's guaranteeing that training and serving compute the same feature the same
+  way. Everything else — offline/online stores, materialization, Feast — is plumbing in
+  service of that one guarantee. I'd lead with the guarantee, then the plumbing."
+- **Narrative-first (good for 'have you dealt with skew before'):** "We once had a model
+  that looked great offline and quietly underperformed for weeks in production. It turned
+  out the batch feature and the online feature used slightly different windowing logic —
+  classic training-serving skew. That's the incident that made 'one shared feature
+  definition, materialized to both stores' a non-negotiable for me now."
+- **Systems-first framing (good when asked to design the promotion pipeline):** "I think of
+  promotion as two separate tracks that happen to share a name — the data/feature pipeline
+  gets promoted on data-quality gates, the model artifact gets promoted on offline-and-
+  online-metric gates. Conflating them hides which one actually failed when something breaks
+  in prod."
+
+### Vocabulary Builder
+
+**Technical shorthand — use these instead of over-explaining the concept every time:**
+
+- **training-serving skew** (n. phrase) — a model performing differently in production than
+  offline because the features it sees at serving time subtly differ from training time.
+- **point-in-time join** (n. phrase) — joining a label to the feature value that existed
+  *at the label's timestamp*, not the current value — the mechanism that prevents label
+  leakage.
+- **label leakage** (n. phrase) — accidentally training on information that wouldn't have
+  been available at prediction time, inflating offline metrics in a way that never survives
+  production.
+- **materialization** (n.) — the scheduled job that pushes feature values from the offline
+  store into the low-latency online store.
+- **lineage** (n.) — the traceable record of which data, code, and feature versions
+  produced a given model artifact; what makes an audit or a rollback possible.
+
+**Expressive phrases — for stating a trade-off fluently instead of listing pros/cons:**
+
+- **"The mechanism that actually prevents this is…"** — moves past naming a problem
+  (skew, leakage) straight to the concrete fix, which is what a senior answer does.
+- **conflate** (v.) — to wrongly treat two distinct things as one. *"Conflating the data
+  pipeline's gate with the model's gate hides which one failed."*
+- **"On a held-out set…"** — precise phrasing for describing an evaluation that wasn't
+  seen during training; signals rigor over "we tested it."
+- **reconcile** (v.) — to bring two divergent things back into agreement. *"Unity Catalog
+  reconciles feature and model permissions under one access-control system instead of two."*
+- **"That's a lower-lift adoption than…"** — a fluent way to argue for a tool (Feast) by
+  comparing integration cost, not just feature checklist.
+
 ---
 
 **Previous:** [2. High-Throughput Ingestion Pipelines](../02_ingestion_pipeline/tutorial.md)  |  **Next:** [4. Model Serving & Deployment](../04_model_serving_deployment/tutorial.md)

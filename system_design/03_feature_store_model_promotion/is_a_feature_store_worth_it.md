@@ -154,6 +154,55 @@ actual risk (skew, leakage, silent duplication) lives.
   don't — walk through how you'd diagnose whether it's a genuine methodology difference or
   silent pipeline drift.
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Reframe-first (the default when the interviewer poses the 'no reuse, so no feature
+  store' trap):** "I'd push back on the framing before answering — a feature store is four
+  benefits bundled under one name, and reuse is the weakest of the four here. Skew
+  prevention and point-in-time correctness are per-pipeline benefits that get *more*
+  valuable as you add independently-built pipelines, not less."
+- **Risk-first (good for 'what actually breaks in this scenario'):** "With ten teams
+  building bespoke pipelines off hundreds of shared tables, the real risk isn't wasted
+  effort — it's silent semantic drift. Two teams build something 80% similar, both look
+  correct in isolation, and nothing catches the divergence until a stakeholder notices the
+  numbers don't reconcile."
+- **Scoped-recommendation framing (good for 'so what would you actually build'):** "I
+  wouldn't reach for the full platform. I'd build the registry and the shared point-in-time
+  join utility first — that's the cheapest piece and it directly addresses the biggest risk
+  — and treat the online store as a per-model escalation, not an upfront platform decision."
+
+### Vocabulary Builder
+
+**Technical shorthand — use these instead of over-explaining the concept every time:**
+
+- **semantic drift** (n. phrase) — two independently-built definitions of "the same thing"
+  slowly diverging without anyone noticing, until the outputs stop reconciling.
+- **intermediate aggregate** (n. phrase) — a shared computational building block (e.g. a
+  30-day trailing join) reused inside otherwise-distinct pipelines, even when their final
+  outputs look nothing alike.
+- **build-vs-buy** (n. phrase) — the decision to hand-roll infrastructure versus adopting an
+  existing tool; here, applied at a finer grain than usual — build the registry, defer the
+  online store.
+- **discoverability** (n.) — whether an engineer can find out something already exists
+  before building a duplicate; the property a searchable registry provides.
+
+**Expressive phrases — for stating a trade-off fluently instead of listing pros/cons:**
+
+- **"Don't let doubting one part stand in for doubting the whole thing…"** — a precise way
+  to push back on an all-or-nothing framing without sounding contrarian for its own sake.
+- **bespoke** (adj.) — custom-built for one specific case rather than shared or generic.
+  *"Each of the ten pipelines is bespoke, but the join mechanics underneath don't have to
+  be."*
+- **forensic** (adj.) — after-the-fact investigation to reconstruct what happened. *"Without
+  a registry, 'does this already exist' becomes a forensic exercise instead of a quick
+  search."*
+- **"That's genuinely weaker here — but let me check before assuming it's zero…"** — models
+  intellectual honesty: concede the weak point, then verify rather than assume.
+- **load-bearing** (adj.) — something the rest of the argument actually depends on, not
+  decorative. *"The other three benefits are load-bearing on their own."*
+
 ---
 
 **See also:** [3. Feature Store + Model Promotion](tutorial.md) ·

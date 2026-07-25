@@ -241,6 +241,59 @@ regression" — a strong deep-dive target, and it directly extends the CI/CD gat
   "worse" answers than the previous version — walk through what you'd check first, given
   the eval gate passed.
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Surface-first (the default for a senior round):** "An LLM system's behavior can change
+  from three independent surfaces — the prompt, the model version, and the retrieved
+  context — and any one of them can be edited without touching the other two. LLMOps is
+  just treating all three with the rigor a code change already gets: versioned, evaluated,
+  gated."
+- **Decision-framework framing (good for 'fine-tune or RAG or prompt-engineer'):** "I'd
+  reach for RAG when the model doesn't *know* something, and fine-tuning when it knows but
+  won't *behave* the way I need. Most systems that need both use them together rather than
+  picking one — treating it as either/or is usually the wrong frame from the start."
+- **Gap-framing (good for the guardrails-vs-evals distinction):** "Evals answer 'is this
+  change safe to ship'; guardrails answer 'is this specific live request safe to serve.' A
+  change can pass every eval and still have a crafted live input slip past a guardrail —
+  naming that gap explicitly is exactly the kind of thing a tricky-scenario question is
+  designed to probe."
+
+### Vocabulary Builder
+
+**Technical shorthand — use these instead of over-explaining the concept every time:**
+
+- **golden set** (n. phrase) — a fixed, versioned set of representative inputs with a rubric
+  or reference answer, used to score whether a prompt/model change is an improvement or a
+  regression.
+- **LLM-as-judge** (n. phrase) — using a separate LLM call to score a candidate response
+  against a rubric, used both offline (pre-deployment gating) and online (live monitoring).
+- **cascading** (n./v.) — routing a request to a cheap model first and escalating to a
+  larger one only when a confidence signal says the cheap model likely can't handle it.
+- **semantic caching** (n. phrase) — caching responses keyed on embedding similarity to
+  past queries rather than exact string match, catching differently-phrased equivalent
+  questions.
+- **defense in depth** (n. phrase) — layering multiple, individually imperfect safeguards
+  (cheap heuristic checks plus a slower classifier) so no single gap fully exposes the
+  system.
+
+**Expressive phrases — for stating a trade-off fluently instead of listing pros/cons:**
+
+- **"…not ad-hoc string edits pushed straight to prod"** — a sharp way to frame why prompts
+  need the same discipline as code, memorable because it names the anti-pattern directly.
+- **"…because it's not code, it skips the review a code change would get"** — a precise,
+  reusable diagnosis for any failure mode caused by something *looking* low-risk because of
+  its format, not its actual blast radius.
+- **calibration** (n.) — checking that an automated proxy (LLM-as-judge) still tracks the
+  thing it's meant to approximate (human judgment). *"Periodic human eval is a calibration
+  check on the judge, not a replacement for it."*
+- **"…closes the loop the same way a bug fix should always ship with a test"** — a fluent
+  analogy for arguing that every production incident should permanently harden the eval
+  set, not just get patched once.
+- **"…is a living artifact, not a fixed fixture"** — useful phrasing for arguing that a
+  golden set (or any baseline) must be actively maintained, not built once and forgotten.
+
 ---
 
 **Previous:** [10. Cost, Security & Multi-Region Governance](../10_cost_security_multiregion/tutorial.md)  |  **Next:** [Tricky MLOps Scenarios](../12_tricky_scenarios/README.md)

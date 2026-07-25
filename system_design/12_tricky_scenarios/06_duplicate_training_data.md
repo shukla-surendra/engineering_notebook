@@ -78,6 +78,33 @@ point-in-time-join / leakage discussion in the
 [feature store tutorial](../03_feature_store_model_promotion/tutorial.md#deep-dive-point-in-time-joins-the-trickiest-part-to-get-right)
 for the closely related failure mode of label leakage.
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Suspicion-symmetry framing (the default for this scenario):** "A suspiciously good
+  result deserves exactly the same scrutiny as a suspiciously bad one — I wouldn't accept
+  an unexplained improvement without a data-integrity check first, before anyone even
+  discusses promoting it."
+- **Mechanism-first (good for explaining why duplication inflates metrics):** "The
+  mechanism matters, not just the symptom: duplicated rows land on both sides of a random
+  train/test split, so the model partially memorizes answers it already saw — that's
+  leakage, and it's a different bug from 'the data grew.'"
+- **Root-vs-symptom framing (good for the fix discussion):** "Deduplicating the dataset
+  fixes the symptom for this model version. The actual fix is making the idempotency key
+  deterministic and enforcing it as a real constraint — otherwise the next retry
+  reintroduces the same class of bug."
+
+### Vocabulary Builder
+
+- **train-test leakage** (n. phrase) — information from the test set inadvertently present
+  in training, here via duplicate rows landing on both sides of a split, inflating offline
+  metrics without real generalization.
+- **deterministic** (adj.) — always producing the same output given the same input; the
+  property an idempotency key needs to survive retries safely.
+- **"…deserves exactly as much scrutiny as…"** — a fluent way to argue symmetric skepticism
+  is applied to both surprising-good and surprising-bad results, not just the latter.
+
 ---
 
 **Previous:** [5. Retrieval Looks Right, Answers Are Wrong](05_rag_retrieval_correct_answers_wrong.md)  |  **Next:** [7. Multi-GPU Training Plateau](07_distributed_training_plateau.md)

@@ -126,6 +126,54 @@ a deep-dive walkthrough → a trade-off table → failure modes → a "Make It Y
 prompting you to attach your own production-system specifics → practice questions. That structure
 *is* this framework, applied to one recurring ML-systems topic at a time.
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Trade-off-first (the default for a senior round):** "I treat every design round as a
+  loop, not a checklist — clarify, sketch, deep-dive, then trade-offs, and any of those
+  steps can send me back to clarify again if a new constraint surfaces. The trade-off step
+  is where I spend the most airtime, because that's what's actually being scored."
+- **Narrative-first (good when asked 'walk me through how you approach these'):** "The
+  first time I skipped clarifying questions and jumped straight to a whiteboard, I designed
+  a beautiful system for the wrong scale — the interviewer had to walk me back fifteen
+  minutes in. Now the very first thing I say out loud is the scale and latency target I'm
+  designing for, before I draw a single box."
+- **Meta-framing (good for 'how do you evaluate a candidate' or self-assessment
+  questions):** "Interviewers weight the clarify step and the trade-off step far more
+  heavily than the box diagram in the middle — the diagram just proves you can hold the
+  system in your head; the other two prove you can reason about it."
+
+### Vocabulary Builder
+
+**Technical shorthand — use these instead of over-explaining the concept every time:**
+
+- **blast radius** (n.) — how much of the system is affected if a given component fails or
+  a decision goes wrong; naming it shows you're thinking about failure scope, not just the
+  happy path.
+- **degrade gracefully** (v. phrase) — a system losing some functionality in a controlled
+  way under stress, rather than failing outright.
+- **crossover point** (n.) — the scale or condition at which one design's trade-off starts
+  beating another's; useful shorthand for "it depends, and here's exactly on what."
+- **first-order vs. second-order effect** (n. phrase) — the direct consequence of a
+  decision versus its downstream ripple effects; naming which one you're discussing avoids
+  talking past an interviewer.
+
+**Expressive phrases — for stating a trade-off fluently instead of listing pros/cons:**
+
+- **"Let me anchor this before I go further…"** — a clean way to pause and restate scale/
+  latency assumptions before continuing, rather than let them drift unstated.
+- **"I chose X over Y because…"** — always prefer this construction to a bare "I used X"; it
+  forces you to name the rejected alternative, which is most of what signals seniority.
+- **principled** (adj.) — a decision made from reasoned trade-offs rather than habit or
+  guesswork. *"I want this to sound principled, not accidental, when the 10x-scale
+  follow-up comes."*
+- **unprompted** (adv.) — offered before being asked. *"I raise the failure mode
+  unprompted, rather than waiting for the interviewer to probe for it."*
+- **"That's a fair pushback — here's how I'd reconsider it…"** — the fluent way to receive
+  interviewer pushback without sounding defensive; treats the round as a discussion, which
+  is exactly what Step 4 is supposed to be.
+
 ---
 
 **Previous:** [Overview](../README.md)  |  **Next:** [1. Fundamentals & Building Blocks](../01_fundamentals/tutorial.md)

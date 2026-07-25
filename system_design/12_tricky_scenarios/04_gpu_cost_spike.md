@@ -76,6 +76,33 @@ token-throughput discussion in the
 [RAG/LLM-serving tutorial](../06_rag_llm_serving_at_scale/tutorial.md) and the
 [observability tutorial's LLM-specific signals](../05_observability_drift/tutorial.md#llm-specific-observability-signals).
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Unit-of-cost framing (the default for this scenario):** "The first thing I'd check
+  isn't 'what changed,' it's whether we're even measuring the right unit — for LLM serving,
+  cost tracks tokens processed, not requests/sec, and those can diverge enormously without
+  either dashboard showing an obvious signal."
+- **Diff-first framing (good for 'how would you find the actual cause'):** "Once tokens
+  confirm the category, I'd diff every config surface that can silently change token
+  count — prompt templates, RAG retrieval settings, routing rules — against deploy history
+  for exactly that window, rather than guessing."
+- **Systemic framing (good for 'how do you prevent this'):** "I'd gate any prompt or RAG
+  config change behind a cost-impact check in review, the same way a code change gets a
+  quality gate — this class of incident is really a missing-gate problem, not a one-off
+  mistake."
+
+### Vocabulary Builder
+
+- **token throughput** (n. phrase) — tokens processed per second, the actual capacity unit
+  for LLM serving, as distinct from and often more volatile than requests/sec.
+- **thrash** (v.) — to oscillate unproductively, here an autoscaler scaling up and down
+  without settling, wasting capacity in the process.
+- **"…is blind to exactly this class of incident"** — a precise, quotable way to argue a
+  specific dashboard/metric is structurally incapable of catching a certain failure mode,
+  not just that it happened to miss one instance.
+
 ---
 
 **Previous:** [3. Silent Drift, No Alert](03_silent_drift_no_alert.md)  |  **Next:** [5. Retrieval Looks Right, Answers Are Wrong](05_rag_retrieval_correct_answers_wrong.md)

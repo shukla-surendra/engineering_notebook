@@ -178,6 +178,52 @@ attempt; only promote the winning experiment to a real commit once you've picked
   conflict (decide which data version wins, or re-run the pipeline stage that produced it)
   rather than trying to "merge" the pointer file's hash directly.
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Mechanism-first (the default when asked 'how does DVC actually work'):** "The core
+  mechanic is a split: Git tracks a small pointer file with a content hash, DVC tracks the
+  actual data behind that hash in a remote like S3. Checking out an old Git commit checks
+  out the old pointer, and `dvc checkout` pulls the data version that pointer actually
+  refers to — that's what makes data versioned *alongside* code, not next to it."
+- **Analogy-first (good for a quick explanation to a non-ML-infra audience):** "It's the
+  same mental model as Git LFS — a lightweight pointer committed to Git, the heavy content
+  stored elsewhere — with a pipeline layer on top so `dvc repro` only reruns stages whose
+  actual inputs changed, the same incremental-build idea as `make`."
+- **Audit-framing (good for compliance-adjacent follow-ups):** "`git log -p` on a `.dvc`
+  file gives a full, ordinary Git-native audit trail of every data version that ever
+  existed — I'd lean on that directly when a lineage or audit requirement comes up, rather
+  than building a separate tracking system."
+
+### Vocabulary Builder
+
+**Technical shorthand — use these instead of over-explaining the concept every time:**
+
+- **content hash** (n. phrase) — a fingerprint derived from a file's actual bytes, used to
+  detect whether data has changed without comparing the full content directly.
+- **incremental build** (n. phrase) — re-running only the steps whose inputs actually
+  changed, skipping ones that provably haven't — the `make`/`dvc repro` idea.
+- **lockfile** (n.) — a generated file (`dvc.lock`) pinning the exact hashes from the last
+  successful run, the reference point incremental reruns compare against.
+- **disposable workspace** (n. phrase) — a throwaway run (`dvc exp run`) that doesn't
+  require a Git commit per attempt, useful for hyperparameter sweeps.
+
+**Expressive phrases — for stating a trade-off fluently instead of listing pros/cons:**
+
+- **"This is the core mechanic…"** — a strong opener for isolating the one idea (pointer vs.
+  content split) that explains everything else about a tool, before listing commands.
+- **"…the same mental model as X, with Y layered on top"** — a fluent way to explain a
+  less-familiar tool (DVC) by anchoring to something the listener already knows (Git LFS),
+  then naming what's genuinely new.
+- **provenance** (n.) — the traceable origin and history of a piece of data. *"Every commit
+  to a `.dvc` file is a provenance record for that dataset."*
+- **"…rather than building a separate tracking system"** — useful for arguing a tool's value
+  by naming the alternative (bespoke tooling) it lets you avoid.
+- **reproducible** (adj.) — capable of producing the same result again given the same
+  inputs. *"A pipeline that can't be reproduced from its dependencies is a debugging and
+  governance liability."*
+
 ---
 
 **See also:** [GitOps & CI/CD for ML tutorial](tutorial.md) · [Hands-On: ArgoCD](argocd_hands_on.md)

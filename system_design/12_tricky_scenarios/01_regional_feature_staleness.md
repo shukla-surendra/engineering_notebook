@@ -72,6 +72,32 @@ granularity*?" — job-level health can hide partition-level, shard-level, or re
 failure. See the freshness-SLA discussion in the
 [feature store tutorial](../03_feature_store_model_promotion/tutorial.md#failure-modes-to-raise-proactively).
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Question-the-signal framing (the default for a debugging round):** "Before I chase root
+  cause, I'd interrogate the dashboard itself — 'healthy' here means job completion, not
+  data freshness, and those are different claims. A lot of debugging time gets wasted
+  trusting a status that was never actually measuring the thing you assumed."
+- **Granularity framing (good for explaining why nothing alerted):** "The gap here isn't
+  the pipeline, it's monitoring granularity — job-level health can hide shard-level or
+  region-level failure. I'd generalize that as a question I ask about any 'healthy' status
+  going forward: healthy at what granularity?"
+- **Narrative-first (good for 'walk me through how you'd debug this live'):** "I'd bypass
+  the dashboard entirely first — query the region's online store directly for a known
+  entity and diff its timestamp against the offline store. A direct freshness check rules
+  out an entire dashboard blind spot in one query."
+
+### Vocabulary Builder
+
+- **partial failure** (n. phrase) — a component fails for a subset of its work while
+  reporting overall success, the specific shape of bug this scenario walks through.
+- **conflate** (v.) — to treat two distinct signals as one. *"'Job completed' and 'data is
+  fresh' were conflated into a single healthy status."*
+- **"…is itself a finding worth raising"** — a phrase for treating a monitoring gap you
+  discover mid-investigation as a deliverable, not a distraction from the main fix.
+
 ---
 
 **Previous:** [Overview](README.md)  |  **Next:** [2. Canary Passed, P1 Two Days Later](02_canary_passed_p1_later.md)

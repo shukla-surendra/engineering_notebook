@@ -1,4 +1,4 @@
-# engineering-notebook
+# engineering_notebook
 
 Personal notes on algorithms, ML/LLM systems, and distributed-systems design, organized as
 three independent MkDocs sites:

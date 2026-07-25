@@ -74,6 +74,34 @@ canary rather than only visible on a weekly dashboard. See the canary-evaluation
 deep-dive in the [model serving tutorial](../04_model_serving_deployment/tutorial.md#deep-dive-designing-the-canary-evaluation-loop)
 for what a more complete guardrail set looks like.
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Metric-scope framing (the default for this scenario):** "A canary is only as good as
+  what it measures. Latency and error rate catch infrastructure regressions, not quality
+  regressions — a model can serve perfectly healthy 200s with subtly worse
+  recommendations. The guardrails here measured the wrong axis entirely."
+- **Coverage framing (good for the 'was the window representative' question):** "Passing a
+  canary proves the sampled traffic was fine, not that all traffic is fine. I'd always ask
+  whether the canary window's segments and timing actually matched the population that
+  later broke."
+- **Compounding-effect framing (good for the feedback-loop hypothesis):** "Some
+  regressions don't announce themselves in a 4-hour window at all — they compound over
+  days, like a personalization feedback loop quietly starving itself of good signal. I'd
+  distinguish a step-change from a compounding pattern before assuming a single cause."
+
+### Vocabulary Builder
+
+- **feedback loop** (n. phrase) — a delayed effect where a model's own output changes the
+  future data it learns from, degrading gradually rather than immediately.
+- **confound** (n.) — a second, unaccounted-for change that could explain an observed
+  effect independent of the suspected cause. *"Rule out confounds before attributing the
+  CTR drop to the model alone."*
+- **"…necessary but not sufficient"** — a reusable template for arguing one guardrail
+  category (infra health) doesn't cover another (business quality), without dismissing its
+  value entirely.
+
 ---
 
 **Previous:** [1. Regional Feature Staleness](01_regional_feature_staleness.md)  |  **Next:** [3. Silent Drift, No Alert](03_silent_drift_no_alert.md)

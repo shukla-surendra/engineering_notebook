@@ -168,6 +168,53 @@ A concrete, interview-friendly deep-dive that combines cost and multi-tenancy:
 - A compliance auditor asks you to prove no PII was used to train a specific model version
   — walk through what your system would need to answer that.
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Unprompted-signal framing (the default for a senior round):** "Cost, security, and
+  multi-region rarely get their own question — they show up as follow-ups to almost every
+  design here. I raise them unprompted rather than waiting to be asked, because that's
+  actually part of what's being evaluated."
+- **Numbers-first (good for the DR/RTO-RPO discussion specifically):** "I wouldn't design
+  'for high availability' vaguely — I'd state the two numbers that actually define it: RTO,
+  how long we can be down, and RPO, how much data we can afford to lose. A serving layer and
+  a training warehouse can have very different acceptable numbers for both."
+- **Narrative-first (good for 'has a DR plan ever actually been tested'):** "The failure
+  mode I'd raise unprompted is a DR plan that's never been drilled — the real failover time
+  under an actual incident is almost always worse than the number on paper, because
+  replication lag and cold-cache warm-up are easy to underestimate until you've lived
+  through them once."
+
+### Vocabulary Builder
+
+**Technical shorthand — use these instead of over-explaining the concept every time:**
+
+- **RTO / RPO** (n.) — Recovery Time Objective (how long you can be down) and Recovery
+  Point Objective (how much data loss is acceptable); the two numbers that actually define
+  a DR requirement.
+- **cost attribution** (n. phrase) — tracing infrastructure spend back to the specific
+  team or workload that caused it, usually via request-level tagging.
+- **active-active vs. active-passive** (adj. phrase) — multiple regions serving live
+  traffic simultaneously versus one primary region with a standby that's promoted on
+  failure.
+- **prompt injection** (n. phrase) — untrusted input (user text or retrieved documents)
+  manipulating a model's behavior by being interpreted as instructions rather than data.
+
+**Expressive phrases — for stating a trade-off fluently instead of listing pros/cons:**
+
+- **"…show up as follow-ups, not their own question"** — a useful way to explain why a topic
+  needs proactive framing rather than waiting to be asked about directly.
+- **"State it as a number, not a vibe…"** — a fluent way to push back on a vague reliability
+  requirement and redirect toward a concrete RTO/RPO target.
+- **"…is pure waste"** — a blunt, quotable way to characterize idle GPU spend, memorable
+  enough to stick with an interviewer.
+- **retrofit** (v.) — to add something after the fact that would have been easier to build
+  in from the start. *"Retrofitting cost tagging after the fact is far more painful than
+  building it in from day one."*
+- **"…before the first surprising invoice"** — idiomatic phrasing for arguing a policy
+  (cost allocation) should be agreed upon proactively, not reactively.
+
 ---
 
 **Previous:** [9. GitOps & CI/CD for ML](../09_gitops_ml_cicd/tutorial.md)  |  **Next:** [11. LLMOps: Prompting, Fine-Tuning, Evals & Guardrails](../11_llmops/tutorial.md)

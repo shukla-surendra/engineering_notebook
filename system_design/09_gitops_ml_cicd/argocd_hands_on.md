@@ -237,6 +237,54 @@ kubectl argo rollouts abort model-serving                 # abort and roll back
   [tricky scenario on GitOps rollouts](../12_tricky_scenarios/09_gitops_rollout_wrong_predictions.md),
   a mutable tag can mean "synced" doesn't mean "the artifact you expect is running."
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Demonstration-first (the default when asked to prove you've actually run this, not
+  just read about it):** "I'd walk through it live: create an Application pointing at a
+  Git path, let it sync, then manually edit the deployed resource with `kubectl edit` and
+  watch ArgoCD flag it `OutOfSync` and self-heal within seconds. That's the reconciliation
+  loop made concrete, not theoretical."
+- **Escalation-framing (good for 'how would you scale this to many services'):** "A single
+  Application resource doesn't scale past a handful of services — I'd reach for the
+  app-of-apps pattern, where one root Application manages a directory of other Application
+  manifests, so adding a new service becomes 'merge a PR that adds a YAML file,' not a
+  manual CLI command."
+- **Debugging-framing (good for troubleshooting questions):** "When something's
+  `OutOfSync` but the diff looks empty, I don't trust the summary status — I go straight to
+  `argocd app diff` for the field-level difference, since it's usually a Kubernetes-defaulted
+  field my manifest just didn't set explicitly."
+
+### Vocabulary Builder
+
+**Technical shorthand — use these instead of over-explaining the concept every time:**
+
+- **app-of-apps** (n. phrase) — a pattern where one root Application declaratively manages
+  a set of other Applications, avoiding manual per-service setup.
+- **mutable tag** (n. phrase) — an image reference (like `:latest`) that can point to
+  different actual content over time, which can make "sync succeeded" misleading about
+  what's actually running.
+- **readiness probe** (n. phrase) — the Kubernetes health check a pod must pass before
+  being considered ready; a common hidden cause of a rollout stuck `Progressing`.
+- **canary weight** (n. phrase) — the percentage of traffic routed to a new version during
+  a staged rollout, incremented in steps with pauses/analysis between them.
+
+**Expressive phrases — for stating a trade-off fluently instead of listing pros/cons:**
+
+- **"…observable directly, not just theoretical"** — useful for signaling you've actually
+  run a mechanism (drift detection, self-heal) rather than only read about it.
+- **"'Synced' doesn't mean…"** — a fluent template for flagging a subtle gap between a
+  status indicator and the actual guarantee it implies (a mutable tag being "synced" without
+  the expected artifact actually running).
+- **granular** (adj.) — broken down to a fine level of detail. *"`argocd app diff` gives
+  you the granular, field-level difference, not just a pass/fail sync status."*
+- **"…no manual CLI commands needed going forward"** — a clean way to describe the payoff
+  of investing in a declarative pattern (app-of-apps) up front.
+- **staged** (adj.) — proceeding in deliberate, incremental steps rather than all at once.
+  *"A staged canary with pauses and analysis steps bounds the blast radius of a bad
+  rollout."*
+
 ---
 
 **See also:** [GitOps & CI/CD for ML tutorial](tutorial.md) · [Hands-On: DVC](dvc_hands_on.md)

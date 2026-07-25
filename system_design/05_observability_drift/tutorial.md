@@ -169,6 +169,56 @@ system" — a strong deep-dive target.
 - A RAG system's users report the answers "feel less accurate" over the past week, but
   no infra metric has changed — walk through how you'd investigate live.
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Gap-first (the default for a senior round):** "Standard observability tells you the
+  model is running; it says nothing about whether it's right. That gap — a system serving
+  fast 200s while its predictions silently degrade — is exactly what ML observability
+  exists to close, layered on top of infra observability, not replacing it."
+- **Cost-of-detection framing (good for 'why monitor prediction drift first'):** "I'd
+  monitor prediction drift before data or concept drift, because it needs no ground-truth
+  labels — which are often delayed days or weeks — and a shift there is frequently the
+  earliest signal that something upstream has already changed."
+- **Narrative-first (good for 'tell me about a monitoring gap you've seen'):** "We had
+  dashboards that stayed green for weeks while a model's real-world accuracy quietly
+  dropped, because we were only tracking infra metrics — latency, error rate — and nothing
+  about the prediction distribution itself. That's the gap this whole topic is really
+  about."
+
+### Vocabulary Builder
+
+**Technical shorthand — use these instead of over-explaining the concept every time:**
+
+- **covariate shift** (n. phrase) — the formal name for data drift: the distribution of
+  input features changes between training and serving.
+- **ground truth** (n.) — the actual correct answer, often available only after a delay
+  (e.g. confirmed fraud after a chargeback); its lag is why prediction-drift monitoring
+  matters as an early-warning layer.
+- **faithfulness** (n.) — for RAG systems, whether a generated answer is actually supported
+  by the retrieved context, as opposed to merely fluent-sounding.
+- **alert fatigue** (n. phrase) — the failure mode where over-sensitive alerting trains
+  people to ignore alerts, defeating the point of alerting at all.
+- **runbook** (n.) — a documented, concrete sequence of checks for responding to a specific
+  alert; the difference between "we have an alert" and "we have a response."
+
+**Expressive phrases — for stating a trade-off fluently instead of listing pros/cons:**
+
+- **"This tells you X is running, not that X is right…"** — a reusable template for
+  distinguishing availability signals from correctness signals in any monitoring
+  discussion, not just ML.
+- **"…before you have the labels to confirm it directly"** — precise phrasing for
+  describing an early-warning signal that precedes ground truth.
+- **self-correcting** (adj.) — a system that responds to its own signals without manual
+  intervention. *"Wiring drift scores into a retraining trigger is what turns dashboards
+  into a self-correcting system."*
+- **"…in the same pane of glass"** — idiomatic shorthand for unifying two categories of
+  metric (infra and ML-quality) into one dashboard/alerting stack, rather than running
+  parallel disconnected tools.
+- **"That's the hardest failure mode in this whole topic…"** — a strong way to signal you
+  understand relative difficulty across a set of risks, not just list them flatly.
+
 ---
 
 **Previous:** [4. Model Serving & Deployment](../04_model_serving_deployment/tutorial.md)  |  **Next:** [6. RAG + LLM-Serving at Scale](../06_rag_llm_serving_at_scale/tutorial.md)

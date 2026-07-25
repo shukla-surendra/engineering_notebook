@@ -145,6 +145,56 @@ roll back**, since a human watching a dashboard doesn't scale and doesn't work a
   predictions "feel off" for a specific customer segment — walk through your diagnostic
   process live.
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Risk-first (the default for a senior round):** "The reason model rollouts need their
+  own strategy is that the dangerous failure mode is invisible to a standard health check —
+  a model serving confidently wrong predictions still returns 200s. Shadow and canary exist
+  specifically to catch a *quality* regression, not an availability one."
+- **Sequencing-first (good for 'walk me through how you'd roll this out'):** "I'd sequence
+  it shadow, then canary, then full rollout — shadow de-risks quality with zero user
+  exposure, canary validates under real serving conditions with bounded exposure, and only
+  then do I ramp to 100%. I'd say that ordering out loud before describing either
+  mechanism, because the ordering *is* the design decision."
+- **Systems-first framing (good when asked to design the automated gate):** "The
+  interesting problem isn't the traffic split, Kubernetes handles that declaratively — it's
+  what automated signal decides ramp-up versus rollback, since nobody's watching a
+  dashboard at 3am. I'd define guardrail metrics before the canary starts, not after."
+
+### Vocabulary Builder
+
+**Technical shorthand — use these instead of over-explaining the concept every time:**
+
+- **dark launch** (n.) — another name for shadow deployment: running a new version against
+  real traffic without ever surfacing its output to users.
+- **guardrail metric** (n. phrase) — a threshold defined *before* a rollout begins that
+  automatically triggers ramp-up or rollback, removing human judgment from the critical
+  path.
+- **blast radius** (n.) — how much of the user base is exposed to a regression; the reason
+  staged ramp-up (5% → 25% → 50% → 100%) exists.
+- **scale-to-zero** (n. phrase) — a serving pattern where idle models consume no compute
+  between requests, at the cost of a cold-start penalty when traffic resumes.
+- **cold-start penalty** (n. phrase) — the latency hit of bringing a scaled-down resource
+  (a Lambda, a GPU pod) back to a warm, request-ready state.
+
+**Expressive phrases — for stating a trade-off fluently instead of listing pros/cons:**
+
+- **"The ordering is the design decision…"** — useful when an interviewer expects a list of
+  techniques but the real insight is *sequencing* them correctly.
+- **statistically meaningless** (adj. phrase) — describes a result too small in sample size
+  to trust. *"A canary evaluated on 50 requests is statistically meaningless, regardless of
+  clock time elapsed."*
+- **"…without waiting for a human to notice"** — a fluent way to argue for automation by
+  naming the cost of the manual alternative directly.
+- **slice** (v.) — to break down an aggregate metric by segment. *"I'd slice guardrail
+  metrics by customer segment, not just look at the aggregate — an aggregate pass can hide
+  a segment-level regression."*
+- **"That's a genuine advantage, but it doesn't mean zero risk…"** — a way to praise an
+  approach (shadow's zero user-facing risk) while immediately naming its real cost
+  (doubled backend load).
+
 ---
 
 **Previous:** [3. Feature Store & Model Promotion](../03_feature_store_model_promotion/tutorial.md)  |  **Next:** [5. ML/LLM Observability & Drift](../05_observability_drift/tutorial.md)
