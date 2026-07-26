@@ -11,11 +11,12 @@ original plan — plus a bank of scenario-debugging problems.
 If terms like **p99 latency**, **the nines**, **sharding vs. replication**, or
 **idempotency** aren't things you could explain from first principles yet, start with the
 **[Prerequisite Concepts](prerequisite_concepts/01_performance_and_scale.md)** primer
-(five short parts: [Performance & Scale](prerequisite_concepts/01_performance_and_scale.md),
+(six short parts: [Performance & Scale](prerequisite_concepts/01_performance_and_scale.md),
 [Data & Consistency](prerequisite_concepts/02_data_and_consistency.md),
 [Communication & Resilience](prerequisite_concepts/03_communication_and_resilience.md),
 [CPU vs. GPU](prerequisite_concepts/04_cpu_vs_gpu.md),
-[Choosing a GPU & Code Optimization](prerequisite_concepts/05_gpu_selection_and_code_optimization.md))
+[Choosing a GPU & Code Optimization](prerequisite_concepts/05_gpu_selection_and_code_optimization.md),
+[Mechanical Sympathy & the Physics of Latency](prerequisite_concepts/06_mechanical_sympathy_and_physics_of_latency.md))
 before the Interview Framework below. It's the shared vocabulary every tutorial in this
 section — and in the [Distributed Systems Design track](http://127.0.0.1:8002/) — assumes
 without re-explaining.

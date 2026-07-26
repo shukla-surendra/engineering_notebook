@@ -53,6 +53,7 @@ nav:
       - "3. Communication & Resilience": prerequisite_concepts/03_communication_and_resilience.md
       - "4. CPU vs. GPU": prerequisite_concepts/04_cpu_vs_gpu.md
       - "5. Choosing a GPU & Code Optimization": prerequisite_concepts/05_gpu_selection_and_code_optimization.md
+      - "6. Mechanical Sympathy & the Physics of Latency": prerequisite_concepts/06_mechanical_sympathy_and_physics_of_latency.md
   - 0. Interview Framework: 00_interview_framework/tutorial.md
   - 1. Fundamentals & Building Blocks: 01_fundamentals/tutorial.md
   - 2. High-Throughput Ingestion Pipelines:

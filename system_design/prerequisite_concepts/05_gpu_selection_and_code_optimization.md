@@ -198,4 +198,4 @@ incomplete:
 
 ---
 
-**Previous:** [Part 4: CPU vs. GPU](04_cpu_vs_gpu.md)  |  **Next:** [0. The Interview Framework](../00_interview_framework/tutorial.md)
+**Previous:** [Part 4: CPU vs. GPU](04_cpu_vs_gpu.md)  |  **Next:** [Part 6: Mechanical Sympathy & the Physics of Latency](06_mechanical_sympathy_and_physics_of_latency.md)
