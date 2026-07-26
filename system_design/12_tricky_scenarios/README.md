@@ -1,6 +1,6 @@
 # Tricky MLOps Scenarios
 
-Thirteen scenario-debugging problems — each a realistic, ambiguous production situation as
+Fourteen scenario-debugging problems — each a realistic, ambiguous production situation as
 it would actually be reported to you (a Slack message, a dashboard anomaly, an angry
 stakeholder), not a clean textbook question. This is where the trade-off vocabulary and
 failure modes from the eleven tutorials in this section get exercised under the kind of
@@ -51,6 +51,7 @@ same way:
 | 11 | [Serving Cost Doubled After a "Routine" Upgrade](11_serving_cost_doubled.md) | Cost |
 | 12 | [DR Failover Took 8x Longer Than Planned](12_dr_failover_slow.md) | Multi-Region/DR |
 | 13 | [Eval Passed, Guardrail Bypassed in Production](13_eval_passed_guardrail_bypassed.md) | LLMOps |
+| 14 | [GPU Sitting Idle 75% of the Time in a Sequential Pipeline](14_gpu_underutilized_sequential_pipeline.md) | GPU / Pipeline Architecture |
 
 ---
 

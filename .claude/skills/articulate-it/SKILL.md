@@ -1,6 +1,6 @@
 ---
 name: articulate-it
-description: Add or refresh the "Articulate It: Interview Framing & Vocabulary" closing section on tutorial/problem docs in this repo (system_design/, staff_system_design/, dsa_prep/). Use whenever a new tutorial, case-study, scenario, or problem.md/PATTERN.md doc is created or substantially rewritten in this repo, or when the user asks to "add articulate it", "add the interview framing section", or "do the same thing" to more docs.
+description: Add or refresh the "Articulate It: Interview Framing & Vocabulary" closing section on tutorial/problem/concept-primer docs in this repo (system_design/, system_design/prerequisite_concepts/, staff_system_design/, dsa_prep/). Also covers how to author a new first-principles concept-primer doc (the prerequisite_concepts/ "Part N" pattern) from scratch. Use whenever a new tutorial, case-study, scenario, concept-primer, or problem.md/PATTERN.md doc is created or substantially rewritten in this repo, when asked to explain something "from first principles" for this repo, or when the user asks to "add articulate it", "add the interview framing section", or "do the same thing" to more docs.
 ---
 
 # Articulate It: Interview Framing & Vocabulary
@@ -13,12 +13,14 @@ loud. This skill adds that section to a doc that doesn't have it yet.
 
 ## When to use this
 
-- A new file is added under `system_design/`, `staff_system_design/`, or `dsa_prep/`
-  (a `tutorial.md`, a scenario doc, a deep-dive doc, a `problem.md`, or a `PATTERN.md`).
+- A new file is added under `system_design/` (including `prerequisite_concepts/`),
+  `staff_system_design/`, or `dsa_prep/` (a `tutorial.md`, a scenario doc, a deep-dive doc,
+  a concept-primer part, a `problem.md`, or a `PATTERN.md`).
 - An existing doc in one of those trees is substantially rewritten (the section should be
   refreshed to match the new content — use `--replace`, see below).
 - The user asks to apply "the same treatment" / "articulate it" / "the interview framing
-  section" to more docs.
+  section" to more docs, or asks for something to be explained/documented "from first
+  principles" (that's mode C — see below, it covers the whole doc, not just this section).
 
 **Do not** apply this to pure index/navigation files — anything whose content is just a
 table of links and a one-paragraph overview (e.g. `README.md`, `TOP_LIST.md` in this
@@ -47,7 +49,7 @@ consistent across ~150 files:
 - **term** (n./v./adj.) — definition.
 ```
 
-## Two content modes — pick based on which tree the doc is in
+## Three content modes — pick based on which tree the doc is in
 
 **A. `system_design/` and `staff_system_design/` (architecture tutorials, deep-dives,
 scenario/incident docs).** Three framings should be genuine alternative *angles* on
@@ -73,6 +75,55 @@ general expressive phrases for narrating fluently. Keep `problem.md` sections co
 files get a slightly richer version — framings about recognizing/teaching/generalizing the
 *pattern itself*, not one instance of it (~4-5 vocab items, matching PATTERN.md's own
 ~70-80 line length).
+
+**C. `system_design/prerequisite_concepts/` (first-principles concept primers — "Part N"
+docs).** This mode is different in kind from A and B: it covers not just the closing
+section but **the whole doc's authoring pattern**, because this tree teaches foundational
+concepts (percentiles, CAP theorem, CPU vs. GPU, etc.) that every other doc in the repo
+assumes without re-explaining, rather than walking through a specific system or problem.
+Use this mode whenever the user asks to explain something "from first principles" that
+belongs in this repo, not just when appending a closing section to an existing file.
+
+*Doc structure* (each numbered `0N_topic_name.md` file):
+- Opens with 1-2 sentences of framing: what this part covers, what it assumes, and a link
+  back to the previous part (`[Part N-1](0N-1_topic.md)` covered X; this covers Y).
+- Body is organized as `## `-level sections, each covering **one concept**, structured
+  problem → mechanism → why it matters practically — never define a term and stop; always
+  answer "why does this exist" before "what is it." Prefer a concrete worked example with
+  real or illustrative numbers over an abstract definition wherever one is possible (see
+  the percentile walkthrough in `01_performance_and_scale.md` or the L4-instance worked
+  example in `04_cpu_vs_gpu.md` as calibration).
+- Cross-reference relentlessly, both to earlier Parts in this same primer and to the
+  tutorials/tricky-scenarios elsewhere in the repo that assume the concept — this is what
+  keeps the primer from being a disconnected glossary. Use relative links within
+  `system_design/`, and the established absolute-URL pattern
+  (`http://127.0.0.1:8002/...`) when crossing into `staff_system_design/`.
+- State numeric claims (hardware specs, cloud pricing, bandwidth figures) as **illustrative
+  and approximate**, explicitly — this repo's convention (see the GPU catalog table in
+  `05_gpu_selection_and_code_optimization.md`) is "the relationship, not the specific
+  numbers, is the point," since exact figures age out quickly.
+- Ends with `## Quick Self-Check` (not `## Practice Questions` or `## Make It Yours` — this
+  tree teaches concepts, not case studies, so the closing check is "could you explain this
+  back," not "go practice a design") — then the `## Articulate It` section — then the nav
+  footer.
+- **Wire it in fully, every time**: update the *next-to-last* part's nav-footer "Next" link
+  and the *following* doc's (`00_interview_framework/tutorial.md`, if this is the last
+  part) nav-footer "Previous" link to keep the Part 1→2→3...→N→Interview Framework chain
+  intact; add the new part to `mkdocs-system-design.yml`'s `nav:` list under
+  "Prerequisite Concepts"; update the part count and file list in
+  `system_design/README.md`'s "Read This First" section; and if the concept has a
+  real-world tie-in elsewhere in the repo (e.g. a GPU-cost tricky scenario), add a
+  cross-link from that doc back to the new part. Run
+  `mkdocs build -f mkdocs-system-design.yml --strict -d /tmp/<throwaway-dir>` afterward and
+  check for `contains a link` warnings — mkdocs slugifies headings by lowercasing, turning
+  spaces into single dashes, and stripping punctuation like `/` and `&` (not turning them
+  into a second dash), which is the most common way a hand-written anchor link breaks; grep
+  the built HTML for the actual `id="..."` if unsure rather than guessing the slug.
+
+For the closing `## Articulate It` section itself in Mode C, follow the same structure as
+Mode A (trade-off/mechanism/scarcity-driven framings, technical shorthand + expressive
+phrases) — the audience and voice are the same interview-prep reader, just explaining a
+foundational concept instead of a system.
 
 ## Worked example (mode B, for calibration)
 
@@ -110,7 +161,9 @@ files get a slightly richer version — framings about recognizing/teaching/gene
 For a mode-A worked example, read any already-finished doc, e.g.
 `system_design/01_fundamentals/tutorial.md` or
 `staff_system_design/02_design_twitter_feed/tutorial.md` — both end with a full section in
-this style.
+this style. For mode C, read `system_design/prerequisite_concepts/04_cpu_vs_gpu.md` in
+full — it demonstrates the problem→mechanism→practical-impact structure, a worked example
+with real numbers, heavy cross-referencing, and the closing section together.
 
 ## Procedure
 
@@ -151,3 +204,7 @@ this style.
   doc.
 - Don't reuse the worked example's exact wording in a real file — it's for calibrating
   tone/depth only.
+- Don't hand-guess a heading anchor for a cross-reference link (mode C especially) — verify
+  it against a strict mkdocs build or the built HTML's `id="..."` before committing it;
+  a wrong anchor still looks fine in the raw markdown and only fails silently in the
+  rendered site.

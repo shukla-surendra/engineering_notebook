@@ -113,4 +113,4 @@ review steps.
 
 ---
 
-**Previous:** [12. DR Failover Took 8x Longer Than Planned](12_dr_failover_slow.md)  |  **Next:** [Back to System Design Overview](../README.md)
+**Previous:** [12. DR Failover Took 8x Longer Than Planned](12_dr_failover_slow.md)  |  **Next:** [14. GPU Sitting Idle 75% of the Time](14_gpu_underutilized_sequential_pipeline.md)

@@ -125,6 +125,12 @@ system" — a strong deep-dive target.
    actually check first when a drift alert fires (which features, which segments, whether
    it correlates with a known upstream data source change)?
 
+> **For the full picture of this loop** — including why the retrained candidate must pass
+> through the exact same gates as any other candidate, a worked example of a shared
+> metric contract across every stage, and where automation should and shouldn't replace a
+> human sign-off — see [Designing Promotion and Observability as One Closed-Loop
+> System](closed_loop_promotion_and_monitoring.md).
+
 ## Trade-offs
 
 | Decision | Option A | Option B | When to pick which |

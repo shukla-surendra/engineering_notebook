@@ -276,4 +276,4 @@ something you could have derived yourself from the hardware up.
 
 ---
 
-**Previous:** [Part 3: Communication & Resilience](03_communication_and_resilience.md)  |  **Next:** [0. The Interview Framework](../00_interview_framework/tutorial.md)
+**Previous:** [Part 3: Communication & Resilience](03_communication_and_resilience.md)  |  **Next:** [Part 5: Choosing a GPU & Code Optimization](05_gpu_selection_and_code_optimization.md)

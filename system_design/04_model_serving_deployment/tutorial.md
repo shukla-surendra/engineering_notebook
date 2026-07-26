@@ -102,6 +102,12 @@ roll back**, since a human watching a dashboard doesn't scale and doesn't work a
    100% v1), not a redeploy — this is only possible because the model registry (previous
    tutorial) keeps the previous version's artifact readily servable.
 
+> **This canary loop is one stage of a larger closed loop, not a standalone mechanism** —
+> see [Designing Promotion and Observability as One Closed-Loop
+> System](../05_observability_drift/closed_loop_promotion_and_monitoring.md) for how the
+> same guardrail metrics checked here should be the same ones used at every other
+> promotion stage and in continuous post-promotion monitoring.
+
 ## Trade-offs
 
 | Decision | Option A | Option B | When to pick which |

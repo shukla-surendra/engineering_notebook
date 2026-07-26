@@ -11,10 +11,11 @@ original plan — plus a bank of scenario-debugging problems.
 If terms like **p99 latency**, **the nines**, **sharding vs. replication**, or
 **idempotency** aren't things you could explain from first principles yet, start with the
 **[Prerequisite Concepts](prerequisite_concepts/01_performance_and_scale.md)** primer
-(four short parts: [Performance & Scale](prerequisite_concepts/01_performance_and_scale.md),
+(five short parts: [Performance & Scale](prerequisite_concepts/01_performance_and_scale.md),
 [Data & Consistency](prerequisite_concepts/02_data_and_consistency.md),
 [Communication & Resilience](prerequisite_concepts/03_communication_and_resilience.md),
-[CPU vs. GPU](prerequisite_concepts/04_cpu_vs_gpu.md))
+[CPU vs. GPU](prerequisite_concepts/04_cpu_vs_gpu.md),
+[Choosing a GPU & Code Optimization](prerequisite_concepts/05_gpu_selection_and_code_optimization.md))
 before the Interview Framework below. It's the shared vocabulary every tutorial in this
 section — and in the [Distributed Systems Design track](http://127.0.0.1:8002/) — assumes
 without re-explaining.
@@ -27,7 +28,7 @@ without re-explaining.
 | 3-4 | [High-Throughput Ingestion Pipelines](02_ingestion_pipeline/tutorial.md) (+ [deep-dive: Lambda vs. EKS cost/speed](02_ingestion_pipeline/serverless_vs_eks_receipt_processing.md)) | Your production-style pipeline: Step Functions/Lambda/S3/Databricks |
 | 5-6 | [Feature Store + Model Promotion](03_feature_store_model_promotion/tutorial.md) (+ [deep-dive: is it worth it when reuse is low?](03_feature_store_model_promotion/is_a_feature_store_worth_it.md)) | Your production ML platform: dev/qa/stage/prod/ml-prod, Unity Catalog, MLflow, Feast |
 | 7-8 | [Model Serving & Deployment](04_model_serving_deployment/tutorial.md) | Extending a production serving layer with canary/shadow, KServe/Seldon |
-| 9-10 | [ML/LLM Observability & Drift](05_observability_drift/tutorial.md) | Generalizing a production drift/monitoring setup; Prometheus/Grafana + Evidently/Arize |
+| 9-10 | [ML/LLM Observability & Drift](05_observability_drift/tutorial.md) (+ [deep-dive: promotion and observability as one closed-loop system](05_observability_drift/closed_loop_promotion_and_monitoring.md)) | Generalizing a production drift/monitoring setup; Prometheus/Grafana + Evidently/Arize |
 | 11-12 | [RAG + LLM-Serving at Scale](06_rag_llm_serving_at_scale/tutorial.md) | Your Track C project: vector DB, LangChain, vLLM/Triton serving |
 
 Read **[00 — The Interview Framework](00_interview_framework/tutorial.md)** before any of
