@@ -176,4 +176,4 @@ prompting you to attach your own production-system specifics → practice questi
 
 ---
 
-**Previous:** [Prerequisite Concepts, Part 6: Mechanical Sympathy & the Physics of Latency](../prerequisite_concepts/06_mechanical_sympathy_and_physics_of_latency.md)  |  **Next:** [1. Fundamentals & Building Blocks](../01_fundamentals/tutorial.md)
+**Previous:** [Prerequisite Concepts, Part 7: Saturation, Amdahl's Law & Hedged Requests](../prerequisite_concepts/07_saturation_amdahls_law_and_hedged_requests.md)  |  **Next:** [1. Fundamentals & Building Blocks](../01_fundamentals/tutorial.md)

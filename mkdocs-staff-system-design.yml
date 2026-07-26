@@ -44,17 +44,20 @@ markdown_extensions:
 
 nav:
   - Overview: README.md
-  - Algorithms & Data Structures: http://127.0.0.1:8000/
-  - ML Systems Design: http://127.0.0.1:8001/
-  - Security Engineering: http://127.0.0.1:8003/
-  - 0. The Staff-Level Signal: 00_staff_level_signal/tutorial.md
-  - 1. Distributed Systems Foundations: 01_distributed_systems_foundations/tutorial.md
-  - "2. Design Twitter/X Feed": 02_design_twitter_feed/tutorial.md
-  - "3. Design a Chat System": 03_design_chat_system/tutorial.md
-  - "4. Design Ride-Hailing Dispatch": 04_design_ride_hailing_dispatch/tutorial.md
-  - "5. Design a Distributed Cache": 05_design_distributed_cache/tutorial.md
-  - "6. Design a Distributed Message Queue": 06_design_distributed_message_queue/tutorial.md
-  - "7. Design a Rate Limiter at Global Scale": 07_design_rate_limiter_at_scale/tutorial.md
-  - "8. Design a Video Streaming Service": 08_design_video_streaming/tutorial.md
-  - "9. Design a Web Crawler": 09_design_web_crawler/tutorial.md
-  - "10. Design Search Autocomplete": 10_design_search_autocomplete/tutorial.md
+  - Other Tracks:
+      - Algorithms & Data Structures: http://127.0.0.1:8000/
+      - ML Systems Design: http://127.0.0.1:8001/
+      - Security Engineering: http://127.0.0.1:8003/
+  - Foundations:
+      - 0. The Staff-Level Signal: 00_staff_level_signal/tutorial.md
+      - 1. Distributed Systems Foundations: 01_distributed_systems_foundations/tutorial.md
+  - Case Studies:
+      - "2. Design Twitter/X Feed": 02_design_twitter_feed/tutorial.md
+      - "3. Design a Chat System": 03_design_chat_system/tutorial.md
+      - "4. Design Ride-Hailing Dispatch": 04_design_ride_hailing_dispatch/tutorial.md
+      - "5. Design a Distributed Cache": 05_design_distributed_cache/tutorial.md
+      - "6. Design a Distributed Message Queue": 06_design_distributed_message_queue/tutorial.md
+      - "7. Design a Rate Limiter at Global Scale": 07_design_rate_limiter_at_scale/tutorial.md
+      - "8. Design a Video Streaming Service": 08_design_video_streaming/tutorial.md
+      - "9. Design a Web Crawler": 09_design_web_crawler/tutorial.md
+      - "10. Design Search Autocomplete": 10_design_search_autocomplete/tutorial.md

@@ -1,4 +1,5 @@
 site-*
+local_notes/*
 site-system-design
 site-staff-system-design
 __pycache__/

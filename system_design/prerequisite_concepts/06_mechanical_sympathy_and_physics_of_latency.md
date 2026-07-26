@@ -358,4 +358,4 @@ complexity, or consistency — the last of which is exactly the terrain
 
 ---
 
-**Previous:** [Part 5: Choosing a GPU & Code Optimization](05_gpu_selection_and_code_optimization.md)  |  **Next:** [0. The Interview Framework](../00_interview_framework/tutorial.md)
+**Previous:** [Part 5: Choosing a GPU & Code Optimization](05_gpu_selection_and_code_optimization.md)  |  **Next:** [Part 7: Saturation, Amdahl's Law & Hedged Requests](07_saturation_amdahls_law_and_hedged_requests.md)
