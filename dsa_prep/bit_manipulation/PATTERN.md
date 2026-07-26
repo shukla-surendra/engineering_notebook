@@ -83,3 +83,35 @@ already known from earlier in the same table — this is 1-D DP (see
 O(1) or O(number of bits) time — effectively constant for fixed-width integers — and O(1)
 space, which is usually the entire reason to reach for a bit trick over a hash-set/array
 approach that would cost O(n) space instead.
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Recognition framing (how you'd explain *when* this pattern applies, before any
+  specific problem):** "I listen for language like 'every element appears twice except
+  one,' 'count set bits,' or 'O(1) space required' — those are the tells that a bitwise
+  identity might replace a hash set. I'd say this out loud early, since it reframes the
+  problem from 'find the trick' to 'match the phrasing to a known identity.'"
+- **Mental-model framing (good for explaining why these tricks work, not just that they
+  do):** "Every trick here boils down to one of three things: cancellation (XOR undoes
+  pairs), subtraction-based bit clearing (`n & (n-1)`), or bit-by-bit extraction into a
+  new value. I'd name which of the three a new problem needs before writing any code —
+  it's a much smaller search space than 'try things.'"
+- **Generalization framing (good for signaling you see bit tricks as one tool among
+  several, not a silver bullet):** "I'd point out that Counting Bits isn't purely a bit
+  trick — it's 1-D DP where the recurrence happens to come from a bitwise observation. That
+  matters because it shows these categories compose rather than being mutually exclusive."
+
+### Vocabulary Builder
+
+- **identity** (n.) — a rule that's always true by definition (e.g. `x ^ x = 0`); precise
+  word for what these tricks actually are, as opposed to heuristics.
+- **two's complement** (n.) — the standard representation for signed integers; relevant
+  whenever a problem's bitwise semantics depend on sign, which Python doesn't handle the
+  same way fixed-width languages do.
+- **"…trades an O(n) structure for an O(1) identity"** — a reusable phrase for justifying
+  any bit-trick optimization over a hash-set or array-based approach.
+- **fixed-width** (adj.) — bound to a specific number of bits (commonly 32); calling this
+  out explains why some solutions need an explicit masking step in Python, which has
+  arbitrary-precision integers by default.

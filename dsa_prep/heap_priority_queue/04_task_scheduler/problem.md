@@ -46,3 +46,37 @@ Runnable, with sample test cases at the bottom (`python3 heap_priority_queue/04_
 ```python
 --8<-- "heap_priority_queue/04_task_scheduler/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Simulation-first framing (the safer default under interview pressure):** "I'd actually
+  reach for the priority-queue simulation first, not the closed-form formula — greedily run
+  the most frequent available task each round, respecting cooldown. It's slower to derive
+  the formula live and easier to get an off-by-one wrong in front of someone watching, so I
+  build the correct-but-simpler version first and mention the formula as an optimization."
+- **Derivation framing (good if asked to explain the closed-form):** "The crux of it is
+  that the most frequent task defines the schedule's shape: it forces `max_freq - 1` full
+  cooldown chunks of size `n+1`, plus one final partial chunk. Everything else either fills
+  idle slots inside those chunks for free, or — if there are enough distinct tasks — there's
+  no idling at all, which is why the answer is a `max` against `len(tasks)`."
+- **Generalization framing (good for tying it back to the heap family):** "This is greedy
+  scheduling by frequency under a cooldown constraint — I'd name it as a heap-family problem
+  because the simulation approach is the same 'always take the current max' idea as Last
+  Stone Weight, just with an added constraint on *when* something is eligible to be taken
+  again."
+
+### Vocabulary Builder
+
+- **closed-form** (adj.) — a formula computed directly from a few summary statistics
+  (here, `max_freq` and `max_count`) rather than by simulating the process step by step.
+- **idle slot** (n. phrase) — a scheduled gap where no task runs because everything
+  eligible is still on cooldown; the formula's whole job is counting how many of these are
+  unavoidable.
+- **"…is easier to get an off-by-one wrong in front of someone watching"** — an honest,
+  reusable phrase for explaining why you'd default to the simpler-but-slower approach in a
+  live setting even when you know a faster one exists.
+- **cooldown constraint** (n. phrase) — a rule that an action can't repeat until some
+  amount of time/steps has passed; naming the constraint explicitly clarifies what makes
+  this different from ordinary greedy scheduling.

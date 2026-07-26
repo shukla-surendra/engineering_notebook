@@ -42,3 +42,33 @@ Runnable, with sample test cases at the bottom (`python3 linked_list/04_remove_n
 ```python
 --8<-- "linked_list/04_remove_nth_node_from_end/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Brute-force-first framing (the default opening move):** "The naive approach is two
+  passes: count the list's length first, then walk again to the `(length - n)`-th node.
+  That's still O(n), but it reads the list twice and the interviewer usually wants one
+  pass — so I'd immediately pivot to the gap-pointer trick."
+- **Invariant framing (good for explaining the two-pointer gap precisely):** "The
+  invariant is that `fast` and `slow` stay exactly `n` nodes apart once the initial
+  head-start finishes. When `fast` hits the last node, `slow` is guaranteed to be sitting
+  right before the node I need to remove — that fixed gap is doing all the work."
+- **Generalization framing (good for signaling pattern recognition):** "This is the
+  'two pointers with a fixed gap' primitive from the pointer-manipulation family, and
+  pairing it with a dummy head is the standard fix for 'what if I'm removing the head
+  itself' — I'd name both pieces explicitly."
+
+### Vocabulary Builder
+
+- **one-pass** (adj. phrase) — an algorithm that reads its input exactly once; worth
+  stating explicitly since it's often the actual ask, not just an optimization.
+- **sentinel node** (n. phrase) — a dummy node preceding `head` that absorbs the
+  "removing the first node" edge case so the main loop needs no special-casing.
+- **"the naive approach breaks down when…"** — a reusable phrase for pivoting from a
+  correct-but-suboptimal solution to the constraint that forces a better one (here: "when
+  you're not allowed a second pass").
+- **off-by-one** (n. phrase) — an error from advancing a pointer one step too many or too
+  few; worth naming when you double-check whether `fast` should start `n` or `n+1` steps
+  ahead.

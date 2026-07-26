@@ -46,6 +46,11 @@ nav:
   - Overview: README.md
   - Algorithms & Data Structures: http://127.0.0.1:8000/
   - Distributed Systems Design: http://127.0.0.1:8002/
+  - Prerequisite Concepts:
+      - "1. Performance & Scale": prerequisite_concepts/01_performance_and_scale.md
+      - "2. Data & Consistency": prerequisite_concepts/02_data_and_consistency.md
+      - "3. Communication & Resilience": prerequisite_concepts/03_communication_and_resilience.md
+      - "4. CPU vs. GPU": prerequisite_concepts/04_cpu_vs_gpu.md
   - 0. Interview Framework: 00_interview_framework/tutorial.md
   - 1. Fundamentals & Building Blocks: 01_fundamentals/tutorial.md
   - 2. High-Throughput Ingestion Pipelines:

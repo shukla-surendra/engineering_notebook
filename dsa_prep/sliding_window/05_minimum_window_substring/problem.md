@@ -42,3 +42,36 @@ Runnable, with sample test cases at the bottom (`python3 sliding_window/05_minim
 ```python
 --8<-- "sliding_window/05_minimum_window_substring/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Brute-force-first framing (the default opening move):** "The brute force checks every
+  substring of `s` and verifies it contains all of `t` — O(n² · m) or worse depending on
+  the verification cost. I'd name that, then pivot to sliding window since 'contains all
+  of `t`' is a property that changes predictably as the window grows or shrinks by one
+  character."
+- **Invariant framing (good for explaining the have/need mechanic precisely):** "The
+  invariant is: `have` always equals the number of distinct required characters whose
+  count in the window currently meets or exceeds what `need` demands. That turns an O(26)
+  or O(distinct chars) recheck into an O(1) increment/decrement — I only update `have`
+  when a count crosses a threshold, not on every single character."
+- **Generalization framing (good for signaling pattern recognition):** "This is the
+  'grow until valid, then shrink to minimize' shape of sliding window — the inverse of
+  the more common 'grow, and shrink while invalid' template — I'd name both shapes to
+  show I know this is a variant, not a special case."
+
+### Vocabulary Builder
+
+- **have/need counters** (n. phrase) — a pair of trackers comparing how many required
+  conditions are currently satisfied versus how many are needed; turns a full-map
+  comparison into an O(1) check.
+- **threshold** (n.) — the exact count a character must reach to satisfy its requirement;
+  crossing it is what should trigger updating `have`, not the raw counts changing.
+- **"grow until valid, then shrink to minimize"** — a reusable phrase distinguishing this
+  window shape from the more common "grow, shrink while invalid" template used elsewhere
+  in this folder.
+- **greedily** (adv.) — making the locally best choice at each step without
+  backtracking; the left-edge shrink here is greedy — it keeps removing characters as
+  long as the window stays valid, trusting that's optimal.

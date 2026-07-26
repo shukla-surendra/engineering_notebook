@@ -143,6 +143,38 @@ boundaries is itself the staff-level skill from the
 - Design "surge pricing" as a subsystem, focusing on consistency across concurrent riders.
 - Extend this design to support scheduled (book-ahead) rides alongside on-demand ones.
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Physical-space framing (the default for what makes this question distinctive):** "Most
+  case studies shard by an abstract key; this one shards by physical space, which is a
+  genuinely different indexing problem — a naive distance scan is infeasible at millions of
+  concurrent drivers, so the geospatial index isn't an optimization, it's the whole
+  design."
+- **Edge-case-first framing (good for demonstrating staff-level thoroughness):** "I'd name
+  the cell-boundary problem before being asked — two points can be physically close but
+  fall on opposite sides of a geohash boundary, so any real query has to check neighboring
+  cells too, not just the rider's own cell."
+- **Deliberate-trade-off framing (good for the batch-vs-greedy matching discussion):**
+  "I'd frame batch matching as a deliberate trade-off, not a default — slightly higher
+  latency per request in exchange for meaningfully better fleet-wide efficiency, which is
+  the kind of call a staff answer surfaces on its own rather than only greedy-matching and
+  stopping."
+
+### Vocabulary Builder
+
+- **geohash** (n.) — an encoding that maps latitude/longitude into a string where nearby
+  locations share longer common prefixes, enabling cheap proximity lookups.
+- **optimistic lock** (n. phrase) — briefly reserving a resource (a candidate driver)
+  during a race-prone operation, released or expired if the operation doesn't complete.
+- **hot-spotting** (n.) — a geospatial version of a hot key/hot shard: a sudden, uneven
+  concentration of load in one region (a concert letting out) that a uniform-capacity
+  index isn't built to absorb.
+- **"…is the kind of decision that in reality would involve a product conversation, not a
+  purely technical call…"** — a fluent way to flag that a trade-off has a business owner,
+  not just an engineering answer, without dodging your own recommendation.
+
 ---
 
 **Previous:** [3. Design a Chat System](../03_design_chat_system/tutorial.md)  |  **Next:** [5. Design a Distributed Cache](../05_design_distributed_cache/tutorial.md)

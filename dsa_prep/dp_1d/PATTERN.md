@@ -93,3 +93,37 @@ return prev1
 Usually O(n) time and O(n) space (or O(1) with rolling-variable optimization) for 1-D DP —
 this is the entire value proposition versus the exponential-time naive recursion it
 replaces.
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Recognition framing (how you'd explain *when* to reach for 1-D DP, before any specific
+  problem):** "I listen for 'count the ways,' 'find the min/max,' or 'is it possible' where
+  the optimal choice at a step depends on earlier choices, not just local information —
+  that dependency is what rules out a pure greedy or two-pointer approach and rules in DP."
+- **Mental-model framing (good for explaining the derivation process itself, not a specific
+  recurrence):** "My process is always the same order: define the state in words first,
+  derive the recurrence from 'what are my choices here,' identify base cases, decide
+  bottom-up vs. top-down, and only then optimize space. I'd narrate that order explicitly —
+  it's the difference between deriving a DP live and guessing at one."
+- **Generalization framing (good for signaling you see the variations as one family):** "I'd
+  point out that 'include/exclude,' 'unbounded reuse,' and 'reachability over prefixes' are
+  all the same underlying idea — combine an optimal answer at `i` from optimal answers at
+  smaller indices — just with different combination rules. Naming the shared skeleton is
+  what lets me adapt fast to a DP variant I haven't seen before."
+
+### Vocabulary Builder
+
+- **optimal substructure** (n. phrase) — the property that an optimal solution to the whole
+  problem is built from optimal solutions to its subproblems; one of the two formal
+  preconditions (with overlapping subproblems) for DP to apply at all.
+- **state** (n.) — the minimal information needed to describe a subproblem (here, a single
+  index `i`); defining it precisely in words is the first and most important step, before
+  any recurrence gets written.
+- **"…the crux of it is defining the state precisely before touching the recurrence"** — a
+  reusable phrase for opening any DP explanation, emphasizing process over memorized
+  formulas.
+- **top-down / bottom-up** (adj. phrases) — recursion-with-memoization versus iterative
+  table-filling; two implementations of the same recurrence, worth naming which one you're
+  choosing and why (bottom-up avoids recursion-depth limits).

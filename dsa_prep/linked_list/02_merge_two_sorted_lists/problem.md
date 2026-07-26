@@ -39,3 +39,34 @@ Runnable, with sample test cases at the bottom (`python3 linked_list/02_merge_tw
 ```python
 --8<-- "linked_list/02_merge_two_sorted_lists/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Brute-force-first framing (the default opening move):** "The naive route is to
+  collect both lists' values, sort the combined array, and build a new list from it —
+  O((n+m) log(n+m)). I'd point out that's wasteful because both inputs are already
+  sorted; a linear merge exploits that instead of throwing the ordering away."
+- **Invariant framing (good for explaining the dummy-head merge precisely):** "The
+  invariant is: everything already attached to `dummy` is fully sorted and final. Each
+  step I just compare the two current heads and attach the smaller — I never have to
+  revisit a decision, which is what makes the single pass valid."
+- **Generalization framing (good for signaling pattern recognition):** "This two-pointer
+  merge is the primitive Merge k Sorted Lists scales up with a heap, and it's the same
+  merge step from merge sort — I'd name that connection to show I see the family, not
+  just this instance."
+
+### Vocabulary Builder
+
+- **sentinel node** (n. phrase) — a placeholder node (here, `dummy`) that simplifies edge
+  cases by giving you something to attach to before you know the real head.
+  *"Using a sentinel node means I never special-case 'what if the result starts with
+  list2.'"*
+- **splice** (v.) — to join or interleave two sequences by relinking pointers rather than
+  copying values.
+- **"trades a full sort for a linear scan"** — a compact phrase for justifying why
+  exploiting existing sortedness beats a generic sort-based approach.
+- **exhausted** (adj.) — describing a pointer/list that has been fully consumed; useful
+  for narrating the loop-termination condition ("once one list is exhausted, I just
+  attach the remainder of the other").

@@ -40,3 +40,31 @@ Runnable, with sample test cases at the bottom (`python3 arrays_hashing/04_group
 ```python
 --8<-- "arrays_hashing/04_group_anagrams/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Canonical-key framing (the core idea to state first):** "The question is really 'which
+  strings collapse to the same identity once you ignore ordering' — so I need a canonical
+  form that's identical for every anagram and different for everything else. `sorted(word)`
+  is the obvious canonical key; a 26-length count tuple is the faster one."
+- **Complexity-refinement framing (shows you iterate on your own answer):** "I'd start with
+  sorting each word as the key — simple, O(k log k) per word — then say: since I only care
+  about letter counts, not order, I can replace the sort with a count signature and drop the
+  log factor, giving O(k) per word instead."
+- **Generalization framing (names the family):** "This is 'bucket by a derived key,' the
+  same shape as grouping by any computed property — the only thing that changes between
+  problems in this family is what `derive_canonical_key` actually computes."
+
+### Vocabulary Builder
+
+- **canonical form** (n. phrase) — a standardized representation such that equivalent
+  inputs map to the identical output; the whole trick here is picking the right one.
+  *"Sorted letters is one canonical form for anagrams; a count signature is another."*
+- **hashable** (adj.) — usable as a dict/set key, meaning immutable and consistently
+  hashable; a `tuple` of counts is hashable, a `list` is not.
+- **"the crux of it is…"** — useful for pivoting straight from problem restatement to your
+  actual insight (here: choosing the key function) without meandering.
+- **signature** (n.) — a compact fingerprint derived from an object that's sufficient to
+  test equivalence, without comparing the full objects directly.

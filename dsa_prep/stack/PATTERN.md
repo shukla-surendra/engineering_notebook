@@ -78,3 +78,39 @@ pointer.
 
 O(n) time (each element pushed/popped a bounded number of times) and O(n) space
 worst-case (e.g., a fully nested structure or a strictly monotonic input array).
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Recognition framing (how you'd name the pattern before writing code):** "My trigger
+  for a stack is 'the most recently seen unresolved thing is exactly what I need next' —
+  nesting, expression evaluation, or a nested loop where the inner loop is scanning
+  forward/backward for the first element satisfying a comparison. I'd say that
+  classification out loud before picking a data structure."
+- **Mental-model framing (good for explaining the technique itself, not one instance of
+  it):** "The mental model is LIFO mirrors resolution order: whatever opened most
+  recently must close first, whatever's waiting longest for 'the next bigger thing' gets
+  resolved as soon as it appears. A stack isn't just a container here — its ordering
+  *is* the algorithm's logic."
+- **Generalization framing (good for showing you can extend the pattern to a new
+  variant):** "Once I recognize 'stack,' the next question is which of three shapes it
+  is: matching/validation, monotonic (next greater/smaller), or evaluator (operands and
+  operators). I'd walk through those three explicitly to classify an unfamiliar problem
+  rather than guessing at an implementation."
+
+### Vocabulary Builder
+
+- **LIFO** (n., last-in-first-out) — the access discipline a stack enforces; the reason a
+  stack (not a queue) matches nesting and 'most recent unresolved thing first' problems.
+- **monotonic stack** (n. phrase) — a stack kept in strictly increasing or decreasing
+  order, specialized for answering 'next greater/smaller element' queries in amortized
+  O(n) instead of a naive O(n²) nested scan.
+- **amortized** (adj.) — a cost measured over the algorithm's entire run; central to why
+  a monotonic stack's inner `while` loop doesn't break the O(n) bound — every element is
+  pushed once, popped at most once, total.
+- **"the last unresolved thing is exactly what I need next"** — a reusable diagnostic
+  phrase for recognizing when a stack applies, before deciding which of the three
+  sub-patterns (matching, monotonic, evaluator) fits.
+- **sentinel/guard check** (n. phrase) — a check like `if not stack` before popping or
+  peeking, to fail gracefully on an unmatched closer instead of crashing.

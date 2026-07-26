@@ -42,3 +42,35 @@ Runnable, with sample test cases at the bottom (`python3 dp_2d/02_longest_common
 ```python
 --8<-- "dp_2d/02_longest_common_subsequence/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Brute-force-first framing (the default opening move):** "The naive recursion tries, at
+  each position, either matching the two current characters or skipping a character from
+  one string — that branches into roughly 2^n calls. I'd name that cost out loud, then say
+  the overlapping subproblems (same `(i, j)` pair reached multiple ways) are exactly what
+  a `dp[i][j]` table eliminates."
+- **Invariant framing (good for justifying the two cases precisely):** "`dp[i][j]` means
+  'LCS length using only the first `i` characters of text1 and first `j` of text2.' When
+  the last characters match, I extend the diagonal answer by one; when they don't, the
+  invariant forces me to take the best of dropping a character from either side — I can't
+  skip that comparison, because I don't yet know which string 'wastes' the mismatched char."
+- **Generalization framing (good for showing this isn't memorized):** "This is the two-string
+  comparison DP template — `dp[i][j]` over prefixes, with a match-diagonal case and a
+  combine-alternatives case. Edit Distance is the same table shape with a different combine
+  function, which is the detail I'd point to if asked how the two problems relate."
+
+### Vocabulary Builder
+
+- **subsequence** (n.) — elements in relative order but not necessarily contiguous;
+  contrast with **substring**, which must be contiguous — worth stating explicitly since
+  interviewers sometimes probe this distinction directly.
+- **prefix** (n.) — the first `i` characters of a string; the natural sub-problem boundary
+  for `dp[i][j]` in two-string DP.
+- **overlapping subproblems** (n. phrase) — when a recursive call re-derives the same
+  sub-answer along multiple recursion paths; the property that makes memoization pay off.
+- **"…same template with a different combine function"** — a reusable phrase for
+  connecting two DP problems that look different on the surface but share a recurrence
+  shape (here, LCS and Edit Distance).

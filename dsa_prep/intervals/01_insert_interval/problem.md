@@ -44,3 +44,37 @@ Runnable, with sample test cases at the bottom (`python3 intervals/01_insert_int
 ```python
 --8<-- "intervals/01_insert_interval/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Brute-force-first framing (the default opening move):** "The brute force appends
+  `newInterval` to the list and re-runs a general merge-intervals sort — O(n log n). The
+  crux of the better approach is that the input is *already* sorted, so re-sorting throws
+  away information I already have; a single linear pass exploiting that existing order gets
+  this to O(n)."
+- **Phase framing (good for narrating the three-way split cleanly):** "I think of the scan
+  as three phases in order: intervals entirely before the new one, intervals overlapping
+  it, and intervals entirely after. I'd say that structure out loud before coding, since it
+  turns a fiddly merge into three simple, sequential loops instead of one loop with
+  tangled conditionals."
+- **Generalization framing (good for connecting to the family):** "This is a variant of
+  interval scheduling that exploits an already-sorted, non-overlapping precondition — I'd
+  name that precondition explicitly, since it's what distinguishes this from Merge
+  Intervals, which can't assume the input arrives pre-sorted."
+
+### Vocabulary Builder
+
+- **precondition** (n.) — an assumption the algorithm relies on being true before it runs
+  (here, that `intervals` is already sorted and non-overlapping); naming it explicitly
+  clarifies why this problem doesn't need its own sort step.
+- **"…exploiting existing structure"** — a reusable phrase for justifying why an approach
+  that looks specialized is actually a legitimate optimization: it's using information
+  (sortedness) the problem statement already hands you, not a hack.
+- **phase** (n.) — a distinct stage of a single pass with its own simple rule; describing
+  an algorithm as having phases is a clean way to narrate multi-part linear scans without
+  the logic sounding tangled.
+- **in-place** (adj.) — modifying a structure without allocating a new one; worth
+  contrasting with this solution's approach of building a fresh result list, and explaining
+  why in-place insertion into an array is awkward here (shifting costs).

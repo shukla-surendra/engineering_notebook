@@ -91,3 +91,38 @@ exactly what enforces "each item usable at most once."
 
 O(n·m) time and space for the full table; often reducible to O(min(n,m)) space with a
 rolling array, since most recurrences only look at the previous row.
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Recognition framing (how you'd name the pattern out loud, fast):** "The moment I
+  notice I need *two* indices to describe 'which subproblem am I solving' — a position in
+  each of two strings, or a row and a column in a grid — I say '2-D DP' and reach for a
+  `dp[i][j]` table instead of trying to force a 1-D array to do double duty."
+- **Mental-model framing (good for explaining the unifying structure across variants):**
+  "I think of 2-D DP as three canonical shapes: two-string comparison (diagonal-extend on
+  match, combine-alternatives on mismatch), grid traversal (combine the cell above and the
+  cell to the left), and item-by-item knapsack (skip-or-take, reading only the previous
+  row). Naming which shape I'm in tells me the recurrence before I've derived it."
+- **Generalization/teaching framing (good for demonstrating depth beyond one problem):**
+  "The deepest insight isn't any single recurrence — it's that Longest Common Subsequence
+  and Edit Distance are *literally the same template* with different `extend`/`combine`
+  functions. I'd walk an interviewer through that unification to show I understand the
+  family, not just two isolated solutions I memorized."
+
+### Vocabulary Builder
+
+- **state space** (n.) — the set of all `(i, j)` pairs the DP table could represent;
+  thinking in terms of state space is what makes "how many indices do I need" a
+  mechanical recognition question rather than a guess.
+- **memoization vs. tabulation** (n. phrase) — top-down caching of recursive calls
+  (memoization) versus bottom-up iterative filling of the table (tabulation); both compute
+  the same values, but tabulation avoids recursion-depth limits and is usually what you'd
+  write once the recurrence is nailed down.
+- **monotonic** (adj.) — non-decreasing or non-increasing as an index advances; not every
+  2-D DP table is monotonic, but checking whether one is can unlock further space
+  optimizations (or rule out a proposed shortcut).
+- **"…read from the previous row only"** — the diagnostic phrase for bounded/bookkeeping
+  correctness: if your recurrence for row `i` never touches row `i` itself, you've encoded
+  "used at most once"; if it does, you've encoded "reusable."

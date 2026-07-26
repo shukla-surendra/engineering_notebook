@@ -79,6 +79,34 @@ almost never free, and the accuracy-vs-latency/cost trade-off (from the
 monitored gate in the promotion process, not an implicit assumption that "same
 architecture family" means "same cost."
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **No-free-lunch framing (the default for this scenario):** "'Slightly better accuracy'
+  is never free — I'd assume there's a cost or latency trade-off behind any accuracy gain
+  until proven otherwise, and treat 'same architecture family' as a claim to verify, not a
+  guarantee of same cost profile."
+- **Missing-gate framing (good for explaining why nobody caught it):** "This isn't really a
+  technical mystery, it's a process gap — cost wasn't a required guardrail in the promotion
+  pipeline, so a model could ship on accuracy alone. The fix is adding the gate, not just
+  explaining this one incident."
+- **Numbers-over-labels framing (good for the diagnostic approach):** "I wouldn't trust
+  'same architecture family' as a proxy for 'same cost' — I'd compare actual parameter
+  count, FLOPs per inference, and token/feature count directly before concluding
+  anything."
+
+### Vocabulary Builder
+
+- **proxy** (n.) — an indirect stand-in for what you actually want to measure, worth
+  distrusting when the real number is available. *"'Same architecture family' is a proxy
+  for cost, and a weak one."*
+- **distillation** (n.) — training a smaller model to approximate a larger one's behavior,
+  a lever for recovering efficiency without a full revert.
+- **"…isn't routine unless it's explicitly checked as part of the routine"** — a fluent,
+  quotable way to argue that calling something "routine" doesn't exempt it from a specific
+  check; the check is what makes it safely routine.
+
 ---
 
 **Previous:** [10. Reconstructing Model Lineage for an Audit](10_audit_lineage_reconstruction.md)  |  **Next:** [12. DR Failover Took 8x Longer Than Planned](12_dr_failover_slow.md)

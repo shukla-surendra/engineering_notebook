@@ -43,3 +43,38 @@ Runnable, with sample test cases at the bottom (`python3 intervals/05_meeting_ro
 ```python
 --8<-- "intervals/05_meeting_rooms_ii/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Brute-force-first framing (the default opening move):** "The brute force checks, for
+  each meeting, how many others it overlaps with — O(n²). The reframe that unlocks the
+  better solution is realizing this isn't really about pairwise overlap at all — it's
+  asking for the *peak* number of meetings active at the same instant, which is a
+  concurrency question, not a comparison question."
+- **Sweep-line framing (good for explaining the heap mechanically):** "I sort by start
+  time and sweep through, using a min-heap of end times to represent 'meetings currently in
+  progress.' Whenever the earliest-ending active meeting has already finished by the time
+  the next one starts, I free that room by popping it. The heap's maximum size across the
+  whole sweep — not its final size — is the answer."
+- **Generalization framing (good for connecting to the broader family):** "This is a sweep-
+  line / heap-of-active-intervals pattern — I'd name it as the 'concurrent usage' variant of
+  interval scheduling, distinct from the sort-by-start (any overlap) and sort-by-end
+  (maximum compatible subset) variants, since it's answering a fundamentally different
+  question: how many, not whether."
+
+### Vocabulary Builder
+
+- **sweep line** (n. phrase) — an algorithmic technique that processes events (starts and
+  ends) in time order while maintaining running state; the heap here is the running state
+  of "currently active" meetings as the sweep progresses.
+- **concurrency** (n.) — multiple things being active/in-progress at the same time; this
+  problem is fundamentally a concurrency question dressed up as a scheduling one.
+- **peak / maximum concurrent usage** (n. phrase) — the largest number of overlapping
+  intervals at any single instant; the actual quantity being computed, worth naming
+  explicitly since it clarifies why you track the heap's *maximum* size, not its size at
+  the end of the sweep.
+- **"…is a concurrency question, not a comparison question"** — a reusable phrase for
+  reframing a problem away from pairwise thinking (which suggests O(n²)) toward a
+  sweep/counting approach (which suggests O(n log n)).

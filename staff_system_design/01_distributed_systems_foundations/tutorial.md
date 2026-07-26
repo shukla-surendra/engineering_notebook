@@ -181,6 +181,39 @@ just one active region with a standby.
 - A payment operation spans three services. Walk through designing it as a Saga, including
   every compensating action.
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **When-not-if framing (the default for consensus/coordination questions):** "Consensus is
+  expensive — every write needs majority acknowledgment. The staff-level judgment call
+  isn't knowing Raft, it's recognizing that most of a system doesn't need it at all; you
+  want consensus at one small, critical coordination point, not everywhere."
+- **Restated-trade-off framing (good for 2PC vs. Saga):** "I'd frame the 2PC-versus-Saga
+  choice as consistency versus availability during partial failure, restated at the
+  application level — resolved by asking whether the operation can tolerate a visible,
+  temporary inconsistent state if it's provably going to resolve."
+- **Representability framing (good for CRDTs specifically):** "The actual skill isn't
+  knowing what a CRDT is, it's recognizing which part of a data model is CRDT-representable
+  — counters, presence indicators — versus which part fundamentally needs coordination,
+  like a money transfer that isn't commutative."
+
+### Vocabulary Builder
+
+- **causally precedes** (v. phrase) — one event happened strictly before another in a way
+  every observer would agree on, as opposed to two concurrent events with no inherent
+  order.
+- **compensating action** (n. phrase) — the explicit undo step for one stage of a Saga,
+  used when a later stage fails.
+- **commutative** (adj.) — an operation whose result doesn't depend on order; the
+  mathematical property that makes a CRDT's merge conflict-free.
+- **fencing token** (n. phrase) — a monotonically increasing number issued with a lock,
+  letting downstream resources reject stale requests from a client that no longer actually
+  holds the lock.
+- **"…is a genuine organizational answer to a technical problem"** — a fluent template for
+  arguing a piece of infrastructure (a service mesh) solves a people/process problem, not
+  just a technical one.
+
 ---
 
 **Previous:** [0. The Staff-Level Signal](../00_staff_level_signal/tutorial.md)  |  **Next:** [2. Design Twitter/X Feed](../02_design_twitter_feed/tutorial.md)

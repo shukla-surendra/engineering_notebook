@@ -83,3 +83,40 @@ every element is added to the window exactly once and removed at most once.
 
 O(n) or O(n · alphabet size) time, O(1) or O(alphabet size) space for fixed-alphabet
 problems (like uppercase letters), O(n) space if tracking arbitrary keys in a hash map.
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Recognition framing (how you'd name the pattern before writing code):** "My trigger
+  for sliding window is the word 'contiguous' plus a brute force that's obviously
+  O(n²) because it re-examines overlapping ranges. I'd say that recognition out loud
+  before touching the keyboard — it tells the interviewer I'm classifying the problem,
+  not pattern-matching on vocabulary alone."
+- **Mental-model framing (good for explaining the technique itself, not one instance of
+  it):** "The mental model is: most of the work done evaluating one window is still valid
+  for its neighbor, so instead of recomputing from scratch, I incrementally add what
+  enters and remove what leaves. The `left` pointer's monotonic forward-only movement is
+  what turns an apparently quadratic double loop into a linear amortized scan."
+- **Generalization framing (good for showing you can extend the pattern to a new
+  variant):** "Once I have the core loop memorized, every new problem is really just
+  answering two questions: what state do I track in the window, and what's the validity
+  condition? Fixed vs. variable size, and boolean vs. counting-based validity, are the
+  axes I'd walk through to classify a problem I haven't seen before."
+
+### Vocabulary Builder
+
+- **amortized** (adj.) — a cost measured over the entire run of an algorithm, not any one
+  step; central to why sliding window is O(n) despite an inner `while` loop that looks
+  like it could repeat work.
+- **monotonic** (adj.) — moving in a single, non-reversing direction; the `left` pointer's
+  monotonicity is the mathematical reason the total work stays linear.
+- **"the brute force re-examines overlapping work"** — a reusable diagnostic phrase for
+  spotting when a sliding window applies: the naive solution redoes work a window could
+  carry forward instead.
+- **validity condition** (n. phrase) — the boolean or derived check that determines
+  whether the current window counts as a candidate answer; naming it explicitly is how
+  you generalize across "no repeats," "at most k distinct," "contains all of t," etc.
+- **degenerate case** (n. phrase) — an edge case like an empty string or `k` larger than
+  the array — worth naming as a boundary check even when the main logic handles it
+  automatically.

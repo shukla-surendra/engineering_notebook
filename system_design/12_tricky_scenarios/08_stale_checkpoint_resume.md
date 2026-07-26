@@ -75,6 +75,32 @@ spot-instance checkpointing discussion in the
 An automated load-time consistency check is cheap insurance against exactly this incident
 recurring silently.
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Claim-precision framing (the default for this scenario):** "'A checkpoint was loaded
+  and training resumed' is a different claim from 'the checkpoint was consistent.' I'd
+  push on that distinction immediately — the orchestration logs proved the first, not the
+  second, and the loss curve is telling you the second one was false."
+- **Mechanism-first (good for explaining the backward jump):** "If workers checkpoint
+  independently without a barrier, you can capture different workers at different steps —
+  resuming from that mismatched state effectively restarts some workers' progress while
+  others are ahead, which is exactly why the aggregate loss curve moves backward."
+- **Insurance framing (good for the prevention discussion):** "The actual fix isn't just a
+  barrier — it's an automated consistency check at load time that rejects a checkpoint with
+  mismatched worker-shard step numbers, rather than trusting any found checkpoint blindly."
+
+### Vocabulary Builder
+
+- **barrier synchronization** (n. phrase) — forcing every worker to reach the same point
+  before any of them proceeds; the mechanism that makes a checkpoint internally consistent.
+- **momentum state** (n. phrase) — the per-parameter statistics an optimizer like Adam
+  carries beyond raw weights; losing it on resume causes a smaller, silent disruption
+  distinct from a full inconsistent-checkpoint jump.
+- **"…is not the same claim as…"** — a reusable template for separating a status message
+  from the stronger guarantee it's often mistaken for.
+
 ---
 
 **Previous:** [7. Multi-GPU Training Plateau](07_distributed_training_plateau.md)  |  **Next:** [9. GitOps Rollout, Wrong Predictions](09_gitops_rollout_wrong_predictions.md)

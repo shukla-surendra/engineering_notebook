@@ -40,3 +40,36 @@ Runnable, with sample test cases at the bottom (`python3 linked_list/06_merge_k_
 ```python
 --8<-- "linked_list/06_merge_k_sorted_lists/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Brute-force-first framing (the default opening move):** "The naive route merges the
+  lists one at a time — merge list 1 into the result, then list 2, then list 3, and so
+  on. That's O(N·k) in the worst case because each merge re-scans the growing result. I'd
+  name that before jumping to the heap, since it's the natural first instinct."
+- **Invariant framing (good for explaining the heap approach precisely):** "The invariant
+  is: the heap always holds exactly the current smallest unconsumed node from every
+  still-active list. Popping the global min and pushing its successor preserves that
+  invariant, which is why popping k times in a row always gives you the next k smallest
+  values in order."
+- **Generalization framing (good for signaling pattern recognition):** "This generalizes
+  Merge Two Sorted Lists — same 'always take the smallest available head' idea, just with
+  a heap standing in for the two manual pointers once k grows past two. I'd also mention
+  the divide-and-conquer alternative, pairwise-merging lists, as the same complexity
+  without a heap."
+
+### Vocabulary Builder
+
+- **min-heap** (n.) — a tree-based structure giving O(log k) access to the current
+  smallest of k elements; the right tool whenever you need repeated 'give me the min'
+  queries with insertions interleaved.
+- **tie-breaker** (n.) — a secondary comparison key (here, an index) used to avoid
+  comparing incomparable objects directly. *"I add a tie-breaker index so the heap never
+  tries to compare two `ListNode` objects when values are equal."*
+- **"generalizes the two-list case"** — a reusable phrase for framing a k-way problem as
+  a scaled-up version of a simpler two-way problem you already know.
+- **divide and conquer** (n. phrase) — an alternative strategy here: pairwise-merge lists
+  and repeat, halving the count each round — worth naming as the heap-free alternative
+  with the same O(N log k) bound.

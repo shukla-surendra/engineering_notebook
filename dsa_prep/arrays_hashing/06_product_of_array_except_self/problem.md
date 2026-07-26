@@ -41,3 +41,34 @@ Runnable, with sample test cases at the bottom (`python3 arrays_hashing/06_produ
 ```python
 --8<-- "arrays_hashing/06_product_of_array_except_self/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Constraint-driven framing (name the constraints before the solution):** "Two
+  constraints shape this: no division, and ideally O(1) extra space. I'd say that up front,
+  because it rules out the 'multiply everything, then divide by nums[i]' shortcut before I
+  even try it — division breaks on zeros anyway."
+- **Decomposition framing (the core insight, stated plainly):** "`answer[i]` decomposes
+  into two independent pieces — the product of everything strictly to the left, and
+  everything strictly to the right. Computing each with a single pass, in opposite
+  directions, avoids ever recomputing a product from scratch."
+- **Space-optimization framing (for the O(1)-extra-space follow-up):** "I'd first write it
+  with two separate prefix and suffix arrays to get the idea right, then say: since I only
+  ever need one of them at a time during the second pass, I can collapse the suffix array
+  into a single running variable and write directly into the output array."
+
+### Vocabulary Builder
+
+- **prefix product** (n. phrase) — the running product of all elements up to (not
+  including) index i, computed left to right; the mirror concept, suffix product, runs
+  right to left.
+- **in-place** (adj.) — reusing the output array itself as scratch space during
+  computation, rather than allocating new auxiliary arrays. *"I write the prefix products
+  in place, then fold in suffix products on the second pass."*
+- **"trades a second array for a single running variable"** — a precise way to describe
+  the O(n)-space-to-O(1)-extra-space optimization here.
+- **degenerate case** (n. phrase) — worth naming for this problem specifically: multiple
+  zeros in the input force every output except at most one position to zero, which a
+  division-based approach handles badly.

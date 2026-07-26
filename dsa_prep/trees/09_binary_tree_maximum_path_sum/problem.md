@@ -44,3 +44,37 @@ Runnable, with sample test cases at the bottom (`python3 trees/09_binary_tree_ma
 ```python
 --8<-- "trees/09_binary_tree_maximum_path_sum/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Brute-force-first framing (the default opening move):** "The naive idea is enumerate
+  every path between every pair of nodes — that's exponential and clearly not where I'm
+  going, but I'd say it out loud for one sentence to establish the target I'm optimizing
+  away from before jumping into the DFS."
+- **Invariant framing (good for the part that actually trips people up):** "The subtlety
+  is that a node can be the *peak* of a path using both children, but it can only report
+  *one* side upward to its own parent, because a path can't branch. So the invariant of my
+  helper is: it returns the best single-sided downward extension, while a separate global
+  variable tracks the best two-sided peak seen at any node along the way — those are two
+  different questions and conflating them is the classic bug."
+- **Generalization framing (good for naming the technique abstractly):** "This is 'return
+  one thing to the parent, but silently accumulate a different global answer while you
+  recurse' — the same shape shows up anytime a problem asks for a maximum over all
+  possible paths/subtrees but the recursive contract can only pass one value upward."
+
+### Vocabulary Builder
+
+- **clamp** (v.) — to constrain a value to a minimum or maximum bound; here, clamping a
+  negative one-sided gain to 0 so a worthless branch is excluded rather than subtracted.
+- **global state** (n. phrase) — a variable that persists and mutates across recursive
+  calls rather than being passed as an argument or return value; the running maximum here
+  is exactly this, and naming it explicitly avoids confusing it with the function's return
+  value.
+- **"…the crux of it is…"** — a good pivot phrase for signaling "I've stated the problem,
+  now here's the actual insight," useful right before explaining the one-sided-vs-peak
+  distinction.
+- **degenerate case** (n. phrase) — here, a tree of all-negative values, where the answer
+  is just the single largest (least negative) node — worth mentioning to show the clamp-
+  to-zero logic doesn't accidentally force a positive-sum path that doesn't exist.

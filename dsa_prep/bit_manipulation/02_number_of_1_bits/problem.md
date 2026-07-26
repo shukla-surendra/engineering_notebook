@@ -41,3 +41,30 @@ Runnable, with sample test cases at the bottom (`python3 bit_manipulation/02_num
 ```python
 --8<-- "bit_manipulation/02_number_of_1_bits/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Brute-force-first framing (the default opening move):** "The obvious approach shifts
+  and checks 32 fixed positions — O(32), technically constant time but wasteful when most
+  bits are 0. I'd mention that before reaching for Kernighan's trick, so the improvement
+  reads as a refinement, not a memorized fact."
+- **Invariant framing (good for explaining *why* the trick terminates correctly):** "Each
+  iteration of `n &= n - 1` strictly clears exactly one set bit — that's the invariant. So
+  the loop provably runs exactly (number of set bits) times, not a guess bounded by 32."
+- **Pattern-recognition framing (good for connecting to related problems):** "This trick
+  generalizes to anything asking 'is this a power of two' or 'clear the lowest set bit' —
+  I'd flag that this is one identity out of a small toolbox covered in the bit-manipulation
+  pattern, not an isolated party trick."
+
+### Vocabulary Builder
+
+- **Hamming weight** (n.) — the standard name for the count of set bits in a binary
+  representation; using the term signals familiarity with the literature.
+- **amortized** (adj.) — a cost averaged across operations; contrast with Kernighan's
+  trick, whose per-call cost is *input-dependent* rather than amortized.
+- **"…runs in proportion to the number of set bits, not the word size"** — a precise,
+  reusable way to describe why this beats a fixed 32-iteration loop.
+- **isolate the lowest set bit** (v. phrase) — a common bit-manipulation idiom (`n & -n`)
+  worth knowing even when the problem at hand uses the related `n & (n-1)` instead.

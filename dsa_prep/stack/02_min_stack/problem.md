@@ -43,3 +43,34 @@ Runnable, with sample test cases at the bottom (`python3 stack/02_min_stack/solu
 ```python
 --8<-- "stack/02_min_stack/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Brute-force-first framing (the default opening move):** "The naive `getMin()` just
+  scans the whole stack every call — O(n) per call. I'd name that first, then say the
+  fix is to *precompute and cache* the running minimum at every depth, so the query
+  becomes O(1) at the cost of O(n) extra space in a parallel stack."
+- **Invariant framing (good for explaining the auxiliary stack precisely):** "The
+  invariant is: the min-stack's top always equals the minimum of every element currently
+  on the main stack, at that exact depth. Popping both stacks in lockstep is what
+  preserves that invariant — if I only popped the main stack, the min-stack would go
+  stale."
+- **Generalization framing (good for signaling pattern recognition):** "This is the
+  'auxiliary stack for a running aggregate' pattern — the same idea generalizes to
+  tracking a running max, running sum, or any aggregate that needs to 'undo' cleanly when
+  you pop, which a plain recomputation approach can't do efficiently."
+
+### Vocabulary Builder
+
+- **lockstep** (adv./adj.) — two structures updated together, one operation at a time, so
+  they stay synchronized. *"I pop both stacks in lockstep so the min-stack never goes
+  stale relative to the main one."*
+- **auxiliary structure** (n. phrase) — a secondary data structure maintained alongside
+  the primary one specifically to cache information that would otherwise cost a rescan.
+- **"trades memory for O(1) queries"** — a reusable phrase justifying any cache-alongside
+  approach: you pay O(n) space once to make every future query O(1).
+- **amortized** (adj.) — worth contrasting here: this isn't amortized O(1), it's *worst-
+  case* O(1) per operation, since every operation is truly constant time, not just
+  averaged over a sequence.

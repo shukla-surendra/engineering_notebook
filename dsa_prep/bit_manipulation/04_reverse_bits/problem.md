@@ -39,3 +39,34 @@ Runnable, with sample test cases at the bottom (`python3 bit_manipulation/04_rev
 ```python
 --8<-- "bit_manipulation/04_reverse_bits/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Brute-force-first framing (the default opening move, even though there's no real
+  alternative here):** "There isn't a cleverer trick to reach for — the honest brute force
+  *is* the optimal solution: touch each of the 32 bit positions once. I'd say that
+  explicitly so it's clear I considered alternatives rather than assuming O(32) by
+  default."
+- **Invariant framing (good for narrating the loop precisely):** "The invariant each
+  iteration maintains is: 'the bits pulled out of `n` so far have been appended to
+  `result` in reverse order.' Shifting `result` left before OR-ing in the new bit is what
+  keeps that invariant — get the order of those two operations backwards and the bits land
+  in the wrong slot."
+- **Pattern-recognition framing (good for naming the reusable shape):** "This is the
+  extract-and-rebuild template — pull the lowest bit off one number, append it to a result
+  being built up, repeat a fixed number of times. It shows up anywhere you need to process
+  a fixed-width value bit by bit."
+
+### Vocabulary Builder
+
+- **fixed-width** (adj.) — bound to a specific bit count (32 here); calling this out
+  explains why the loop bound is `range(32)` rather than something input-dependent.
+- **two's complement** (n.) — the representation scheme for signed integers; worth
+  mentioning if asked how this would change for signed vs. unsigned interpretations.
+- **"…the crux of it is getting the shift direction and order right"** — a natural way to
+  narrate a bit-assembly loop without getting lost in the mechanics.
+- **mask** (n./v.) — a bit pattern used to isolate or clear specific bits (e.g.
+  `& 0xFFFFFFFF`); relevant if the language's integers aren't natively fixed-width, as in
+  Python.

@@ -139,6 +139,37 @@ worth calling out unprompted.
 - Design "message reactions" (emoji reactions) as an extension.
 - Design a system supporting disappearing/ephemeral messages with guaranteed deletion.
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Different-scaling-axis framing (the default for connection-management questions):**
+  "This is a fundamentally different scaling axis than a stateless API — each gateway
+  holds a bounded number of concurrent open connections, limited by file descriptors and
+  memory, not CPU. I'd say that explicitly before drawing anything, because it changes
+  every capacity decision downstream."
+- **Bottleneck-naming framing (good for 'what's the hardest part of this system'):** "I'd
+  name the presence service as the actual bottleneck and single point of concern up front,
+  not treat it as an incidental lookup table — a slow presence lookup adds latency to
+  every message, and an unavailable one breaks delivery entirely."
+- **Pragmatic-default framing (good for the delivery-guarantee discussion):**
+  "At-least-once with client-side dedup is the standard, pragmatic choice — it's far
+  simpler to build reliably than true exactly-once, and the client-side cost is small. I'd
+  justify the choice by that engineering trade-off, not just name it as the answer."
+
+### Vocabulary Builder
+
+- **stateful tier** (n. phrase) — a layer that holds per-connection or per-session state
+  (a connection gateway), as opposed to a stateless tier that can be freely load-balanced
+  and restarted.
+- **liveness check** (n. phrase) — a heartbeat-based mechanism confirming a connection or
+  service is still actually alive, not just assumed to be.
+- **drain** (v.) — to gracefully finish in-flight work (open connections) before shutting
+  a component down, instead of abruptly dropping it.
+- **"…rather than leave stale presence entries pointing at a dead gateway"** — a precise
+  way to state a specific correctness requirement (treat unreachable as offline) as a
+  design constraint, not an afterthought.
+
 ---
 
 **Previous:** [2. Design Twitter/X Feed](../02_design_twitter_feed/tutorial.md)  |  **Next:** [4. Design Ride-Hailing Dispatch](../04_design_ride_hailing_dispatch/tutorial.md)

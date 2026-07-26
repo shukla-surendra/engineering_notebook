@@ -43,3 +43,34 @@ Runnable, with sample test cases at the bottom (`python3 sliding_window/03_longe
 ```python
 --8<-- "sliding_window/03_longest_repeating_character_replacement/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Brute-force-first framing (the default opening move):** "The brute force checks every
+  substring, counts letters, and verifies `length - max_freq <= k` from scratch each
+  time — O(n²) or worse. I'd name that, then say I can maintain the count and `max_freq`
+  incrementally as the window slides, getting to O(n)."
+- **Invariant framing (good for explaining the non-shrinking window, which trips people
+  up):** "The subtlety here is the window never needs to shrink below its historical max
+  size — once I've achieved a window of size W, sliding both edges forward together
+  keeps checking whether size W+1 is achievable, without ever needing to fall back below
+  W. I'd say that explicitly, since it's the part that looks wrong at first glance."
+- **Generalization framing (good for signaling pattern recognition):** "This is the
+  'variable window with a validity check' shape, where validity comes from a derived
+  quantity — `max_freq` — instead of a simple boolean. I'd mention that's the same family
+  as Minimum Window Substring, just with a different validity condition."
+
+### Vocabulary Builder
+
+- **validity check** (n. phrase) — the condition a window must satisfy to count as a
+  candidate answer; here, `window_length - max_freq <= k`.
+- **derived quantity** (n. phrase) — a value computed from other tracked state rather than
+  stored directly; `max_freq` is derived from the count array, not maintained independently
+  from scratch each time.
+- **"the crux of it is…"** — useful for isolating the one subtle design decision an
+  interviewer is probing for, here: *"the crux of it is that `max_freq` never needs to
+  decrease even when the window slides past its peak."*
+- **monotonic** (adj.) — non-decreasing here: the answer (best window length) only ever
+  grows or stays the same as the scan proceeds, never needs revisiting downward.

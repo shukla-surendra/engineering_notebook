@@ -39,3 +39,33 @@ Runnable, with sample test cases at the bottom (`python3 backtracking/03_permuta
 ```python
 --8<-- "backtracking/03_permutations/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **State-tracking framing (the detail that differentiates this from Subsets):** "Unlike
+  Subsets, position matters here and every element must appear exactly once per
+  permutation — so I need a `used` tracker to know, at each recursive level, which numbers
+  are still available to place next."
+- **Invariant framing (what the backtrack step must undo):** "The invariant is: `used`
+  always reflects exactly what's currently in `path`, nothing more, nothing less. That's
+  why unmarking a number as used has to happen right after the recursive call returns —
+  skip that line and the invariant breaks for every sibling branch that runs afterward."
+- **Complexity framing (justifying the n! term without hand-waving):** "There are n!
+  orderings total, and building each one costs O(n) to construct the path, so I'd state the
+  bound as O(n! · n) rather than just O(n!), since the interviewer may probe on that
+  distinction."
+
+### Vocabulary Builder
+
+- **used tracker** (n. phrase) — a boolean array or set marking which elements are already
+  placed in the current path, checked before considering an element as the next choice.
+- **backtrack** (v.) — to undo the most recent choice after exploring its consequences, so
+  sibling branches start from a clean state. *"I backtrack by popping the last element and
+  unmarking it as used."*
+- **"state leaks between branches"** — the standard phrase for describing the bug that
+  happens when you forget to backtrack (undo a choice) before trying the next option.
+- **factorial growth** (n. phrase) — describing complexity that scales as n!, which grows
+  faster than exponential (2^n) — worth naming to show you know it's a harder ceiling than
+  typical subset/combination problems.

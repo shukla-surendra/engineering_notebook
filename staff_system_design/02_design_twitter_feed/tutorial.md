@@ -132,6 +132,35 @@ adjust, or a hardcoded assumption baked into the schema?
 - Design a "who to follow" recommendation feature on top of this system.
 - Extend this design to support real-time trending topics.
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Proactive-break framing (the default, and the actual staff signal in this question):**
+  "I wouldn't just propose fan-out-on-write — I'd immediately name why it breaks for a
+  celebrity account, before being asked. That one sentence is the difference between a
+  senior answer and a staff one here."
+- **Bound-both-sides framing (good for explaining the hybrid design):** "The hybrid design
+  is really about bounding the worst case on both sides — normal-account fan-out stays
+  cheap because follower counts are small, and celebrity fan-in stays cheap because a user
+  follows relatively few celebrities, even if they follow many people overall."
+- **Capacity-planning framing (good for the organizational follow-up):** "I'd treat
+  celebrity write-amplification as its own capacity-planning category, not folded into
+  average-case provisioning — that's the operational consequence of the technical design
+  choice, and naming it is what makes this a staff answer."
+
+### Vocabulary Builder
+
+- **fan-out on write / fan-out on read** (n. phrase) — precomputing and pushing data to
+  every consumer at write time, versus computing it on demand at read time; the core axis
+  this whole problem turns on.
+- **thundering herd** (n. phrase) — a burst of simultaneous work (100M fan-out writes from
+  one tweet) overwhelming the workers meant to absorb it.
+- **candidate generation** (n. phrase) — narrowing a huge space down to a small, cheaply
+  rankable set, the first stage of a two-stage recommendation pipeline.
+- **"…is the crux of why this is a hard problem at all"** — a fluent way to signal you've
+  identified the one detail that makes an otherwise-simple design actually interesting.
+
 ---
 
 **Previous:** [1. Distributed Systems Foundations](../01_distributed_systems_foundations/tutorial.md)  |  **Next:** [3. Design a Chat System](../03_design_chat_system/tutorial.md)

@@ -39,3 +39,32 @@ Runnable, with sample test cases at the bottom (`python3 linked_list/03_reorder_
 ```python
 --8<-- "linked_list/03_reorder_list/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Brute-force-first framing (the default opening move):** "The easy version copies
+  every node into an array, then uses two array pointers walking inward from both ends
+  to rebuild the list — O(n) time, O(n) space. I'd name that first, then say I can drop
+  the space to O(1) by doing the same 'walk from both ends' idea directly on the list."
+- **Decomposition framing (good for explaining why this problem feels different):**
+  "Rather than one clever trick, this is three known sub-routines chained together — find
+  the middle, reverse the second half, merge by alternating. I'd say out loud that
+  recognizing the decomposition *is* the problem; each piece individually is easy."
+- **Generalization framing (good for signaling pattern recognition):** "Each of those
+  three steps is a named primitive from the linked-list pointer-manipulation family —
+  fast/slow for the middle, iterative reversal, two-pointer merge — so I'd frame this as
+  composition rather than a new trick."
+
+### Vocabulary Builder
+
+- **compose** (v.) — to combine simpler operations into a larger solution; useful for
+  describing multi-step approaches like this one. *"I'm composing three primitives I'd
+  already use independently."*
+- **interleave** (v.) — to alternate elements from two sequences into one combined
+  sequence, as the final merge step does here.
+- **"the difficulty here is decomposition, not a new trick"** — a reusable phrase for
+  problems that are hard only because they chain familiar sub-problems together.
+- **in-place** (adj.) — operating with O(1) extra memory by rewiring existing nodes
+  instead of allocating a new structure.

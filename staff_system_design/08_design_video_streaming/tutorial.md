@@ -154,6 +154,36 @@ purely technical queue-ordering choice made unilaterally.
   the [Twitter feed case study's](../02_design_twitter_feed/tutorial.md) ranking
   discussion).
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Two-halves framing (the default, and the first move worth making):** "I'd split this
+  system in two before drawing anything else — an asynchronous, throughput-oriented
+  processing pipeline, and a latency-critical global delivery path. Conflating them is what
+  produces a muddled design; naming the split is the first architectural insight."
+- **Who-decides framing (good for explaining ABR):** "The player decides quality, not the
+  server — that's not just an implementation detail, it's what lets the server-side system
+  stay stateless about per-viewer network conditions entirely. I'd frame it as an
+  architectural consequence, not a trivia fact."
+- **Cost-at-scale framing (good for the storage discussion):** "With billions of videos
+  each stored in roughly ten renditions, keep-forever versus re-transcode-on-demand isn't a
+  minor knob, it's a genuine multi-million-dollar decision — I'd treat storage cost as a
+  first-class design concern, not an afterthought."
+
+### Vocabulary Builder
+
+- **embarrassingly parallel** (adj. phrase) — a workload that splits into independent
+  pieces with essentially no coordination needed between them, like transcoding video
+  segments.
+- **cache warming** (n. phrase) — proactively populating a cache before organic demand
+  hits it, trading bandwidth cost now for guaranteed low latency to early requesters.
+- **long tail** (n. phrase) — the large share of content that's individually low-traffic,
+  which breaks any policy assuming uniform popularity across a catalog.
+- **"…is a simplifying property worth stating explicitly"** — a fluent way to point out
+  when a system is *easier* than the general case (immutable video segments rarely need
+  invalidation), rather than only ever naming what's hard.
+
 ---
 
 **Previous:** [7. Design a Rate Limiter at Global Scale](../07_design_rate_limiter_at_scale/tutorial.md)  |  **Next:** [9. Design a Web Crawler](../09_design_web_crawler/tutorial.md)

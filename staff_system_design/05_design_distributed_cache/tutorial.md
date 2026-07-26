@@ -151,6 +151,36 @@ concern from steady-state read/write performance.
   [video streaming case study](../08_design_video_streaming/tutorial.md)).
 - Design a leaderboard system (a specific, well-known hot-key-prone workload).
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Two-different-problems framing (the default for this topic):** "Hot-key and cache
+  stampede sound related but they're different problems — hot-key is uneven *access* to
+  one key, stampede is synchronized *expiration* across many keys. I'd name both
+  proactively, since these are exactly the 'looks solved until you push on it' failure
+  modes staff rounds probe for."
+- **Detection-before-mitigation framing (good for the hot-key deep-dive):** "Proposing a
+  mitigation without proposing how hotness gets *detected* in the first place is an
+  incomplete answer — the harder half of this problem is the monitoring layer that feeds
+  the mitigation, not the mitigation technique itself."
+- **Layered-defense framing (good for the stampede discussion):** "I wouldn't present
+  request coalescing, jittered TTLs, and stale-while-revalidate as competing options — a
+  mature cache layers all three, each covering a different slice of the failure window."
+
+### Vocabulary Builder
+
+- **request coalescing** (n. phrase) — merging concurrent identical requests into one
+  actual origin call, with the rest waiting on the shared result.
+- **jitter** (n.) — small randomization added to a timing value (a TTL) specifically to
+  prevent synchronized behavior across many entities.
+- **split-brain** (n. phrase) — two nodes on either side of a network partition both
+  believing they're authoritative for the same data, a risk any partition-tolerant cluster
+  must explicitly guard against.
+- **"…is a different concern from steady-state read/write performance"** — a fluent way to
+  separate a system's normal-operation behavior from its behavior during operational
+  events (restarts, resharding, failures).
+
 ---
 
 **Previous:** [4. Design Ride-Hailing Dispatch](../04_design_ride_hailing_dispatch/tutorial.md)  |  **Next:** [6. Design a Distributed Message Queue](../06_design_distributed_message_queue/tutorial.md)

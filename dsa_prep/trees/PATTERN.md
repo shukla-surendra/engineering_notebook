@@ -94,3 +94,42 @@ you which single child to descend into.
 O(n) time (every node visited once) for standard traversals. O(h) space for DFS recursion
 (h = tree height: O(log n) balanced, O(n) worst-case skewed), O(w) space for BFS (w = max
 width of the tree, up to O(n)).
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Recognition framing (the default for opening a new tree problem):** "Before writing
+  anything, I ask myself one question: does this value flow *up* from children, or *down*
+  from ancestors? If it's 'compute something from my children's results,' that's
+  post-order DFS. If it's 'a constraint my ancestors impose on me,' that's pre-order DFS
+  with state threaded down. Naming which one out loud before coding prevents me from
+  writing a traversal that fights the problem's actual data flow."
+- **Mental-model framing (good for explaining the template as reusable, not memorized):**
+  "I don't memorize solutions per problem — I memorize three shapes: post-order combine,
+  pre-order propagate, and BFS-by-level. Every problem in this file is one of those three
+  shapes plus a different `combine`, `valid_given`, or `update_state` function. Saying that
+  explicitly is how I signal I'm generalizing, not pattern-matching from memory."
+- **Generalization/insight framing (good for the 'why does this work at all' question):**
+  "The deep reason tree recursion works cleanly is that a tree has no cycles — every
+  subtree is a strictly smaller, independent instance of the same problem, so 'solve the
+  children first, then combine' is always well-founded. That's also exactly why the same
+  post-order idea generalizes to DAGs (topological order) once cycles are ruled out."
+
+### Vocabulary Builder
+
+- **post-order / pre-order** (adj.) — describing *when* a node is processed relative to
+  its children (after vs. before); the single most useful classification question for any
+  new tree problem.
+- **well-founded** (adj.) — describing a recursion guaranteed to terminate because each
+  call operates on a strictly smaller subproblem; trees are well-founded by construction
+  since they're acyclic.
+- **"…fights the problem's actual data flow"** — a reusable phrase for describing a
+  traversal choice (top-down vs. bottom-up) that's technically workable but awkward,
+  usually producing convoluted state-passing instead of a clean recurrence.
+- **threading (state)** (v.) — passing accumulated context down through recursive calls
+  as an explicit argument (e.g. the `(low, high)` range in Validate BST), as opposed to
+  relying on return values or global variables.
+- **acyclic** (adj.) — containing no cycles; the property that makes trees a special,
+  easier case of general graph traversal, where "visited" tracking is unnecessary because
+  no path can loop back on itself.

@@ -41,3 +41,38 @@ Runnable, with sample test cases at the bottom (`python3 greedy/01_maximum_subar
 ```python
 --8<-- "greedy/01_maximum_subarray/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Brute-force-first framing (the default opening move):** "The naive approach checks
+  every subarray — O(n²) with a running sum, or O(n³) if I recompute sums from scratch —
+  so I'd name that first, then say the trade I'm making: instead of comparing all
+  subarrays, I only need to know the best sum *ending at* each position, which collapses
+  the whole thing to one O(n) pass."
+- **Invariant framing (good for justifying Kadane's line-by-line):** "The invariant is
+  `current_sum` is always the best sum of a subarray that ends exactly at index i. At each
+  step I ask: does extending the previous subarray still help, or has it turned into dead
+  weight I should drop? A negative `current_sum` can only drag down anything I add to it,
+  so resetting isn't a heuristic — it's provably never worse."
+- **Generalization framing (good for signaling you know this beyond memorization):** "This
+  is the canonical instance of Kadane's algorithm, which is itself a greedy technique —
+  I'd name that family out loud, since the same 'track a running local optimum, reset when
+  it can't help the future' shape reappears in max-product-subarray and best-time-to-buy-
+  sell-stock variants."
+
+### Vocabulary Builder
+
+- **invariant** (n.) — a condition an algorithm maintains at every step; here, "`current_sum`
+  is the best sum ending at the current index." *"Stating the invariant out loud is how I
+  prove the reset rule is correct, not just plausible."*
+- **local optimum** (n. phrase) — the best choice available given only current
+  information, as opposed to a global optimum that requires foresight; Kadane's works
+  because the local optimum at each step never needs revisiting.
+- **"the naive approach breaks down when…"** — a reusable phrase for pivoting from brute
+  force to the real solution; here it breaks down because recomputing every subarray's sum
+  from scratch is wasteful when the running sum already carries that information.
+- **degenerate case** (n. phrase) — a trivial but valid input, like a single-element or
+  all-negative array; worth naming explicitly since Kadane's must still return the least
+  negative element, not zero.

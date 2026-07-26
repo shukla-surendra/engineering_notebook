@@ -42,3 +42,37 @@ Runnable, with sample test cases at the bottom (`python3 math_geometry/03_set_ma
 ```python
 --8<-- "math_geometry/03_set_matrix_zeroes/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Brute-force-first framing (the default opening move):** "The naive approach is to scan
+  for zeroes, record their (row, col) coordinates in a separate set, then do a second pass
+  zeroing based on that set — O(m·n) space. I'd present that first as clearly correct, then
+  say the follow-up optimization is realizing I don't need a *new* boolean grid at all —
+  the matrix's own first row and column can serve as that storage."
+- **Invariant framing (good for explaining the multi-pass ordering):** "The invariant I
+  have to protect is that the marker cells (`matrix[r][0]`, `matrix[0][c]`) aren't zeroed
+  out by the second pass before I've finished reading them. That's why I process from
+  `(1,1)` onward first and handle row 0 / column 0 themselves *last*, using two separate
+  boolean flags captured before any mutation — get that ordering wrong and I'd corrupt the
+  very markers the algorithm depends on."
+- **Generalization framing (good for showing this isn't matrix-specific):** "The reusable
+  idea is 'repurpose part of the existing structure as marker storage instead of
+  allocating a new one' — it trades a slightly trickier multi-pass implementation for O(1)
+  extra space. I'd name that trade explicitly as the same family of thinking behind other
+  in-place matrix problems, not a trick unique to zeroes."
+
+### Vocabulary Builder
+
+- **auxiliary storage** (n. phrase) — extra space allocated beyond the input itself (e.g.
+  a separate boolean grid); the thing this technique specifically avoids.
+- **propagate** (v.) — to spread an effect outward from its origin; here, a zero at
+  `(r, c)` propagates to its entire row and column.
+- **cascading** (adj.) — an error where an earlier mutation incorrectly influences a later
+  decision in the same pass; naively zeroing while scanning cascades, because newly-zeroed
+  cells then falsely trigger more zeroing.
+- **"…trades memory for a trickier implementation"** — reusable phrase for justifying the
+  marker-reuse trick: O(1) space is gained at the cost of needing a carefully ordered,
+  multi-pass implementation instead of one straightforward pass.

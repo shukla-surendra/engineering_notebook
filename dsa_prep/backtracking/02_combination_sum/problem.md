@@ -42,3 +42,33 @@ Runnable, with sample test cases at the bottom (`python3 backtracking/02_combina
 ```python
 --8<-- "backtracking/02_combination_sum/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Pruning-first framing (state the cutoff before the recursion):** "The moment the
+  remaining target goes negative, that whole branch is dead — I prune it immediately
+  instead of letting the recursion bottom out on its own. Pruning early is what keeps this
+  from exploring far more of the tree than it needs to."
+- **Invariant framing (why duplicates never appear):** "The invariant is: I never revisit
+  an index smaller than where I currently am. That's what guarantees `[2,3]` and `[3,2]`
+  never both get generated — order in the combination is fixed by the order I visit
+  indices, not by the order I add numbers."
+- **Contrast framing (distinguishes it from Permutations/Subsets by name):** "This is
+  backtracking with reuse allowed — the recursive call stays at index `i` instead of
+  advancing to `i+1` when I include a candidate. I'd contrast that explicitly with
+  Permutations, where a `used` tracker forbids reuse."
+
+### Vocabulary Builder
+
+- **prune** (v.) — to abandon a branch of the recursion early because it provably cannot
+  lead to a valid answer, without exploring it fully. *"Once remaining target goes
+  negative, I prune that branch immediately."*
+- **search space** (n. phrase) — the full set of possibilities a backtracking algorithm
+  could in principle explore; pruning shrinks how much of it actually gets visited.
+- **"the naive approach breaks down when…"** — useful for explaining why unconstrained
+  reuse without the non-decreasing-index rule would generate the same combination multiple
+  times in different orders.
+- **base case** (n. phrase) — the termination condition of the recursion; here, remaining
+  target exactly zero (record the combination) or negative (dead branch, return).

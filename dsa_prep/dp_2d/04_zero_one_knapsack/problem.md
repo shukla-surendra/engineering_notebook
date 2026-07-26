@@ -42,3 +42,35 @@ Runnable, with sample test cases at the bottom (`python3 dp_2d/04_zero_one_knaps
 ```python
 --8<-- "dp_2d/04_zero_one_knapsack/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Brute-force-first framing (the default opening move):** "The brute force is trying
+  every subset of items and checking which fit under the weight cap — 2^n subsets. I'd say
+  that out loud, then note greedy-by-value-density doesn't provably work here because items
+  are indivisible, which is exactly the signal that pushes this toward DP instead of a
+  greedy heuristic."
+- **Invariant framing (good for explaining why the loop order isn't arbitrary):** "`dp[i][w]`
+  is 'best value achievable using only the first `i` items at capacity `w`.' The invariant
+  I have to protect is that row `i` only reads from row `i-1`, never from itself — that's
+  what enforces 'each item used at most once.' If I let a row read from itself I'd silently
+  allow reusing an item, which is a different problem."
+- **Generalization framing (good for showing you know the knapsack family, not just this
+  instance):** "This is bounded knapsack. I'd contrast it out loud with unbounded knapsack
+  (like Coin Change), where the recurrence deliberately reads from the *current* row to
+  allow reuse — same table shape, one line of loop logic decides bounded vs. unbounded."
+
+### Vocabulary Builder
+
+- **subset-sum** (n. phrase) — the family of problems asking whether/how some subset of
+  items meets a target; 0/1 Knapsack is the weighted, value-maximizing generalization of it.
+- **bounded / unbounded** (adj.) — whether an item can be used at most once (bounded, this
+  problem) or unlimited times (unbounded, e.g. Coin Change) — the single loop-order detail
+  that distinguishes the two DP variants.
+- **"…trades memory for speed"** — reusable phrase for justifying the O(n·W) table against
+  the exponential brute force, and again when discussing the O(W) rolling-array reduction.
+- **greedy fails here** (phrase) — worth stating explicitly: unlike fractional knapsack,
+  where greedy-by-ratio is optimal, indivisible items break the greedy exchange argument,
+  which is precisely why DP is required.

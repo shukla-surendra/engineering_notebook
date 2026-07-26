@@ -87,3 +87,39 @@ the target could lie in that sorted half's range before deciding which way to re
 
 O(log n) time for classic search; O(n log(range)) for binary-search-on-the-answer problems
 where each feasibility check costs O(n). O(1) extra space (iterative).
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Recognition framing (the trigger phrase to listen for):** "I'm listening for
+  'minimize the maximum' or 'maximize the minimum,' or for a monotonic yes/no question
+  buried in the problem statement. The moment I hear either, I stop thinking 'is this
+  array sorted' and start thinking 'is there a monotonic predicate I can binary search
+  over,' because the array itself might not be sorted at all."
+- **Mental-model framing (how you'd teach the generalized idea in one breath):** "Binary
+  search isn't fundamentally about sorted arrays — it's about finding where a monotonic
+  yes/no answer flips from false to true. The sorted-array case is just the version where
+  the predicate happens to be 'is arr[i] >= target.'"
+- **Generalization framing (what elevates this from a trick to a technique):** "I'd point
+  out that classic search, rotated-array search, and Koko Eating Bananas are all the same
+  loop with a different `feasible()` function plugged in — writing the predicate first and
+  proving it's monotonic is the actual skill, the loop is boilerplate I write from memory."
+
+### Vocabulary Builder
+
+- **monotonic predicate** (n. phrase) — a yes/no function of a candidate that is
+  consistently false-then-true (or true-then-false) as the candidate increases; the
+  property that makes binary search valid at all, on arrays or on any answer space.
+- **binary search on the answer** (n. phrase) — searching over a derived decision variable
+  (a speed, a capacity, a maximum) rather than array indices; the generalization that
+  unlocks problems where nothing about the input is sorted.
+- **"the mental model is: you're searching for where the answer flips"** — a reusable,
+  spoken-language way to explain binary search's generalized form without leaning on
+  pseudocode.
+- **convergence** (n.) — the process of `left` and `right` narrowing toward each other
+  until they meet, used to describe boundary-finding search as opposed to exact-match
+  search which can return early.
+- **insertion point** (n. phrase) — the index where a value would need to be inserted to
+  keep an array sorted (`bisect_left`/`bisect_right`); a related but distinct use of binary
+  search worth naming when it comes up.

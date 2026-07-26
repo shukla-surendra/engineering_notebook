@@ -72,3 +72,41 @@ Almost always O(n) or O(n·k) time (k = size of a derived key, like word length)
 or O(n·k) space — you're paying memory to avoid repeated scanning. If interview follow-ups
 ask for O(1) space, that's a signal to look for a two-pointer or in-place technique instead
 (see `../two_pointers/PATTERN.md`).
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Recognition framing (how you'd name the pattern the moment you see it):** "As soon as
+  I catch myself about to write a nested loop where the inner loop just re-searches
+  something I've already scanned, I stop and say out loud: this is a hashing problem —
+  I'm going to trade memory for speed and remember what I've seen instead of re-deriving it
+  every time."
+- **Mental-model framing (how you'd teach it to someone else in thirty seconds):** "Almost
+  every hashing problem boils down to one repeated question: 'have I seen this value, or
+  some key derived from it, before?' Once you frame it that way, the only real decision left
+  is what the key is — the raw value, its complement, or some canonical transformation of
+  it."
+- **Generalization framing (what separates a pattern-matcher from someone who's memorized
+  seven problems):** "I'd point out that Two Sum, Group Anagrams, and Top K Frequent are
+  the same skeleton with three different key functions — complement lookup, canonical
+  signature, and frequency count. Naming that skeleton out loud is what tells the
+  interviewer I'm generalizing, not pattern-matching from memory."
+
+### Vocabulary Builder
+
+- **canonical key** (n. phrase) — a derived value chosen so that all "equivalent" inputs
+  map to the exact same key and nothing else does; the central design decision in the
+  bucket-by-key template. *"Choosing the right canonical key is the whole problem —
+  everything after that is boilerplate."*
+- **amortized** (adj.) — a cost measured as an average over a full sequence of operations
+  rather than guaranteed on any single one; relevant whenever a hash-based loop looks
+  worse than O(n) at first glance but isn't.
+- **"trades memory for speed"** — the single most reusable phrase for justifying any
+  hash-based optimization over a brute-force scan, worth having ready verbatim.
+- **prefix sum** (n. phrase) — a running cumulative total; combined with a hash map of
+  sums-seen-so-far, it extends this pattern to subarray-sum problems beyond simple
+  membership checks.
+- **self-matching bug** (n. phrase) — the classic error of checking membership *after*
+  inserting the current element instead of before, causing an element to incorrectly pair
+  with itself.

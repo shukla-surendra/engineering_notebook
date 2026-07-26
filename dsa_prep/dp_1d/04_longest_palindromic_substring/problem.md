@@ -40,3 +40,33 @@ Runnable, with sample test cases at the bottom (`python3 dp_1d/04_longest_palind
 ```python
 --8<-- "dp_1d/04_longest_palindromic_substring/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Brute-force-first framing (the default opening move):** "The true brute force checks
+  every substring for being a palindrome — O(n³). I'd name that, then note that a lot of
+  that work is redundant: a palindrome's identity is fully determined by its center, which
+  is the opening for expand-around-center."
+- **Invariant framing (good for explaining the expansion loop precisely):** "The invariant
+  each expansion step maintains is: 'the substring between the current left and right
+  pointers is a palindrome.' The moment `s[left] != s[right]`, that invariant would break, so
+  I stop immediately — that's why the loop condition checks equality before advancing."
+- **Pattern-recognition framing (good for connecting to a simpler DP table alternative):**
+  "I'd mention this is one of two standard approaches — expand-around-center or a 2-D `is
+  palindrome` DP table — and that I'm choosing the center approach because it's O(1) extra
+  space and easier to get right under pressure, even though both are O(n²) time."
+
+### Vocabulary Builder
+
+- **center** (n.) — for palindromes, either a single character (odd length) or the gap
+  between two characters (even length); enumerating `2n - 1` centers is what makes the
+  approach exhaustive without being O(n³).
+- **monotonic** (adj.) — not directly used here, but worth contrasting: expand-around-center
+  is *not* monotonic in the sense two-pointer problems often are — expansion can stop at any
+  point, it's not a one-directional sweep.
+- **"…trades an explicit DP table for a simpler O(n²) sweep"** — a reusable phrase for
+  justifying expand-around-center over the table-based DP formulation of the same problem.
+- **odd/even-length symmetry** (n. phrase) — the two cases a palindrome center-expansion
+  must handle separately; forgetting the even case is a common bug.

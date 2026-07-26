@@ -251,4 +251,6 @@ shed backpressure chain from the [ingestion tutorial](tutorial.md#backpressure).
 
 **See also:** [2. High-Throughput Ingestion Pipelines](tutorial.md) ·
 [4. Model Serving & Deployment](../04_model_serving_deployment/tutorial.md) ·
-[Tricky Scenario: Overnight GPU Cost Spike](../12_tricky_scenarios/04_gpu_cost_spike.md)
+[Tricky Scenario: Overnight GPU Cost Spike](../12_tricky_scenarios/04_gpu_cost_spike.md) ·
+[Prerequisite Concepts, Part 4: CPU vs. GPU](../prerequisite_concepts/04_cpu_vs_gpu.md#worked-example-is-an-nvidia-l4-g62xlarge-a-good-fit-for-a-receipt-fraud-classifier)
+(if this pipeline's fraud/classification step runs on a GPU instance, not just Textract)

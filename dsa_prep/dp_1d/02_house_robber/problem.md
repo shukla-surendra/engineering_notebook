@@ -42,3 +42,34 @@ Runnable, with sample test cases at the bottom (`python3 dp_1d/02_house_robber/s
 ```python
 --8<-- "dp_1d/02_house_robber/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Brute-force-first framing (the default opening move):** "The brute force tries every
+  subset of non-adjacent houses — exponential. I'd say that, then point out the optimal
+  choice at each house only depends on the best totals from the two houses before it, which
+  is the opening for DP."
+- **Invariant framing (good for explaining the include/exclude recurrence precisely):** "At
+  every house I maintain two invariants: `rob_prev` is the best total *if* I robbed the
+  previous house, `skip_prev` is the best total if I didn't. The new best is always
+  `max(skip_prev + nums[i], rob_prev)` — stating both invariants out loud is what keeps the
+  transition from getting muddled."
+- **Pattern-recognition framing (good for naming the reusable shape):** "This is the
+  classic include/exclude recurrence — 'take it or leave it' — and I'd flag that it
+  generalizes directly to House Robber II with one extra twist for the circular
+  constraint."
+
+### Vocabulary Builder
+
+- **include/exclude** (adj. phrase) — a recurrence structured around 'take this element or
+  skip it'; precise vocabulary for the shape of this DP.
+- **optimal substructure** (n. phrase) — the property that the best overall answer is built
+  from best answers to smaller subproblems; the formal reason this greedy-looking choice is
+  actually safe to make locally.
+- **"…the naive approach breaks down when adjacency constraints interact across choices"** —
+  a reusable way to explain why a simple greedy scan (always take the bigger house) fails
+  here.
+- **rolling variable** (n. phrase) — a variable reused across iterations instead of stored
+  in an array, enabling the O(1)-space version once the array version is verified correct.

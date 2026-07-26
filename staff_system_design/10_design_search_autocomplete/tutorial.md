@@ -154,6 +154,38 @@ correctly sequencing which problem to solve first is itself a staff-level judgme
   very different domain, useful for testing whether the underlying pattern (precomputed
   base + fast incremental overlay) actually generalizes in your own understanding.
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Precompute-is-the-answer framing (the default, and the single most important design
+  decision in this system):** "Knowing what a trie is gets you to the starting line — the
+  actual answer to a sub-100ms budget is precomputing top-K completions at every node, so a
+  request becomes an O(1) lookup instead of a live subtree scan. I'd name that as the
+  decision the whole system hinges on."
+- **Pattern-transfer framing (good for the sharding discussion, and a strong staff
+  signal):** "Uneven trie-shard load is structurally the same problem as a hot key in a
+  distributed cache — just at the shard level instead of the key level. I'd say that
+  explicitly, because recognizing the same pattern across different systems is exactly
+  what's being tested."
+- **Sequencing framing (good for the personalization trade-off):** "I'd treat
+  personalization as a layer added on top of a working global system, not a requirement to
+  design in from day one — conflating 'make it correct and fast' with 'make it
+  personalized' at the same time is how this kind of system gets stuck."
+
+### Vocabulary Builder
+
+- **trie (prefix tree)** (n.) — a tree structure where each path from the root spells out a
+  prefix, naturally suited to "everything starting with X" queries.
+- **scatter-gather** (n. phrase) — querying every shard in a cluster and merging results,
+  the expensive pattern that prefix-preserving sharding is specifically designed to avoid.
+- **overlay** (n.) — a small, fast-updating structure merged with a larger, slower-updating
+  base at read time; the recurring pattern behind both this system's trending queries and
+  the Twitter feed's celebrity fan-in.
+- **"…is a recurring pattern worth naming explicitly, not just a solution to this one
+  problem"** — a fluent way to elevate a specific fix into a transferable, reusable design
+  pattern when explaining it.
+
 ---
 
 **Previous:** [9. Design a Web Crawler](../09_design_web_crawler/tutorial.md)  |  **Next:** [Back to Overview](../README.md)

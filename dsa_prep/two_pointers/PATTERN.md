@@ -77,3 +77,41 @@ linked list): see `../linked_list/PATTERN.md`, which is really a two-pointer var
 O(n) after any required O(n log n) sort, and O(1) extra space — this is usually the space
 optimization over a hash-map approach (see `../arrays_hashing/PATTERN.md`) when the array
 is already sorted or sorting is affordable.
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Recognition framing (the default for spotting when two pointers applies):** "The
+  question I ask myself is: is there a monotonic relationship I can exploit — sortedness,
+  or a value that only shrinks/grows as pointers move — and does the brute force look like
+  a nested loop over pairs? If both are true, two pointers is very likely to collapse an
+  O(n²) brute force to O(n), and I'd say that reasoning out loud before jumping to code."
+- **Mental-model framing (good for explaining the technique as a family, not a trick):**
+  "I think of two pointers as three related shapes, not one: converging pointers from
+  opposite ends, a fixed pointer with a sliding second one (3Sum's inner loop), and
+  same-direction fast/slow pointers for linked-list-style problems. Naming which shape
+  applies is more useful than reciting 'use two pointers,' since the correctness argument
+  differs across the three."
+- **Generalization/insight framing (good for the 'why does moving one pointer suffice'
+  question):** "The deep justification, in every converging-pointer problem I've seen, is
+  a dominance argument: the move I choose to make is never worse, and the move I skip could
+  never have helped. I'd say that's the actual thing to prove on the whiteboard — 'I moved
+  two pointers inward' is not a proof, 'here's why the move I skipped was safe to skip' is."
+
+### Vocabulary Builder
+
+- **monotonic** (adj.) — consistently non-decreasing or non-increasing; the structural
+  property (usually from sorting) that two pointers exploits to eliminate candidates
+  without checking them individually.
+- **dominance argument** (n. phrase) — a correctness proof showing one choice is never
+  worse than another, making it safe to discard the alternative without exploring it; the
+  standard justification pattern for a greedy pointer move.
+- **"…collapses an O(n²) brute force to O(n)"** — a precise, reusable phrase for stating
+  the complexity payoff of two pointers up front, before walking through the mechanism.
+- **partition** (v.) — to divide a collection into distinct regions in place using pointers
+  (e.g. a read pointer and a write pointer moving in the same direction), a distinct
+  variant from the converging-pointer shape covered above.
+- **degenerate case** (n. phrase) — an input where the two pointers start already crossed
+  or adjacent (an empty array, a single-element array); worth naming as the boundary
+  condition that a `while left < right` guard is specifically designed to handle safely.

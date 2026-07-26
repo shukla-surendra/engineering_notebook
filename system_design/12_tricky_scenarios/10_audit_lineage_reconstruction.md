@@ -88,6 +88,35 @@ like this one. See the lineage discussion in the
 and the governance section of the
 [cost/security tutorial](../10_cost_security_multiregion/tutorial.md#security-compliance-in-ml-pipelines).
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Chain-of-links framing (the default for this scenario):** "I wouldn't look for one root
+  cause here — I'd walk the lineage chain link by link and report exactly which link is
+  broken: serving-log granularity, registry retention, approval record-keeping, or data
+  versioning. Each is independently fixable, and conflating them hides which one actually
+  failed."
+- **Honesty-over-completeness framing (good for the audit-response discussion):** "An
+  honest 'we can identify the model version but not the exact approver' is a far better
+  answer than either guessing or spending days on Slack archaeology to manufacture false
+  completeness."
+- **Design-in-from-the-start framing (good for the systemic lesson):** "Audit-readiness has
+  to be a first-class requirement from day one, not something reconstructed retroactively
+  from operational logs that were never meant to serve that purpose — this incident is what
+  happens when it's treated as the latter."
+
+### Vocabulary Builder
+
+- **system of record** (n. phrase) — the single authoritative source for a fact (e.g. who
+  approved a promotion), as opposed to information scattered across informal channels.
+- **retroactively** (adv.) — after the fact, attempting to reconstruct something that
+  should have been captured at the time. *"Lineage shouldn't be reconstructed
+  retroactively — it should be captured at promotion time."*
+- **"…is itself the finding to report"** — useful for framing a discovered gap (missing
+  data, missing approval record) as a legitimate deliverable of an investigation, not a
+  failure to complete it.
+
 ---
 
 **Previous:** [9. GitOps Rollout, Wrong Predictions](09_gitops_rollout_wrong_predictions.md)  |  **Next:** [11. Serving Cost Doubled After a "Routine" Upgrade](11_serving_cost_doubled.md)

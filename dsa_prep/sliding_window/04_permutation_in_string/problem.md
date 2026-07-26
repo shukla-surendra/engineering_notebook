@@ -41,3 +41,35 @@ Runnable, with sample test cases at the bottom (`python3 sliding_window/04_permu
 ```python
 --8<-- "sliding_window/04_permutation_in_string/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Brute-force-first framing (the default opening move):** "The naive approach generates
+  every permutation of `s1` and searches for each in `s2` — factorial time, clearly a
+  non-starter. I'd immediately reframe: a permutation is just 'same letters, same
+  counts,' so this becomes a fixed-size window comparison instead of a combinatorics
+  problem, which is O(n)."
+- **Invariant framing (good for explaining the fixed-size window precisely):** "The
+  invariant is: the window is always exactly `len(s1)` characters wide. Each slide adds
+  one character on the right and removes exactly one on the left, so I maintain the
+  count array incrementally rather than recomputing it — and I track a single 'matches'
+  counter instead of comparing two 26-length arrays every step."
+- **Generalization framing (good for signaling pattern recognition):** "This is the
+  fixed-size-window variant of the sliding-window family — contrast it with the variable-
+  size windows in Longest Substring or Minimum Window Substring, where the window's size
+  itself is what you're solving for."
+
+### Vocabulary Builder
+
+- **fixed-size window** (n. phrase) — a sliding window whose length is constant
+  throughout, as opposed to one that grows/shrinks to satisfy a condition.
+- **frequency count** (n. phrase) — an array or map tracking how many times each
+  character appears; comparing two frequency counts is how you check "same letters,
+  regardless of order."
+- **"reframe the problem as…"** — a reusable phrase for the moment you notice a
+  combinatorial-looking problem ("check every permutation") is secretly a simpler
+  structural check ("same character counts").
+- **amortized** (adj.) — describing the O(1) per-step cost of the matches-counter trick,
+  which avoids an O(26) full-array comparison at every window position.

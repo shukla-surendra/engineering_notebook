@@ -40,3 +40,35 @@ Runnable, with sample test cases at the bottom (`python3 trees/08_kth_smallest_e
 ```python
 --8<-- "trees/08_kth_smallest_element_in_bst/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Brute-force-first framing (the default opening move):** "The brute force is: do a full
+  in-order traversal, collect every value into a list, index into `list[k-1]`. That's
+  O(n) time and space regardless of `k`. I'd name that first, then say the optimization is
+  stopping the traversal early instead of avoiding it entirely."
+- **Invariant framing (good for the iterative early-exit version):** "The invariant is
+  that an iterative in-order walk with an explicit stack visits nodes in strictly ascending
+  order, one at a time, so I can decrement a counter as I go and return the instant it hits
+  zero — I never need to materialize the rest of the tree past the k-th node."
+- **Generalization framing (good for the trades-memory-for-speed framing):** "This is the
+  'let sortedness do the work' idea again — an in-order BST walk is a sorted stream for
+  free, so any 'k-th smallest/largest' question on a BST should make me reach for an
+  early-exit traversal before reaching for sorting or a heap."
+
+### Vocabulary Builder
+
+- **in-order traversal** (n. phrase) — visiting left subtree, then node, then right
+  subtree; the specific traversal order that yields sorted output on a BST, unlike
+  pre-order or post-order.
+- **early exit** (n. phrase) — returning as soon as the answer is known rather than
+  finishing a full computation; here, stopping the moment the k-th node is popped instead
+  of building the whole sorted list.
+- **"…avoids materializing the full result"** — a reusable phrase for justifying an
+  early-exit or streaming approach over one that builds an entire intermediate structure
+  just to throw most of it away.
+- **explicit stack** (n. phrase) — a manually managed stack used to simulate recursion
+  iteratively; worth naming when asked to convert a recursive traversal into an iterative
+  one, since it's the standard technique for that conversion.

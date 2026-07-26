@@ -41,3 +41,34 @@ Runnable, with sample test cases at the bottom (`python3 sliding_window/01_best_
 ```python
 --8<-- "sliding_window/01_best_time_to_buy_sell_stock/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Brute-force-first framing (the default opening move):** "The obvious approach checks
+  every buy/sell pair — O(n²). I'd name that first, then say the O(n) version notices you
+  never need to re-check old pairs: at any given sell day, the only buy day that matters
+  is the cheapest one seen *so far*, so I just track a running minimum instead."
+- **Invariant framing (good for explaining the single pass precisely):** "The invariant
+  is: `min_price` always equals the lowest price seen up to and including the current
+  day. Because I update the best-profit-so-far *before* considering whether to lower
+  `min_price`, I never accidentally sell before I buy — order of operations here is load-
+  bearing."
+- **Generalization framing (good for signaling pattern recognition):** "This is a
+  degenerate sliding window — the left edge only ever moves to a strictly better position
+  and never needs to shrink for validity, unlike the substring problems in this same
+  folder. I'd mention that to show I see it as a family member, not a one-off trick."
+
+### Vocabulary Builder
+
+- **running minimum/maximum** (n. phrase) — a value updated incrementally to always
+  reflect the best-so-far seen during a single pass, without rescanning prior elements.
+- **monotonic** (adj.) — moving consistently in one direction; here, profit-so-far only
+  ever increases, never needs revisiting once recorded.
+- **"the naive approach breaks down when…"** — a reusable phrase for justifying an O(n)
+  pivot: *"the O(n²) approach breaks down at scale because it repeats comparisons an O(n)
+  scan makes unnecessary."*
+- **degenerate case** (n. phrase) — here, both a trivial input (empty or single-element
+  price array) and, more interestingly, a "degenerate" version of a general pattern —
+  worth naming both senses if asked.

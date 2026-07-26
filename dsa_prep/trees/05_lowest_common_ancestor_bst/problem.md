@@ -41,3 +41,34 @@ Runnable, with sample test cases at the bottom (`python3 trees/05_lowest_common_
 ```python
 --8<-- "trees/05_lowest_common_ancestor_bst/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Brute-force-first framing (the default opening move):** "The general-tree brute force
+  is: find the root-to-`p` and root-to-`q` paths, then walk both lists to find where they
+  last agree — that works on any binary tree but costs O(n) and O(n) extra space. I'd name
+  that first, then say the BST ordering makes it unnecessary."
+- **Invariant framing (good for explaining why you don't need to search both sides):** "The
+  invariant I'm exploiting is that a BST's ordering tells me, without looking, which side
+  a value lives on. So the moment `p` and `q` fall on opposite sides of the current node —
+  or one equals it — that node *is* the split point, and I can stop; I never need to
+  explore both subtrees like a general-tree LCA would."
+- **Generalization framing (good for signaling BST-specific thinking):** "I'd flag this is
+  a 'let the ordering do the searching' problem — the same instinct that makes Kth Smallest
+  cheap without a full traversal. Whenever a problem says BST specifically, not just binary
+  tree, that's a cue to ask what the ordering buys me before reaching for general DFS."
+
+### Vocabulary Builder
+
+- **split point** (n. phrase) — the node where two paths diverge; here, the first node
+  where `p` and `q` stop being on the same side, which is exactly the LCA by definition.
+- **degenerate case** (n. phrase) — an edge case that's valid but easy to mishandle; here,
+  when one of `p`/`q` *is* an ancestor of the other, so "the LCA" is literally one of the
+  two input nodes.
+- **"…let the ordering do the searching"** — a reusable phrase for describing any
+  algorithm that uses sortedness to eliminate branches instead of exploring them.
+- **prune** (v.) — to eliminate a branch of the search space without visiting it; the BST
+  property prunes one entire subtree at every step, which is why this runs in O(h) instead
+  of O(n).

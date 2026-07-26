@@ -39,3 +39,35 @@ Runnable, with sample test cases at the bottom (`python3 trees/03_same_tree/solu
 ```python
 --8<-- "trees/03_same_tree/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Brute-force-first framing (the default opening move):** "There's no meaningfully
+  slower alternative to name here — you can't determine structural equality without
+  visiting every node in at least one tree, so O(min(n, m)) with early exit is already the
+  floor. I'd say that instead of manufacturing a fake brute force."
+- **Invariant framing (good for the three-way branch in the recursion):** "The invariant
+  I'm checking at every step is 'same shape, same value, so far.' The three-way branch —
+  both `None`, exactly one `None`, or both present but different values — has to be
+  exhaustive, because missing the 'exactly one is `None`' case is the classic silent bug
+  that only shows up on asymmetric trees."
+- **Generalization framing (good for connecting to Subtree of Another Tree):** "This is a
+  structural-comparison DFS, and I'd flag it's about to become a subroutine — Subtree of
+  Another Tree literally calls this same-tree check at every node of a bigger tree, so
+  getting this one exactly right pays off twice."
+
+### Vocabulary Builder
+
+- **short-circuit** (v.) — to stop evaluating as soon as the result is determined; the
+  `and` in the recursive call short-circuits so a left mismatch skips checking the right
+  side entirely.
+- **exhaustive** (adj.) — covering every possible case with no gaps; used to describe a
+  set of conditional branches that leaves nothing unhandled.
+- **structural equality** (n. phrase) — sameness of shape *and* values, as opposed to
+  reference equality (same object in memory) — worth distinguishing explicitly since
+  interviewers sometimes probe this distinction.
+- **"…the classic silent bug"** — a reusable phrase for flagging an edge case that
+  compiles and often passes casual testing but is wrong (e.g. comparing `.val` before
+  confirming neither node is `None`).

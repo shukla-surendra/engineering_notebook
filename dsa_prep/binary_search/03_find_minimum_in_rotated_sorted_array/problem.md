@@ -41,3 +41,33 @@ Runnable, with sample test cases at the bottom (`python3 binary_search/03_find_m
 ```python
 --8<-- "binary_search/03_find_minimum_in_rotated_sorted_array/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Reframing-the-target framing (the mental shift that matters most):** "There's no
+  `target` value to search for here — I'm searching for a *boundary*, the rotation point.
+  That reframing is what tells me to use the converging `left < right` loop shape instead
+  of the exact-match `left <= right` shape."
+- **Invariant framing (why `right = mid`, not `mid - 1`):** "Comparing `nums[mid]` to
+  `nums[right]` tells me which side the minimum is on. When the minimum could *be* `mid`
+  itself, I keep it in range with `right = mid` rather than excluding it — dropping it
+  would be the classic off-by-one that loses the answer."
+- **Generalization framing (names this as boundary-finding, not classic search):** "This is
+  really 'binary search on the answer' in disguise — the predicate is 'is the rotation
+  point at or before this index,' and I'm converging on the smallest index where that's
+  true, the same shape as Koko Eating Bananas underneath."
+
+### Vocabulary Builder
+
+- **boundary-finding** (n. phrase) — a binary search variant that converges on a
+  transition point rather than an exact match; uses `left < right` and narrows until they
+  meet.
+- **candidate answer** (n. phrase) — a value that might itself be the final answer, which
+  is why it must stay in the search range (`right = mid`) rather than being excluded
+  (`right = mid - 1`).
+- **"converges when left equals right"** — a precise, reusable way to describe the
+  termination condition of boundary-finding binary search, distinct from exact-match search.
+- **rotation point** (n. phrase) — the index where the originally sorted array was cut and
+  wrapped; also the index of the minimum element.

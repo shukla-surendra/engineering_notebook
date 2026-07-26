@@ -39,3 +39,31 @@ Runnable, with sample test cases at the bottom (`python3 bit_manipulation/01_sin
 ```python
 --8<-- "bit_manipulation/01_single_number/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Brute-force-first framing (the default opening move):** "The naive approach is a hash
+  set — track what I've seen, O(n) space. I'd say that out loud first, then note the
+  constraint 'O(1) space' is the tell that they want XOR: it lets me cancel pairs without
+  storing anything."
+- **Invariant framing (good for justifying why the trick is correct, not just fast):** "The
+  invariant is that `result` always holds the XOR of everything processed so far. Since
+  XOR is commutative and associative, order never breaks that invariant — which is exactly
+  why I don't need to sort or group first."
+- **Pattern-recognition framing (good for signaling this generalizes):** "This is the base
+  case of XOR cancellation — anytime I hear 'everything appears twice except one,' that's
+  my cue. I'd name the family, since Missing Number is the same identity applied over
+  indices instead of just values."
+
+### Vocabulary Builder
+
+- **cancellation** (n.) — here, the algebraic fact that `x ^ x = 0` makes paired elements
+  vanish under XOR. *"XOR cancellation is what lets duplicates zero themselves out."*
+- **commutative / associative** (adj.) — order and grouping don't affect the result;
+  worth stating explicitly since it's *why* a single linear pass suffices.
+- **"the naive approach breaks down when…"** — a reusable phrase for pivoting from brute
+  force to optimized: "...it breaks down when we're told we can't use extra space."
+- **degenerate case** (n. phrase) — a trivially small but valid input (a single-element
+  array here) — worth naming to show you've checked boundaries.

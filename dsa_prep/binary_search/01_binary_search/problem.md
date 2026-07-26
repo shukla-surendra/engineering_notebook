@@ -40,3 +40,32 @@ Runnable, with sample test cases at the bottom (`python3 binary_search/01_binary
 ```python
 --8<-- "binary_search/01_binary_search/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Baseline framing (even for the "easy" version, name the alternative):** "A linear scan
+  is O(n) and trivially correct — I'd mention it only to contrast it with binary search,
+  which exploits the fact that the array is sorted to eliminate half the remaining
+  candidates on every comparison."
+- **Invariant framing (the habit worth building on the simplest case first):** "The
+  invariant is: if the target exists, it's always within `[left, right]`. Every comparison
+  either finds it or shrinks that range while preserving the invariant — that's the exact
+  mental model I carry into every harder binary-search variant."
+- **Boundary-condition framing (shows precision on loop bounds):** "I use `left <= right`
+  because I'm looking for an exact match and returning -1 on failure — that's a different
+  loop condition than the boundary-converging version I'd use for something like 'find the
+  rotation point,' and mixing the two up is the most common bug in this family."
+
+### Vocabulary Builder
+
+- **search space** (n. phrase) — the current range of candidates still under
+  consideration; binary search halves it every iteration. *"The search space shrinks by
+  half on every comparison, giving O(log n)."*
+- **invariant** (n.) — a condition guaranteed true throughout the loop's execution; here,
+  "if the target exists, it's within `[left, right]`."
+- **off-by-one** (n. phrase) — an error from an incorrect boundary (`mid+1` vs `mid`,
+  `<=` vs `<`); binary search is notorious for these, so naming the risk shows awareness.
+- **"halving the problem at each step"** — a natural, spoken-language way to describe
+  O(log n) behavior without leaning on notation alone.

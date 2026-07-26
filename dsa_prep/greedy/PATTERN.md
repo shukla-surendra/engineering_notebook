@@ -92,3 +92,42 @@ for x in arr:
 
 Usually O(n log n) (dominated by an initial sort) or O(n) (single pass, no sort needed) —
 greedy's whole appeal is trading DP's O(n) or O(n²) *table* for a single decisive pass.
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Recognition framing (how I'd open a discussion of this pattern):** "Greedy is worth
+  reaching for whenever I notice an obviously-best local choice at each step — sort by
+  some key, then take a single pass making one decision per element. The tell is that I'm
+  tempted to say 'just always do X' without needing to compare X against alternatives."
+- **Justification framing (the part that actually distinguishes strong candidates):** "The
+  real skill isn't spotting a plausible greedy rule, it's proving it can't be beaten —
+  usually with an exchange argument ('if the optimal solution differed from my choice, I
+  could swap them without making it worse') or a no-benefit-to-waiting argument ('delaying
+  this decision can only make the situation the same or worse, never better'). I'd say
+  which one applies before writing any code."
+- **Contrast framing (good for showing you know the boundary of the technique):** "If I
+  can't construct any version of that proof — if a locally-best choice could be
+  invalidated by information that only shows up later — that's my signal to drop greedy and
+  reach for DP instead, which considers multiple choices and lets the recurrence decide
+  rather than committing early."
+
+### Vocabulary Builder
+
+- **exchange argument** (n. phrase) — the classic greedy-correctness proof: show any
+  optimal solution can be transformed into your greedy solution one swap at a time without
+  losing value. *"The exchange argument for sorting by end time is what tells me it's not
+  just a heuristic."*
+- **local optimum vs. global optimum** (n. phrase) — a locally-best choice is only useful
+  if it's provably consistent with the globally-best answer; greedy's entire risk surface
+  is confusing the two.
+- **counterexample** (n.) — a specific input that breaks a proposed greedy rule; the
+  fastest way an interviewer tests whether your "obviously correct" greedy actually is —
+  worth actively hunting for one yourself before committing to the approach.
+- **"…considers all choices and lets the recurrence decide"** — a compact phrase for
+  explaining what DP does differently from greedy, useful when pivoting away from a greedy
+  idea that doesn't have a clean proof.
+- **suboptimal** (adj.) — technically valid but not the best possible; the usual failure
+  mode of a greedy algorithm with the wrong sort key or comparison direction, as opposed to
+  outright incorrect.

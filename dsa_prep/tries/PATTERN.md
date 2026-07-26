@@ -89,3 +89,41 @@ O(L) per insert/search, where L = word or prefix length — independent of how m
 are stored. Space is O(total characters across all inserted words) in the worst case
 (no shared prefixes), but real dictionaries share a lot of prefix structure, so actual
 usage is often much less.
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Recognition framing (the default for spotting a trie problem):** "The tell I listen
+  for is 'prefix' — literally the word, or its synonyms: 'startsWith,' 'autocomplete,'
+  'many words checked repeatedly against a fixed dictionary.' If a hash set would need to
+  answer 'does anything begin with X,' that's the signal a hash set is the wrong structure
+  and I should restructure the strings into a tree instead."
+- **Mental-model framing (good for explaining *why* a trie, not just *that* a trie):** "I
+  think of a trie as turning a *set of strings* into a *single shared tree*, where the cost
+  of a lookup depends on the length of what I'm looking up, not on how many strings are
+  stored. That independence from dictionary size is the actual value proposition, and I'd
+  say that explicitly rather than just 'it's a tree of characters.'"
+- **Generalization/insight framing (good for connecting the three problems in this
+  family):** "The three problems here are really one data structure with three different
+  *walks* on top: a straight-line walk (exact/prefix search), a branching walk
+  (wildcard search), and a walk driven by an external structure (the board) instead of the
+  query string itself (Word Search II). I'd name that spectrum out loud to show I'm not
+  memorizing three separate tricks."
+
+### Vocabulary Builder
+
+- **amortize** (v.) — to spread a one-time setup cost (building the trie) over many
+  repeated queries so it pays for itself; the core justification for building a trie
+  instead of re-scanning a word list per query.
+- **branching walk** (n. phrase) — a traversal that must explore multiple children at a
+  single step rather than following one deterministic path; wildcards force this.
+- **"…restructure the data so the question becomes cheap to ask"** — a general, reusable
+  phrase for describing why you'd build an index (trie, hash map, sorted array) before
+  answering queries, applicable well beyond tries.
+- **shared substructure** (n. phrase) — the space efficiency that comes from multiple
+  strings reusing the same prefix nodes instead of being stored independently; the reason
+  trie space usage is often much better than the worst-case bound suggests.
+- **degenerate case** (n. phrase) — here, a dictionary with no shared prefixes at all
+  (e.g. completely random strings), which pushes the trie's space usage toward its
+  worst-case O(total characters) bound with little savings from sharing.

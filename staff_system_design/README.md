@@ -17,6 +17,14 @@ picture. This track exists so that ground gets the same depth of treatment.
 
 ## Read This First
 
+If terms like **p99 latency**, **the nines**, **sharding vs. replication**, **CAP
+theorem**, or **idempotency** aren't things you could explain from first principles yet,
+start with the [ML track's Prerequisite Concepts
+primer](http://127.0.0.1:8001/prerequisite_concepts/01_performance_and_scale/) (three
+short parts covering measurement/scaling, data/consistency, and communication/resilience)
+— it's the shared vocabulary this track assumes too, even though the case studies below
+are ML-independent.
+
 **[0. The Staff-Level Signal](00_staff_level_signal/tutorial.md)** — what actually
 separates a staff-level answer from a senior one in these rounds. It's not "bigger
 numbers" — it's organizational scope, ambiguity handling, and trade-off framing at a

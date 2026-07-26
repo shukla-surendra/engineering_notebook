@@ -80,3 +80,38 @@ Exponential in the worst case (that's inherent — you're enumerating an exponen
 solution space), but pruning is what makes previously-intractable inputs feasible in
 practice. Space is O(depth of the recursion) for the path/call stack, plus whatever the
 output itself costs to store.
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Recognition framing (the trigger phrase to listen for):** "Whenever a problem asks me
+  to return *all* valid configurations, not the count and not just one, that's my signal
+  to reach for backtracking rather than pure DP or greedy. I'd say that distinction out
+  loud, since it's the fastest way to justify the approach before writing any code."
+- **Mental-model framing (how you'd teach the skeleton to someone in one breath):** "It's
+  choose, explore, un-choose — at every step, make a choice, recurse into the consequences
+  of that choice, and then undo it before trying the next option. The un-choose step is the
+  one people forget, and it's the one that actually makes it 'backtracking' instead of
+  plain brute-force recursion."
+- **Generalization framing (what separates fluency from having memorized five problems):**
+  "I'd point out that Subsets, Combination Sum, and Permutations are all the same skeleton
+  with one dial turned differently — whether the recursion advances the index or stays put
+  controls whether reuse is allowed. Naming that dial, rather than re-deriving each
+  solution from scratch, is what shows real pattern recognition."
+
+### Vocabulary Builder
+
+- **prune** (v.) — to abandon a branch of the search the moment it provably can't lead to a
+  valid solution, instead of exploring it to completion. *"I prune as soon as a partial
+  placement conflicts, rather than discovering the conflict at a leaf."*
+- **state space** (n. phrase) — the complete set of configurations a search could visit in
+  principle; backtracking's efficiency comes from how much of it pruning lets you skip.
+- **"the un-choose step is what makes it backtracking"** — a precise, quotable way to
+  distinguish backtracking from generic brute-force recursion when asked to define the term.
+- **exponential blowup** (n. phrase) — the inherent worst-case growth of enumerating an
+  entire solution space; naming it upfront shows you're not surprised by the complexity
+  bound, just managing it with pruning.
+- **incremental construction** (n. phrase) — building a solution one decision at a time
+  rather than generating full candidates and validating them after the fact; the structural
+  reason backtracking can prune mid-build.

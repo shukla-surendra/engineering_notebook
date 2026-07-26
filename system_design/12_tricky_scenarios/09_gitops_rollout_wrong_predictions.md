@@ -77,6 +77,35 @@ explicit environment-parity checks are what actually close this gap; drift detec
 doesn't. See the reconciliation-loop discussion in the
 [GitOps tutorial](../09_gitops_ml_cicd/tutorial.md#argocds-reconciliation-loop).
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Scope-of-guarantee framing (the default for this scenario):** "'ArgoCD says synced'
+  only guarantees Git-declared state matches live state — it says nothing about whether
+  that declared state resolves to the same real-world artifact across environments. That
+  gap is exactly where this bug lives."
+- **Mutable-reference framing (good for explaining the core mechanism):** "A mutable tag
+  means 'identical Git config' doesn't mean 'identical deployment' — the tag can point to
+  different actual content depending on when each environment happened to sync. I'd pin
+  every model reference to an immutable digest specifically to close this gap."
+- **Layered-diff framing (good for the diagnostic walkthrough):** "I wouldn't stop at 'the
+  manifests match' — I'd diff the *effective*, post-overlay configuration, and separately
+  resolve the actual deployed artifact digest in both environments, because either layer
+  can diverge while the other looks identical."
+
+### Vocabulary Builder
+
+- **mutable vs. immutable reference** (adj. phrase) — a pointer that can silently change
+  what it resolves to (`:latest`) versus one that always resolves to the exact same
+  artifact (a digest or explicit version).
+- **effective configuration** (n. phrase) — the final, post-overlay config actually
+  applied, as opposed to the base manifest, which can look identical while the effective
+  result differs.
+- **"…looks identical in sync status, since it only reconciles what's declared"** — a
+  precise way to name the limits of a reconciliation guarantee without dismissing its
+  value.
+
 ---
 
 **Previous:** [8. Stale Checkpoint After Preemption](08_stale_checkpoint_resume.md)  |  **Next:** [10. Reconstructing Model Lineage for an Audit](10_audit_lineage_reconstruction.md)

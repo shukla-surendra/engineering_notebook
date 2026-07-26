@@ -40,3 +40,37 @@ Runnable, with sample test cases at the bottom (`python3 stack/04_daily_temperat
 ```python
 --8<-- "stack/04_daily_temperatures/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Brute-force-first framing (the default opening move):** "The naive approach is, for
+  every day, scan forward until a warmer day shows up — O(n²) worst case, e.g. on a
+  strictly decreasing array. I'd name that, then say a monotonic stack gets to O(n) by
+  answering many days' questions in a single forward pass instead of a nested scan."
+- **Invariant framing (good for explaining why it's still O(n) despite the inner while
+  loop):** "The invariant is the stack holds indices in decreasing order of temperature.
+  When a warmer day appears, I pop every index whose 'waiting question' that day just
+  answers — and crucially, each index is pushed once and popped at most once across the
+  *entire* run, so the total work across all iterations is O(n), even though any single
+  iteration's inner loop looks like it could be expensive."
+- **Generalization framing (good for signaling pattern recognition):** "This is the
+  textbook monotonic stack — 'find the next greater/smaller element for every position' —
+  and I'd name that family explicitly, since it's the same shape as Next Greater Element
+  and stock-span-style problems."
+
+### Vocabulary Builder
+
+- **monotonic stack** (n. phrase) — a stack maintained in strictly increasing or
+  decreasing order, used to answer 'next greater/smaller element' queries in amortized
+  O(n).
+- **amortized** (adj.) — a cost averaged across the whole algorithm's run; here, even
+  though the inner `while` loop can pop several elements at once, no element is ever
+  popped more than once in total, so the amortized per-element cost is O(1).
+- **"each element is pushed once and popped at most once"** — the standard proof
+  sketch for why a monotonic-stack solution is O(n) despite looking like nested loops —
+  worth stating verbatim when asked to justify the complexity.
+- **resolve** (v.) — to determine an element's final answer and remove it from further
+  consideration; here, popping an index "resolves" its "how many days until warmer"
+  question.

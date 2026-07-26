@@ -41,3 +41,35 @@ Runnable, with sample test cases at the bottom (`python3 greedy/02_jump_game/sol
 ```python
 --8<-- "greedy/02_jump_game/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Brute-force-first framing (the default opening move):** "The brute force is
+  backtracking — try every jump length from every index — which is exponential in the
+  worst case. I'd say that out loud, then pivot: I don't actually need to know *which*
+  sequence of jumps works, only whether the farthest reachable index ever falls behind my
+  current position, which turns this into a single O(n) scan."
+- **Monotonicity framing (good for justifying why one pass is enough):** "The quantity I'm
+  tracking, `farthest`, is monotonically non-decreasing as I scan left to right — it never
+  needs to shrink or be reconsidered. That's the 'no benefit to waiting' argument: if index
+  i is unreachable, no amount of extra scanning fixes that, so I can fail fast the moment
+  `i > farthest`."
+- **Generalization framing (good for signaling pattern recognition):** "This is the
+  'track the farthest reachable index' pattern — I'd name it explicitly, since it's the
+  same frontier-tracking idea behind Jump Game II (minimum jumps) and several interval-
+  reachability problems, just with a different quantity being maximized at each step."
+
+### Vocabulary Builder
+
+- **monotonic** (adj.) — never decreasing (or never increasing) as you move through a
+  sequence; `farthest` is monotonic here, which is exactly what licenses a single forward
+  pass with no backtracking.
+- **infeasible** (adj.) — impossible to satisfy given the constraints; useful for
+  precisely describing why the scan bails out the instant an index is unreachable, rather
+  than saying something vaguer like "broken."
+- **"…which turns this into a single pass"** — a reusable phrase for the moment a greedy
+  insight collapses an apparently combinatorial search into linear-time scanning.
+- **frontier** (n.) — the boundary of what's currently reachable/known; a natural way to
+  describe `farthest` without repeating the variable name verbatim.

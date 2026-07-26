@@ -147,6 +147,40 @@ downstream dependency, say) is understood, which is dramatically simpler to buil
 - Extend this design to support a "burst allowance" (short bursts above the sustained
   limit are permitted) on top of the base global-limit design.
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **CAP-in-disguise framing (the default for this topic):** "A single global counter is a
+  CAP-theorem trade-off wearing a rate-limiter costume — I'd name that immediately rather
+  than waiting to be pushed there, and propose local enforcement with async reconciliation
+  as the direct consequence of that trade-off, not a separate idea."
+- **Named-parameter framing (good for the overshoot discussion, the single strongest
+  signal in this topic):** "I wouldn't present this design as if it enforces the limit
+  exactly — it doesn't and can't at this latency budget. I'd state the overshoot bound as
+  an explicit, quantified design parameter: we tolerate up to N%, bounded by the
+  reconciliation interval."
+- **Question-the-requirement framing (good for 'is global even real'):** "Before building
+  the harder version, I'd ask whether 'no user exceeds X globally' is a real requirement or
+  an unexamined assumption — often the actual motivation is protecting a downstream
+  dependency, and 'per-region, summing to approximately X' satisfies that just as well,
+  dramatically more simply."
+
+### Vocabulary Builder
+
+- **reconciliation** (n.) — periodically syncing distributed local state back to a shared
+  view of the truth, accepting temporary drift between syncs in exchange for avoiding a
+  synchronous cross-region call on every request.
+- **fail toward last-known-good** (v. phrase) — when a dependency (the global aggregator)
+  becomes unreachable, defaulting to the most recent value you trusted rather than either
+  extreme (fail open or fail closed).
+- **overshoot bound** (n. phrase) — the maximum amount a distributed, approximate system
+  can exceed its nominal limit before the next reconciliation, stated as a number rather
+  than left implicit.
+- **"…is exactly where a senior-level response stops"** — a fluent way to explicitly mark
+  the boundary between a correct-but-incomplete answer and the harder version the question
+  is actually testing.
+
 ---
 
 **Previous:** [6. Design a Distributed Message Queue](../06_design_distributed_message_queue/tutorial.md)  |  **Next:** [8. Design a Video Streaming Service](../08_design_video_streaming/tutorial.md)

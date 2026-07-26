@@ -86,6 +86,35 @@ asynchronously) needs to be evaluated explicitly against the RTO target it would
 otherwise satisfy, since these two concerns trade off directly against each other and one
 frequently undermines the other silently until a real incident reveals it.
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Untested-plan framing (the default for this scenario):** "A DR plan that's never been
+  tested is not a DR plan, it's a hypothesis. I'd say that directly to leadership rather
+  than softening it — the 5-minute RTO was aspirational until this incident, whether or not
+  anyone had said so out loud before."
+- **Trade-off-made-explicit framing (good for explaining the cost-vs-RTO tension):** "Cost
+  optimization on a standby region and an aggressive RTO target trade off directly against
+  each other. Scaling the standby down for cost reasons is defensible — but only if it's
+  evaluated explicitly against the RTO it would otherwise satisfy, not decided
+  independently by two different conversations."
+- **Timeline-reconstruction framing (good for the diagnostic approach):** "I'd reconstruct
+  the 40 minutes minute by minute — detection, decision, warm-up, data readiness, cutover —
+  because that single exercise usually makes the dominant cause obvious without needing to
+  guess between four plausible hypotheses."
+
+### Vocabulary Builder
+
+- **warm standby vs. cold standby** (adj. phrase) — infrastructure already running and
+  ready to absorb load immediately, versus infrastructure that's defined but not actually
+  running until failover is triggered.
+- **aspirational** (adj.) — a stated target that hasn't been validated as actually
+  achievable. *"An aspirational RTO that's never been drilled is worse than an honest,
+  tested, slower one."*
+- **"…is the price of that RTO"** — a fluent way to frame ongoing idle-capacity cost as the
+  necessary cost of a real reliability guarantee, not wasted spend.
+
 ---
 
 **Previous:** [11. Serving Cost Doubled After a "Routine" Upgrade](11_serving_cost_doubled.md)  |  **Next:** [13. Eval Passed, Guardrail Bypassed in Production](13_eval_passed_guardrail_bypassed.md)

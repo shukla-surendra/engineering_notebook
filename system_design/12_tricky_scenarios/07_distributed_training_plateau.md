@@ -80,6 +80,33 @@ binding constraints at different scale points, and diagnosing *which one* is bin
 "add more hardware." See the full scaling-efficiency diagnostic order in the
 [distributed training tutorial](../07_distributed_training_serving/tutorial.md#deep-dive-diagnosing-poor-scaling-efficiency).
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Diagnosis-as-skill framing (the default for this scenario):** "'More GPUs' only pays
+  off linearly while compute is the actual bottleneck — communication, data loading, and
+  stragglers all become binding constraints at different scale points. Figuring out *which
+  one* is binding, not just reaching for more hardware, is the actual skill being tested
+  here."
+- **Utilization-as-signal framing (good for explaining the diagnostic order):** "GPU
+  utilization is the fork in the diagnosis: high utilization with poor scaling points to
+  communication overhead; low or dropping utilization points to data starvation. I'd check
+  that number before touching anything else."
+- **Expectation-setting framing (good for the fix discussion):** "Sometimes the right fix
+  isn't a technical change at all — it's telling the team sub-linear scaling is expected
+  given the current topology, and setting expectations accordingly instead of buying more
+  GPUs that won't help."
+
+### Vocabulary Builder
+
+- **topology** (n.) — the physical arrangement of hardware (same-node vs. cross-node GPUs)
+  that determines communication cost; often the real variable behind a scaling result.
+- **binding constraint** (n. phrase) — whichever bottleneck currently caps performance,
+  useful for framing why fixing a non-binding constraint won't help.
+- **"…is the actual skill, not just 'add more hardware'"** — a fluent way to reframe a
+  scaling question from a purchasing decision into a diagnostic one.
+
 ---
 
 **Previous:** [6. Silently Duplicated Training Data](06_duplicate_training_data.md)  |  **Next:** [8. Stale Checkpoint After Preemption](08_stale_checkpoint_resume.md)

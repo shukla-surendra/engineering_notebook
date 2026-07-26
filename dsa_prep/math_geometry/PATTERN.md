@@ -73,3 +73,40 @@ space, at the cost of a slightly more careful multi-pass implementation.
 O(m·n) time (every cell touched a constant number of times), and — the entire point of
 this topic — O(1) *extra* space, achieved through geometric decomposition or repurposing
 existing storage rather than allocating a second grid.
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Recognition framing (how you'd name the pattern out loud, fast):** "Whenever a matrix
+  problem says or implies 'in place,' I stop looking for a clever single-pass formula and
+  ask instead: can I decompose this into named, simpler in-place steps (transpose +
+  reverse), track shrinking boundaries (spiral), or repurpose part of the structure itself
+  as storage (marker reuse)? Naming which of those three shapes applies is most of the
+  work before any code."
+- **Mental-model framing (good for explaining the unifying idea across sub-techniques):**
+  "I think of every problem in this family as answering the same underlying question: 'what
+  free space already exists in this structure that I can exploit instead of allocating a
+  new one?' Sometimes that's geometric — two operations compose into the transform I need —
+  and sometimes it's literal — the first row and column are memory I'm not otherwise using."
+- **Generalization/teaching framing (good for demonstrating depth beyond one problem):**
+  "The insight worth calling out explicitly is that these problems are rarely
+  algorithmically hard — they're bookkeeping-hard. The interesting content is the ordering
+  of operations (transpose before reverse, mark before overwrite, process (1,1) before row
+  0), not an unfamiliar algorithm, so I'd narrate the ordering decisions out loud rather
+  than rushing past them."
+
+### Vocabulary Builder
+
+- **in-place** (adj.) — an algorithm using O(1) extra space beyond the input itself,
+  mutating the given structure rather than building a new one.
+- **decomposition** (n.) — breaking a single complex transform into a sequence of simpler,
+  well-known operations that compose to the same result; the core move behind rotation via
+  transpose + reverse.
+- **auxiliary space** (n. phrase) — memory used beyond the input and output; minimizing
+  this, not runtime, is usually the actual constraint driving the "trick" in this pattern
+  family.
+- **"…exploit existing structure instead of allocating new"** — a reusable phrase for
+  describing the shared insight across this pattern family, applicable whether the "existing
+  structure" is the matrix's own first row/column or a geometric relationship between rows
+  and columns.

@@ -44,3 +44,38 @@ Runnable, with sample test cases at the bottom (`python3 graphs/04_course_schedu
 ```python
 --8<-- "graphs/04_course_schedule/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Brute-force-first framing (the default opening move):** "The question 'can all courses
+  be finished' is really 'does the prerequisite graph have a cycle,' so I'd restate the
+  problem that way immediately. A naive plain-visited DFS can't answer that correctly on a
+  directed graph, because it can't tell 'already fully explored elsewhere' apart from
+  'currently on my own recursion path' — that gap is exactly why a richer coloring scheme
+  is needed, not an optimization afterthought."
+- **Invariant framing (good for explaining the three-color scheme precisely):** "The
+  invariant is: a node is 'visiting' only while it's on the current DFS call stack. If DFS
+  ever reaches a node still marked 'visiting,' that's a back edge to an ancestor — a cycle
+  — and I return `False` immediately. Once a node's neighbors are fully explored with no
+  cycle found, I mark it 'visited' so future paths can safely skip it without re-deriving
+  the same answer."
+- **Generalization framing (good for placing this in the bigger toolbox):** "This is
+  directed-cycle detection, the same 3-color DFS that underlies topological sort — 'can
+  all courses finish' and 'is there a valid course ordering' are the same question asked
+  two ways. I'd mention that a valid ordering could be produced with the same traversal if
+  asked for it."
+
+### Vocabulary Builder
+
+- **topological sort** (n. phrase) — a linear ordering of a directed acyclic graph's nodes
+  such that every edge points from earlier to later in the ordering; only possible when no
+  cycle exists, which is exactly what this problem is checking for.
+- **back edge** (n.) — in DFS, an edge to an ancestor still on the current recursion path;
+  its presence is both necessary and sufficient for a cycle in a directed graph.
+- **acyclic** (adj.) — containing no cycles; "DAG" (directed acyclic graph) is the term for
+  a graph that satisfies this and is therefore topologically sortable.
+- **"…the crux of it is…"** — reusable phrase for compressing a restated problem into its
+  core question, e.g. "the crux of it is telling apart 'fully explored' from 'still on my
+  current path.'"

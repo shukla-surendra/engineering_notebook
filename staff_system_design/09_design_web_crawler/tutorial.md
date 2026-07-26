@@ -153,6 +153,39 @@ staff-worthy sub-design, not an afterthought bolted onto "crawl everything perio
   re-crawl frequency, structured data extraction) — a narrower, different-shaped variant
   of this same core problem.
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Fairness-not-throughput framing (the default for this topic):** "The central hard
+  problem here isn't raw throughput, it's scheduling fairly and politely across millions of
+  uncooperative external domains. I'd say that up front, since it reframes every subsequent
+  design choice around fairness rather than speed."
+- **Two-different-dedups framing (good for the deduplication deep-dive):** "URL-level and
+  content-level dedup are easy to conflate but they're genuinely different problems — one
+  asks 'have I seen this address,' the other asks 'have I seen this content under a
+  different address' — and they need different data structures, a Bloom filter versus a
+  content hash."
+- **Constraint-not-optimization framing (good for the politeness/robots.txt discussion):**
+  "I'd frame robots.txt compliance as a non-negotiable constraint driven by legal and
+  ethical obligation, not a performance knob to tune — that framing changes how a reviewer
+  reads every trade-off I make around it."
+
+### Vocabulary Builder
+
+- **politeness** (n., domain-specific) — the constraint that a crawler must not overwhelm
+  any single external site, enforced via per-host rate limiting and delay.
+- **Bloom filter** (n.) — a probabilistic set-membership structure with a small false-
+  positive rate and no false negatives, the standard answer for URL dedup at scale where
+  storing every seen URL exactly would be too memory-heavy.
+- **crawler trap** (n. phrase) — a site (malicious or misconfigured) generating an infinite
+  sequence of links, capable of starving crawl capacity for everything else if unbounded.
+- **near-duplicate detection** (n. phrase) — identifying content that's almost, not
+  exactly, identical (MinHash/SimHash), as distinct from exact-match content hashing.
+- **"…is itself a significant, staff-worthy sub-design, not an afterthought"** — a
+  reusable template for arguing a component that sounds minor (re-crawl prioritization)
+  actually deserves its own design treatment.
+
 ---
 
 **Previous:** [8. Design a Video Streaming Service](../08_design_video_streaming/tutorial.md)  |  **Next:** [10. Design Search Autocomplete](../10_design_search_autocomplete/tutorial.md)

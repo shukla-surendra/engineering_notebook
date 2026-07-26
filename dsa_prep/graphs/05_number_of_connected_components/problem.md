@@ -43,3 +43,37 @@ Runnable, with sample test cases at the bottom (`python3 graphs/05_number_of_con
 ```python
 --8<-- "graphs/05_number_of_connected_components/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Brute-force-first framing (the default opening move):** "A brute-force reading would
+  be to build an adjacency list and DFS from every unvisited node, counting how many times
+  I start a fresh traversal — that's a completely valid O(V+E) answer. I'd present it
+  first, then offer Union-Find as the alternative that's often preferred here because it
+  handles the edges as an incremental stream rather than requiring the full adjacency list
+  up front."
+- **Invariant framing (good for explaining what Union-Find is actually tracking):** "The
+  invariant is: at any point, the number of distinct root parents equals the number of
+  connected components formed by the edges processed *so far*. Each union either merges two
+  components (root count drops by one) or is a no-op on an edge that connects a component
+  to itself (root count unchanged) — there's no way to accidentally overcount."
+- **Generalization framing (good for naming when Union-Find beats DFS):** "I'd say
+  explicitly: DFS and Union-Find are interchangeable for a fixed graph, but Union-Find is
+  the natural choice specifically when connectivity is being built up edge-by-edge and I
+  might need the answer *between* edges too — that's the signal that separates this from a
+  plain 'count islands in a static graph' problem."
+
+### Vocabulary Builder
+
+- **disjoint set / Union-Find** (n. phrase) — a data structure tracking a partition of
+  elements into non-overlapping sets, supporting near-constant-time union and find.
+- **path compression** (n. phrase) — flattening the tree during `find` so future lookups
+  are faster; without it, Union-Find degrades toward O(n) per operation on adversarial
+  chains.
+- **amortized** (adj.) — describing a cost averaged over a sequence of operations; with
+  path compression and union-by-size, each Union-Find operation is amortized nearly O(1).
+- **"…incrementally, not all at once"** — reusable phrase for describing when Union-Find
+  beats a fixed adjacency-list traversal: the structure updates cleanly as edges arrive one
+  at a time, rather than needing the full graph up front.

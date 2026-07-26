@@ -136,6 +136,38 @@ in each: what a senior answer stops at, and what a staff answer adds — organiz
 scope, multi-year reasoning, or an explicitly named ambiguity — on top of the same
 technical design.
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Altitude-first (the default when asked 'what's the difference between senior and
+  staff'):** "It's not more technical correctness, it's a different altitude — a staff
+  answer narrates the organizational consequence of a technical choice, not just the
+  technical consequence. Same decision, one sentence further of reasoning about who else
+  it touches."
+- **Contrast-pair framing (good for demonstrating the distinction live, in the room):**
+  "I'd give both versions out loud: 'I'd use eventual consistency here' is senior. 'I'd use
+  eventual consistency here, which means the billing team needs to handle out-of-order
+  events — I'd align with them on that contract before this ships' is staff. Same
+  technical call, more scope."
+- **Named-tension framing (good for ambiguity-handling questions):** "When two
+  stakeholders genuinely want different things, I wouldn't quietly pick a side — I'd name
+  the tension explicitly, since that's a real disagreement, not a missing piece of
+  information I can resolve by asking one more clarifying question."
+
+### Vocabulary Builder
+
+- **altitude** (n., used metaphorically) — the level of abstraction or organizational scope
+  a discussion operates at; "staff altitude" means reasoning above the single-service level.
+- **blast radius** (n.) — how much breaks, and for whom, if a decision turns out wrong; a
+  required section in any staff-level design doc.
+- **total cost of ownership** (n. phrase) — the full cost of a choice beyond its initial
+  build cost, including on-call burden, upgrade cadence, and institutional knowledge risk.
+- **"…rather than a confession"** — a fluent way to reframe deliberately-taken technical
+  debt as a stated trade-off, not an admission of failure.
+- **reversibility** (n.) — how easily a decision can be undone if it turns out wrong; a
+  staff-level lens for evaluating build-vs-buy that a senior answer often skips.
+
 ---
 
 **Next:** [1. Distributed Systems Foundations](../01_distributed_systems_foundations/tutorial.md)

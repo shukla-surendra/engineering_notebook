@@ -117,3 +117,40 @@ cell.
 O(V + E) for BFS/DFS. O((V + E) · α(V)) for Union-Find (α = inverse Ackermann, effectively
 constant). Space is O(V) for visited-tracking plus O(V) worst-case for the queue/stack/
 recursion depth.
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Recognition framing (how you'd name the right tool out loud, fast):** "Before writing
+  any code, I translate the question into one of a handful of shapes: 'shortest path in an
+  unweighted graph' means BFS, 'does a path exist / flood-fill a region' means DFS or BFS,
+  'is this edge redundant / how many groups' means Union-Find, and 'is there a valid
+  ordering under dependencies' means topological sort. Naming the shape first is what
+  keeps me from writing the wrong traversal and discovering it thirty lines in."
+- **Mental-model framing (good for explaining why the tools aren't interchangeable):** "I
+  think of these four tools as answering four different *questions*, not four different
+  *implementations* of the same question — BFS answers 'how far,' DFS answers 'can I get
+  there,' Union-Find answers 'are these already connected,' and coloring-based DFS answers
+  'is there a cycle in a specific direction.' Picking the wrong one usually still compiles
+  and runs — it just answers a question nobody asked."
+- **Generalization/teaching framing (good for demonstrating depth beyond one problem):**
+  "The deepest reusable idea here is that a 'graph' doesn't have to be handed to you as an
+  adjacency list — grids are graphs with implicit 4-directional edges, and Word Ladder's
+  words-as-nodes graph is generated lazily via wildcard patterns. I'd walk through that
+  reframing explicitly, since recognizing an implicit graph is often the actual hard part,
+  not the traversal itself."
+
+### Vocabulary Builder
+
+- **adjacency list** (n. phrase) — a mapping from each node to its list of neighbors; the
+  standard explicit representation a graph is traversed over, whether given directly or
+  built on the fly.
+- **amortized** (adj.) — a cost averaged over a sequence of operations rather than any
+  single one; Union-Find's near-O(1) operations are amortized, not worst-case-O(1) per call.
+- **degenerate case** (n. phrase) — a trivial but valid edge case, such as a graph with one
+  node and no edges, or a start node equal to the target — worth naming to show boundaries
+  were checked, not just the typical case.
+- **"…is a graph problem in disguise"** — a reusable phrase for the moment a problem's
+  surface form (grid, word list, dependency list) isn't obviously graph-shaped, but the
+  underlying structure is — naming the disguise is what signals pattern recognition.

@@ -40,3 +40,33 @@ Runnable, with sample test cases at the bottom (`python3 arrays_hashing/02_valid
 ```python
 --8<-- "arrays_hashing/02_valid_anagram/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Early-exit framing (shows you check cheap conditions first):** "Before touching any
+  data structure, I check lengths — mismatched lengths are an instant `False` and save me
+  the trouble of building a frequency map at all. Cheap checks first is a habit, not just
+  luck."
+- **Invariant framing (for the frequency-count approach):** "The invariant is: after
+  incrementing for every character in `s` and decrementing for every character in `t`,
+  every count should land back at exactly zero. If any count is nonzero at the end, the
+  multisets of characters differ."
+- **Trade-off framing (for comparing to the sorting alternative):** "Sorting both strings
+  and comparing them is the more obvious approach, at O(n log n) — I'd mention it, then say
+  the frequency-count version trades the log factor away by counting in a single pass
+  instead of ordering."
+
+### Vocabulary Builder
+
+- **multiset** (n.) — a set where an element can appear more than once and its count
+  matters; anagram-checking is really multiset equality. *"Two strings are anagrams iff
+  their character multisets are equal."*
+- **bounded alphabet** (n. phrase) — a fixed, small set of possible characters (like
+  lowercase a–z); lets you use a fixed-size array instead of a general hash map for O(1)
+  space.
+- **"trades a log factor for a linear pass"** — a precise way to describe swapping a
+  sort-based solution for a counting-based one.
+- **symmetric check** (adj. phrase) — describing an approach that treats both inputs
+  identically (increment on one, decrement on the other) rather than comparing asymmetrically.

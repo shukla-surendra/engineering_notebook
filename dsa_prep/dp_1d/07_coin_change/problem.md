@@ -43,3 +43,32 @@ Runnable, with sample test cases at the bottom (`python3 dp_1d/07_coin_change/so
 ```python
 --8<-- "dp_1d/07_coin_change/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Brute-force-first framing (the default opening move):** "The brute force tries every
+  combination of coins recursively — exponential, and it re-explores the same remaining
+  amount over and over from different coin orderings. I'd name that redundancy before
+  introducing the DP table, since it's the actual justification for memoizing on amount."
+- **Invariant framing (good for explaining the bottom-up fill order):** "The invariant is
+  that by the time I compute `dp[a]`, every `dp[a - c]` for coin `c <= a` is already final.
+  That's only true because I iterate amounts from 0 upward — get that order backwards and
+  the recurrence reads uninitialized values."
+- **Pattern-recognition framing (good for naming the family and its variant):** "This is
+  unbounded knapsack — each coin can be reused arbitrarily many times, which is why coins
+  go in the inner loop without any 'already used' tracking. I'd contrast that out loud with
+  0/1 knapsack, where each item can only be used once, to show I know which variant applies
+  here."
+
+### Vocabulary Builder
+
+- **unbounded knapsack** (n. phrase) — the knapsack variant where items can be reused
+  without limit; the term itself signals you recognize the family, not just this instance.
+- **sentinel value** (n. phrase) — here, initializing `dp[a]` to infinity to represent
+  "not yet reachable," letting `min()` work correctly before any real value is known.
+- **"…trades exponential branching for a table filled once, amount by amount"** — a
+  reusable way to justify the DP table over recursive brute force.
+- **unreachable** (adj.) — describing an amount no combination of coins can sum to exactly;
+  the reason the final check for `dp[amount] == infinity` (returning -1) matters.

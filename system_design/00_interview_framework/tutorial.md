@@ -176,4 +176,4 @@ prompting you to attach your own production-system specifics → practice questi
 
 ---
 
-**Previous:** [Overview](../README.md)  |  **Next:** [1. Fundamentals & Building Blocks](../01_fundamentals/tutorial.md)
+**Previous:** [Prerequisite Concepts, Part 4: CPU vs. GPU](../prerequisite_concepts/04_cpu_vs_gpu.md)  |  **Next:** [1. Fundamentals & Building Blocks](../01_fundamentals/tutorial.md)

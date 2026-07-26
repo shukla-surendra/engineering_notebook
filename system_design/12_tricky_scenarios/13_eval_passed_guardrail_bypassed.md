@@ -80,6 +80,37 @@ seemingly cosmetic prompt edit can change the *structural* assumptions a guardra
 on, so prompt changes and guardrail validation can't be treated as independent, siloed
 review steps.
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Different-tests framing (the default for this scenario):** "An eval gate and a
+  guardrail test different things, and they're not redundant — a passing eval says
+  'legitimate users are better served,' nothing about 'this resists misuse.' An aggregate
+  quality score going up can coexist with a safety regression the eval was never built to
+  catch."
+- **Cosmetic-change-isn't-cosmetic framing (good for explaining the root cause):** "'Just
+  making it more concise' sounds low-risk because it's a wording change, not a logic
+  change — but trimming boilerplate can quietly weaken the structural separation between
+  instructions and user content a guardrail depends on. I'd treat any prompt-structure
+  change as guardrail-relevant by default, not exempt it because it 'looks' cosmetic."
+- **Coverage-gap framing (good for the diagnostic approach):** "I'd replay the exact
+  injected input against both prompt versions with the guardrail active first — that one
+  test tells me immediately whether this is a guardrail-assumption break or a wiring gap
+  where a second input path never went through the guardrail at all."
+
+### Vocabulary Builder
+
+- **adversarial example** (n. phrase) — an input specifically crafted to defeat a system's
+  intended behavior, as opposed to a naturally-occurring difficult case; the category
+  missing from the golden set here.
+- **structural separation** (n. phrase) — keeping system instructions and untrusted content
+  in distinct, clearly-delimited roles, the property a prompt-injection guardrail typically
+  depends on.
+- **"…are not redundant"** — a precise, quotable way to argue two safeguards that sound
+  similar (eval, guardrail) actually cover different failure surfaces, so passing one says
+  nothing about the other.
+
 ---
 
 **Previous:** [12. DR Failover Took 8x Longer Than Planned](12_dr_failover_slow.md)  |  **Next:** [Back to System Design Overview](../README.md)

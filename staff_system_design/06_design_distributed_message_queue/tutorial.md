@@ -159,6 +159,38 @@ parameter to casually adjust later.
 - Design the exactly-once payment-event pipeline explicitly, using this queue as the
   backbone.
 
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Mechanism-over-name framing (the default for 'why is Kafka fast'):** "I wouldn't stop
+  at 'it's a log' — sequential writes are dramatically faster than random writes, segments
+  make retention-based deletion cheap, and zero-copy reads avoid an extra memory copy on
+  the read path. Naming the mechanism, not just the architecture pattern, is the actual
+  signal."
+- **Scope-the-guarantee framing (the default for exactly-once questions):** "Exactly-once
+  is achievable within the system's boundary — producer to topic to consumer — but it
+  doesn't automatically extend to a consumer's side effects outside it, like calling an
+  external API. I'd say that boundary out loud, since it's exactly where 'I know Kafka'
+  answers tend to quietly overreach."
+- **Irreversibility framing (good for the partition-count discussion):** "I'd treat initial
+  partition count as a long-term, hard-to-change decision, not a parameter to casually
+  adjust later — repartitioning breaks the key-to-partition mapping consumers depend on
+  for ordering."
+
+### Vocabulary Builder
+
+- **append-only log** (n. phrase) — a storage structure that only ever adds to the end,
+  never overwrites in place; the core design decision behind a message queue's throughput.
+- **zero-copy** (adj.) — transferring data from disk to network without an intermediate
+  copy through application memory, a specific, nameable throughput optimization.
+- **in-sync replica (ISR)** (n. phrase) — the set of followers currently caught up with a
+  partition's leader; a write counts as committed once enough of the ISR has it.
+- **idempotent producer** (n. phrase) — a producer whose retried sends are deduplicated by
+  the broker via a sequence number, solving duplicate writes from retries specifically.
+- **"…still your responsibility at the edges"** — a precise, reusable way to draw the line
+  between what a piece of infrastructure guarantees and what the caller still owns.
+
 ---
 
 **Previous:** [5. Design a Distributed Cache](../05_design_distributed_cache/tutorial.md)  |  **Next:** [7. Design a Rate Limiter at Global Scale](../07_design_rate_limiter_at_scale/tutorial.md)

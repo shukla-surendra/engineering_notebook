@@ -82,3 +82,43 @@ def median():
 
 O(log n) per insert/extract (O(log k) for a bounded top-k heap), O(1) for peeking the
 top. Building a heap from n elements up front is O(n) (`heapify`), not O(n log n).
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Recognition framing (how I'd open a discussion of this pattern):** "The tell for a
+  heap is catching myself wanting to sort the whole collection just to look at a few
+  extreme elements, or wanting to re-sort after every single insertion. Any time the
+  question is phrased as 'top k,' 'kth largest,' 'merge k sorted things,' or 'running
+  median,' a heap is almost always the right structure before I even think about the
+  details."
+- **Mental-model framing (good for explaining *why* it's the right tool, not just naming
+  it):** "A heap gives you a partial order — it only guarantees the extreme element is
+  accessible in O(log n), not that everything is sorted. That's exactly the right amount of
+  structure when you only ever need the min or max repeatedly, and paying for a full sort
+  would be solving a harder problem than you were asked."
+- **Generalization framing (good for showing you can pick the right heap shape):** "There
+  are really three templates here, not one: a size-bounded heap for top-k, a heap of 'next
+  candidates' for merging k sorted sequences, and two heaps split at a boundary for running
+  medians. I'd name which template applies before writing code, since picking the wrong one
+  is the most common way this goes sideways."
+
+### Vocabulary Builder
+
+- **partial order** (n. phrase) — an ordering that only guarantees relationships between
+  some elements (like "the root is smaller than its children") rather than a full sorted
+  sequence; it's exactly the guarantee a heap provides, and exactly what most "top-k" or
+  "extreme element" problems actually need.
+- **heapify** (v.) — building a heap from an existing collection in O(n) time, faster than
+  n individual O(log n) insertions would suggest; worth knowing so you don't accidentally
+  claim O(n log n) for heap construction when it isn't necessary.
+- **extract-min / extract-max** (n. phrase) — the operation of removing and returning the
+  heap's root; the core operation that makes heaps useful whenever a problem repeatedly
+  asks for "the current smallest/largest."
+- **"…is exactly the right amount of structure"** — a reusable phrase for justifying a data
+  structure choice by noting it provides no more (and no less) guarantee than the problem
+  actually needs — useful pushback against over-engineering with a fully sorted structure.
+- **tie-breaker** (n.) — an auxiliary value added to a heap entry (like an index) purely to
+  make comparisons well-defined when primary keys are equal; worth mentioning when merging
+  k sorted sequences of complex objects.

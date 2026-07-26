@@ -39,3 +39,37 @@ Runnable, with sample test cases at the bottom (`python3 math_geometry/01_rotate
 ```python
 --8<-- "math_geometry/01_rotate_image/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Brute-force-first framing (the default opening move):** "The obvious approach is to
+  allocate a new n×n matrix and copy `matrix[i][j]` into `result[j][n-1-i]` directly — O(n²)
+  time and space. I'd name that first, then say the in-place constraint is really asking
+  for a *decomposition*: two well-known operations, transpose and row-reversal, composed
+  together, instead of one clever index formula."
+- **Invariant framing (good for explaining why order (transpose, then reverse) matters):**
+  "Transpose alone gives a counter-clockwise-ish reflection across the diagonal, not the
+  rotation; the invariant I'm relying on is that transpose-then-reverse-rows is
+  mathematically equivalent to a 90° clockwise rotation for every cell, not just the ones I
+  happened to test. Reversing the order of those two steps produces a different, wrong
+  transform, so I'd state the decomposition by name rather than trying to re-derive it live."
+- **Generalization framing (good for showing this isn't a one-off trick):** "This belongs
+  to the in-place matrix manipulation family, where the recurring insight is 'decompose a
+  spatial transform into two simpler, named, in-place steps' rather than compute a closed
+  form per cell. I'd reference that family explicitly if asked to handle a related
+  transform, like counter-clockwise rotation or a 180° rotation."
+
+### Vocabulary Builder
+
+- **transpose** (n./v.) — reflecting a matrix across its main diagonal, swapping
+  `matrix[i][j]` with `matrix[j][i]`. *"Transposing first is what makes the row-reversal
+  step produce a clean 90-degree rotation."*
+- **in-place** (adj.) — modifying a data structure using only O(1) extra space, without
+  allocating an auxiliary copy.
+- **decomposition** (n.) — breaking a complex transform into a sequence of simpler, named
+  operations; the core technique this whole problem family relies on.
+- **"…is the load-bearing detail"** — reusable phrase for flagging the one design choice
+  an approach depends on, e.g. "the order of transpose-then-reverse is the load-bearing
+  detail here."

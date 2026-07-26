@@ -43,3 +43,39 @@ Runnable, with sample test cases at the bottom (`python3 tries/02_design_add_and
 ```python
 --8<-- "tries/02_design_add_and_search_words/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Brute-force-first framing (the default opening move):** "The brute force is: store
+  every word in a list, and for a wildcard query, regex-match or manually compare against
+  every stored word — O(number of words · L). I'd name that, then say the trie version is
+  really about pruning the search early rather than changing the asymptotic worst case
+  outright, since a query like '...' still has to explore broadly."
+- **Invariant framing (good for explaining why `.` needs recursion, not a loop):** "A
+  plain letter narrows me to exactly one child, so a simple `while` loop suffices — that's
+  the base trie. The moment I hit a `.`, I no longer have one path to follow, I have up to
+  26, so the invariant shifts from 'walk a single path' to 'succeed if *any* branch
+  succeeds' — that's exactly what recursion with an `any(...)` expresses, and a loop
+  can't express it as cleanly."
+- **Generalization framing (good for naming the technique):** "This is backtracking
+  layered on top of a trie walk: try a branch, and if it doesn't pan out, that recursive
+  call just returns False and I've implicitly backtracked with no extra bookkeeping. I'd
+  connect that to the exact same 'try each option, recurse, let failure propagate up'
+  shape used in general backtracking problems."
+
+### Vocabulary Builder
+
+- **backtracking** (n.) — a search strategy that tries a choice, recurses, and
+  automatically abandons that choice (returns to the previous state) if it doesn't lead to
+  a solution; here, trying each of up to 26 children for a wildcard.
+- **worst case** (n. phrase) — here, a query of all dots (`"..."`) forces exploring every
+  path of that length in the trie, giving the O(26^d · L) bound — worth stating precisely
+  rather than just saying "it's slower with dots."
+- **"…pruning the search early rather than changing the worst case"** — an honest,
+  reusable phrase for describing an optimization that helps the common case a lot without
+  improving the theoretical worst-case bound.
+- **branching factor** (n. phrase) — the number of choices available at each step of a
+  search (here, up to 26 possible children per trie node); a higher branching factor
+  directly inflates a backtracking search's cost.

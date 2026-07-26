@@ -42,3 +42,32 @@ Runnable, with sample test cases at the bottom (`python3 bit_manipulation/03_cou
 ```python
 --8<-- "bit_manipulation/03_counting_bits/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Brute-force-first framing (the default opening move):** "Running Kernighan's trick or
+  a naive bit-check independently for every `i` from 0 to `n` gives O(n log n) overall —
+  I'd state that total before pivoting, since 'linear time' in the prompt is the signal
+  that I should reuse work across iterations instead of recomputing."
+- **Invariant framing (good for explaining the recurrence precisely):** "The invariant is
+  that `ans[j]` is already correct for every `j < i` by the time I compute `ans[i]`. That
+  lets me write `ans[i] = ans[i >> 1] + (i & 1)` and trust the smaller answer instead of
+  recomputing it — it's DP dressed up as a bit trick."
+- **Pattern-recognition framing (good for placing this in the DP family):** "I'd name this
+  explicitly as 1-D DP where the recurrence happens to come from a bitwise observation
+  rather than an array of costs — same shape as Climbing Stairs, different source for the
+  transition."
+
+### Vocabulary Builder
+
+- **memoization** (n.) — caching subproblem results so they're computed once; here it's
+  implicit in the array itself rather than an explicit cache.
+- **recurrence** (n.) — the rule relating `ans[i]` to earlier entries; stating it in words
+  before code ("shift right, drop the low bit, add it back if it was 1") shows you derived
+  it rather than memorized it.
+- **"…trades recomputation for reuse"** — a compact phrase for describing any DP speedup
+  over independent per-element brute force.
+- **bottom-up** (adj.) — building the table from the smallest index upward, as opposed to
+  top-down recursion with memoization; worth naming which direction you're building in.

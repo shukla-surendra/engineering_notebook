@@ -42,3 +42,34 @@ Runnable, with sample test cases at the bottom (`python3 dp_1d/09_longest_increa
 ```python
 --8<-- "dp_1d/09_longest_increasing_subsequence/solution.py"
 ```
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Brute-force-first framing (the default opening move):** "The true brute force checks
+  every subsequence — exponential. The first real improvement is O(n²) DP: `dp[i]` is the
+  LIS ending at `i`. I'd land there first, out loud, before mentioning the O(n log n)
+  refinement, since the DP version is what most people should derive under pressure."
+- **Invariant framing (good for explaining why the `tails` array works even though it isn't
+  a real subsequence):** "The invariant is: `tails[k]` is the *smallest possible* tail value
+  among all increasing subsequences of length `k+1` found so far. Keeping that tail minimal
+  is what maximizes future extensibility — it's why I overwrite in place with binary search
+  rather than only appending."
+- **Pattern-recognition framing (good for naming the technique precisely):** "This is
+  patience sorting — the same idea behind sorting a deck of cards into piles — repurposed
+  to track subsequence lengths instead of literal piles. Naming it signals I know this is a
+  known technique, not an improvised binary-search hack."
+
+### Vocabulary Builder
+
+- **patience sorting** (n.) — a card-sorting technique whose pile-placement rule, applied
+  to array elements, yields the O(n log n) LIS algorithm; the technique's actual name, worth
+  using precisely.
+- **monotonic** (adj.) — the `tails` array is monotonically non-decreasing by construction,
+  which is exactly what makes binary search over it valid.
+- **"…trades an O(n²) recurrence for an O(n log n) one by keeping tails minimal"** — a
+  reusable phrase summarizing the whole optimization in one sentence.
+- **strictly increasing** (adj. phrase) — precise language distinguishing this problem from
+  the non-strict ("non-decreasing") variant, which changes whether the binary search uses
+  `bisect_left` or `bisect_right`.

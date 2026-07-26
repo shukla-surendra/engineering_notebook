@@ -87,3 +87,40 @@ return `dummy.next` at the end. This one trick eliminates an entire category of
 Nearly everything in this topic is O(n) time, O(1) space — that O(1) space (versus an
 O(n)-space array-conversion approach) is usually the entire point of doing it with pointer
 manipulation instead of copying values into an array first.
+
+## Articulate It: Interview Framing & Vocabulary
+
+### Three Ways to Explain This
+
+- **Recognition framing (how you'd name the pattern before writing code):** "Whenever I
+  see a linked-list problem, my first question is 'can I random-access or peek ahead
+  here?' — I can't, so the whole problem is really about disciplined pointer bookkeeping.
+  I'd say that out loud, then map the problem onto one of a handful of known shapes:
+  reversal, fast/slow, fixed-gap, or dummy-head-plus-merge."
+- **Mental-model framing (good for explaining the technique itself, not one instance of
+  it):** "The mental model I use is: a linked list gives you exactly one thing arrays
+  don't — cheap in-place relinking — and takes away exactly one thing arrays have — random
+  access. Every technique in this family is really about substituting a second (or third)
+  pointer for the random access you don't have."
+- **Generalization framing (good for showing you can extend the pattern to a new
+  variant):** "If I saw a brand-new linked-list problem in an interview, I'd first ask
+  which of the four templates it smells like — reversal, fast/slow, fixed-gap, or
+  dummy-head-merge — and often it's a composition of two, the way Reorder List chains
+  three of them together. Naming the sub-problems is usually 90% of solving it."
+
+### Vocabulary Builder
+
+- **pointer bookkeeping** (n. phrase) — the discipline of tracking which pointer to save
+  before overwriting another; the unifying skill across this entire pattern family.
+- **sentinel/dummy node** (n. phrase) — a placeholder node used to eliminate special-case
+  logic for "what if the head changes"; worth having as a default reflex, not something
+  you reach for only when you get stuck.
+- **"this reduces to a known sub-problem"** — a reusable phrase for signaling
+  decomposition when a new problem is really a chain of familiar primitives (as in
+  Reorder List or Merge k Sorted Lists).
+- **amortized** (adj.) — describing a cost measured over a whole sequence of operations
+  rather than any single one; the fast/slow and gap-pointer templates are both O(n)
+  overall even though a step "looks" like it could repeat work.
+- **monotonic** (adj.) — moving in one direction only; the `left`/`slow` pointers in
+  these templates only ever advance, never retreat, which is exactly what keeps the total
+  work linear.
