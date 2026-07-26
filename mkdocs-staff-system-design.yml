@@ -46,6 +46,7 @@ nav:
   - Overview: README.md
   - Algorithms & Data Structures: http://127.0.0.1:8000/
   - ML Systems Design: http://127.0.0.1:8001/
+  - Security Engineering: http://127.0.0.1:8003/
   - 0. The Staff-Level Signal: 00_staff_level_signal/tutorial.md
   - 1. Distributed Systems Foundations: 01_distributed_systems_foundations/tutorial.md
   - "2. Design Twitter/X Feed": 02_design_twitter_feed/tutorial.md

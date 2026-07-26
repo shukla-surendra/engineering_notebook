@@ -46,6 +46,7 @@ nav:
   - Overview: README.md
   - Algorithms & Data Structures: http://127.0.0.1:8000/
   - Distributed Systems Design: http://127.0.0.1:8002/
+  - Security Engineering: http://127.0.0.1:8003/
   - Prerequisite Concepts:
       - "1. Performance & Scale": prerequisite_concepts/01_performance_and_scale.md
       - "2. Data & Consistency": prerequisite_concepts/02_data_and_consistency.md
