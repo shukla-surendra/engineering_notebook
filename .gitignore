@@ -1,7 +1,7 @@
 site-*
 local_notes/*
 site-system-design
-site-staff-system-design
+site-system-design-practice
 __pycache__/
 *.pyc
 product-company-transition-plan_1.md

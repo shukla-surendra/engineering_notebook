@@ -1,6 +1,6 @@
 ---
 name: articulate-it
-description: Add or refresh the "Articulate It: Interview Framing & Vocabulary" closing section on tutorial/problem/concept-primer docs in this repo (system_design/, system_design/prerequisite_concepts/, staff_system_design/, dsa_prep/). Also covers how to author a new first-principles concept-primer doc (the prerequisite_concepts/ "Part N" pattern) from scratch. Use whenever a new tutorial, case-study, scenario, concept-primer, or problem.md/PATTERN.md doc is created or substantially rewritten in this repo, when asked to explain something "from first principles" for this repo, or when the user asks to "add articulate it", "add the interview framing section", or "do the same thing" to more docs.
+description: Add or refresh the "Articulate It: Interview Framing & Vocabulary" closing section on tutorial/problem/concept-primer docs in this repo (system_design/, system_design/prerequisite_concepts/, system_design_practice/, dsa_prep/). Also covers how to author a new first-principles concept-primer doc (the prerequisite_concepts/ "Part N" pattern) from scratch. Use whenever a new tutorial, case-study, scenario, concept-primer, or problem.md/PATTERN.md doc is created or substantially rewritten in this repo, when asked to explain something "from first principles" for this repo, or when the user asks to "add articulate it", "add the interview framing section", or "do the same thing" to more docs.
 ---
 
 # Articulate It: Interview Framing & Vocabulary
@@ -14,7 +14,7 @@ loud. This skill adds that section to a doc that doesn't have it yet.
 ## When to use this
 
 - A new file is added under `system_design/` (including `prerequisite_concepts/`),
-  `staff_system_design/`, or `dsa_prep/` (a `tutorial.md`, a scenario doc, a deep-dive doc,
+  `system_design_practice/`, or `dsa_prep/` (a `tutorial.md`, a scenario doc, a deep-dive doc,
   a concept-primer part, a `problem.md`, or a `PATTERN.md`).
 - An existing doc in one of those trees is substantially rewritten (the section should be
   refreshed to match the new content — use `--replace`, see below).
@@ -51,7 +51,7 @@ consistent across ~150 files:
 
 ## Three content modes — pick based on which tree the doc is in
 
-**A. `system_design/` and `staff_system_design/` (architecture tutorials, deep-dives,
+**A. `system_design/` and `system_design_practice/` (architecture tutorials, deep-dives,
 scenario/incident docs).** Three framings should be genuine alternative *angles* on
 explaining the doc's core idea to an interviewer — typically some mix of: trade-off-first,
 narrative/incident-first, business-impact-first, numbers-first, systems-first, or
@@ -97,7 +97,7 @@ belongs in this repo, not just when appending a closing section to an existing f
   tutorials/tricky-scenarios elsewhere in the repo that assume the concept — this is what
   keeps the primer from being a disconnected glossary. Use relative links within
   `system_design/`, and the established absolute-URL pattern
-  (`http://127.0.0.1:8002/...`) when crossing into `staff_system_design/`.
+  (`http://127.0.0.1:8002/...`) when crossing into `system_design_practice/`.
 - State numeric claims (hardware specs, cloud pricing, bandwidth figures) as **illustrative
   and approximate**, explicitly — this repo's convention (see the GPU catalog table in
   `05_gpu_selection_and_code_optimization.md`) is "the relationship, not the specific
@@ -160,7 +160,7 @@ foundational concept instead of a system.
 
 For a mode-A worked example, read any already-finished doc, e.g.
 `system_design/01_fundamentals/tutorial.md` or
-`staff_system_design/02_design_twitter_feed/tutorial.md` — both end with a full section in
+`system_design_practice/02_design_twitter_feed/tutorial.md` — both end with a full section in
 this style. For mode C, read `system_design/prerequisite_concepts/04_cpu_vs_gpu.md` in
 full — it demonstrates the problem→mechanism→practical-impact structure, a worked example
 with real numbers, heavy cross-referencing, and the closing section together.

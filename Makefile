@@ -1,17 +1,17 @@
-.PHONY: help install docs mkdocs sd-serve sd-build sd-clean dsa-serve dsa-build dsa-clean staff-serve staff-build staff-clean security-serve security-build security-clean build clean
+.PHONY: help install docs mkdocs sd-serve sd-build sd-clean dsa-serve dsa-build dsa-clean practice-serve practice-build practice-clean security-serve security-build security-clean build clean
 
 help:
 	@echo "  make docs        - (alias: make mkdocs) build (--strict) then serve ALL FOUR sites together, live-reloading:"
 	@echo "                       DSA                    -> http://127.0.0.1:8000"
 	@echo "                       ML System Design       -> http://127.0.0.1:8001"
-	@echo "                       Staff System Design    -> http://127.0.0.1:8002"
+	@echo "                       System Design Practice -> http://127.0.0.1:8002"
 	@echo "                       Security Engineering   -> http://127.0.0.1:8003"
 	@echo "                     (Ctrl+C stops all four)"
 	@echo ""
-	@echo "Staff-Level System Design docs (staff_system_design/, mkdocs-staff-system-design.yml):"
-	@echo "  make staff-serve - serve at http://127.0.0.1:8002"
-	@echo "  make staff-build - build static site into site-staff-system-design/"
-	@echo "  make staff-clean - remove site-staff-system-design/"
+	@echo "System Design Practice docs (system_design_practice/, mkdocs-system-design-practice.yml):"
+	@echo "  make practice-serve - serve at http://127.0.0.1:8002"
+	@echo "  make practice-build - build static site into site-system-design-practice/"
+	@echo "  make practice-clean - remove site-system-design-practice/"
 	@echo ""
 	@echo "ML System Design docs (system_design/, mkdocs-system-design.yml):"
 	@echo "  make sd-serve    - serve at http://127.0.0.1:8001"
@@ -53,14 +53,14 @@ dsa-build:
 dsa-clean:
 	rm -rf site-dsa
 
-staff-serve:
-	mkdocs serve -f mkdocs-staff-system-design.yml -a 127.0.0.1:8002
+practice-serve:
+	mkdocs serve -f mkdocs-system-design-practice.yml -a 127.0.0.1:8002
 
-staff-build:
-	mkdocs build -f mkdocs-staff-system-design.yml --strict
+practice-build:
+	mkdocs build -f mkdocs-system-design-practice.yml --strict
 
-staff-clean:
-	rm -rf site-staff-system-design
+practice-clean:
+	rm -rf site-system-design-practice
 
 security-serve:
 	mkdocs serve -f mkdocs-security.yml -a 127.0.0.1:8003
@@ -71,9 +71,9 @@ security-build:
 security-clean:
 	rm -rf site-security
 
-build: dsa-build sd-build staff-build security-build
+build: dsa-build sd-build practice-build security-build
 
-clean: dsa-clean sd-clean staff-clean security-clean
+clean: dsa-clean sd-clean practice-clean security-clean
 
 mkdocs: docs
 
@@ -81,13 +81,13 @@ docs: build
 	@echo ""
 	@echo "DSA docs:                  http://127.0.0.1:8000"
 	@echo "ML System Design docs:     http://127.0.0.1:8001"
-	@echo "Staff System Design docs:  http://127.0.0.1:8002"
+	@echo "System Design Practice docs: http://127.0.0.1:8002"
 	@echo "Security Engineering docs: http://127.0.0.1:8003"
 	@echo "(Ctrl+C stops all four)"
 	@echo ""
 	@trap 'kill 0' EXIT INT TERM; \
 	mkdocs serve -f mkdocs-dsa.yml -a 127.0.0.1:8000 & \
 	mkdocs serve -f mkdocs-system-design.yml -a 127.0.0.1:8001 & \
-	mkdocs serve -f mkdocs-staff-system-design.yml -a 127.0.0.1:8002 & \
+	mkdocs serve -f mkdocs-system-design-practice.yml -a 127.0.0.1:8002 & \
 	mkdocs serve -f mkdocs-security.yml -a 127.0.0.1:8003 & \
 	wait

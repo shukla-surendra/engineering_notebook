@@ -5,7 +5,7 @@ question. It builds directly on two things covered earlier in this track: the **
 threat-modeling method and **trust boundary** concept from
 [00_foundations](../00_foundations/tutorial.md#threat-modeling-stride-and-trust-boundaries),
 and the four-step system-design structure (clarify → high-level design → deep-dive →
-trade-offs) used throughout [staff_system_design](http://127.0.0.1:8002/00_staff_level_signal/tutorial/).
+trade-offs) used throughout [system_design_practice](http://127.0.0.1:8002/00_staff_level_signal/tutorial/).
 The two case studies that follow —
 [Secure RAG Pipeline](design_secure_rag_pipeline.md) and
 [Secure Multi-Tenant ML Platform](design_secure_multi_tenant_ml_platform.md) — are worked

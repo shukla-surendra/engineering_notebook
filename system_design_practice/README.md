@@ -1,4 +1,4 @@
-# Staff-Level System Design
+# System Design Practice
 
 General distributed-systems design at staff-engineer depth — independent of the
 [ML System Design track](http://127.0.0.1:8001/). Where that track is scoped to ML/LLM

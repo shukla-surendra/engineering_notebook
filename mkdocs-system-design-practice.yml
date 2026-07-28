@@ -1,7 +1,7 @@
 site_name: Distributed Systems Design Notes
 site_description: General distributed-systems design foundations and classic case studies, independent of the ML/LLM-specific track.
-docs_dir: staff_system_design
-site_dir: site-staff-system-design
+docs_dir: system_design_practice
+site_dir: site-system-design-practice
 
 theme:
   name: material

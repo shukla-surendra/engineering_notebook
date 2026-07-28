@@ -1,6 +1,6 @@
 ---
 name: system-design-interview
-description: Run a live mock system design interview at senior, staff, or principal bar, using this repo's case studies (system_design/, staff_system_design/, system_design/12_tricky_scenarios/, system_design/prerequisite_concepts/) as the question bank and answer key. Covers full green-field design interviews, incident-debugging scenarios, and a lighter-weight rapid-fire "concept check" quiz on first-principles fundamentals. Use when the user asks to practice, be quizzed, be interviewed, or run/act as interviewer for a system design question or fundamentals — "mock interview", "quiz me", "interview me on system design", "practice a design question", "run a scenario debugging interview", "grill me on fundamentals", "principal-level mock interview". Do not use this for passively explaining a design — that's just reading the tutorial.
+description: Run a live mock system design interview at senior, staff, or principal bar, using this repo's case studies (system_design/, system_design_practice/, system_design/12_tricky_scenarios/, system_design/prerequisite_concepts/) as the question bank and answer key. Covers full green-field design interviews, incident-debugging scenarios, and a lighter-weight rapid-fire "concept check" quiz on first-principles fundamentals. Use when the user asks to practice, be quizzed, be interviewed, or run/act as interviewer for a system design question or fundamentals — "mock interview", "quiz me", "interview me on system design", "practice a design question", "run a scenario debugging interview", "grill me on fundamentals", "principal-level mock interview". Do not use this for passively explaining a design — that's just reading the tutorial.
 ---
 
 # System Design Mock Interview — Senior / Staff / Principal Bar
@@ -17,7 +17,7 @@ simulated interview, and gives feedback per-question by design.)
 
 Ask, or infer from what the user already said:
 1. **Mode**: green-field design (pick from `system_design/*/tutorial.md` or
-   `staff_system_design/*/tutorial.md`), incident/debugging (pick from
+   `system_design_practice/*/tutorial.md`), incident/debugging (pick from
    `system_design/12_tricky_scenarios/*.md`), **concept-check** (a rapid-fire fundamentals
    quiz — see its own section below, a distinct flow from the design/debugging modes), or
    a custom question the user brings that isn't in the repo at all.
@@ -138,7 +138,7 @@ Switch explicitly out of interviewer mode ("Alright, stepping out of interviewer
 here's how that went"). Structure the debrief as:
 
 1. **Scorecard against the staff-vs-senior axes** (from
-   `staff_system_design/00_staff_level_signal/tutorial.md` — Read it now if you haven't,
+   `system_design_practice/00_staff_level_signal/tutorial.md` — Read it now if you haven't,
    for the full nuance beyond this summary):
 
    | Axis | Senior signal | Staff signal | What they actually did |
@@ -149,7 +149,7 @@ here's how that went"). Structure the debrief as:
    | Trade-offs | States a trade-off when asked | Surfaces it proactively, in organizational terms | ... |
 
 2. **If the bar is Principal, extend the scorecard with three more rows** — drawn from the
-   later sections of `staff_system_design/00_staff_level_signal/tutorial.md`
+   later sections of `system_design_practice/00_staff_level_signal/tutorial.md`
    ("Influence Without Authority," "Build vs. Buy as Organizational Strategy," and
    "Multi-Year Technical Strategy" — re-read those sections now if it's been a while, the
    summary below is not a substitute for their nuance):
