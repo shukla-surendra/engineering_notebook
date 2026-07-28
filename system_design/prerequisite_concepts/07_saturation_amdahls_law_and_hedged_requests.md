@@ -276,4 +276,4 @@ for a lot less latency variance (the opening section of this part).
 
 ---
 
-**Previous:** [Part 6: Mechanical Sympathy & the Physics of Latency](06_mechanical_sympathy_and_physics_of_latency.md)  |  **Next:** [0. The Interview Framework](../00_interview_framework/tutorial.md)
+**Previous:** [Part 6: Mechanical Sympathy & the Physics of Latency](06_mechanical_sympathy_and_physics_of_latency.md)  |  **Next:** [Part 8: The Cost of Communication](08_cost_of_communication.md)
