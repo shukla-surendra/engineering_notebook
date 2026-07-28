@@ -81,7 +81,10 @@ seamlessly without the viewer noticing a hard cut or buffering stall.
   viewers, serving the vast majority of requests without ever reaching the origin — this
   is the same origin/cache relationship as the
   [distributed cache case study](../05_design_distributed_cache/tutorial.md), applied to
-  static video segments instead of dynamic key-value data.
+  static video segments instead of dynamic key-value data. The mechanics of how a viewer's
+  request actually finds the nearest edge node in the first place — anycast, GeoDNS, and
+  the BGP routing underneath both — are covered in depth in the [DNS/BGP/edge prerequisite
+  primer](http://127.0.0.1:8001/prerequisite_concepts/09_dns_bgp_and_the_edge/#the-edge-where-dns-anycast-and-bgp-meet-a-cdn).
 - **Cache warming for anticipated popular content**: rather than waiting for organic cache
   misses to populate edge caches (which would mean the *first* viewers in a region get
   origin-latency performance), a platform can proactively push newly-published, expected-

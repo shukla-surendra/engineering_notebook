@@ -45,7 +45,9 @@ the 5-minute target is even real.
 4. **DNS/traffic-manager propagation delay** — if failover relies on DNS TTL-based
    propagation rather than a faster health-check-based global traffic manager, client-side
    caching of the old endpoint can extend perceived downtime well past the point where the
-   standby was actually ready.
+   standby was actually ready — TTL is a hint resolvers can ignore, not an enforceable
+   contract, per the [DNS/BGP prerequisite
+   primer](../prerequisite_concepts/09_dns_bgp_and_the_edge.md#ttl-a-hint-not-a-promise-and-why-that-breaks-failover).
 
 ## Diagnostic Path
 

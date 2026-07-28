@@ -176,4 +176,4 @@ prompting you to attach your own production-system specifics → practice questi
 
 ---
 
-**Previous:** [Prerequisite Concepts, Part 7: Saturation, Amdahl's Law & Hedged Requests](../prerequisite_concepts/07_saturation_amdahls_law_and_hedged_requests.md)  |  **Next:** [1. Fundamentals & Building Blocks](../01_fundamentals/tutorial.md)
+**Previous:** [Prerequisite Concepts, Part 9: The Anatomy of a Request (DNS, BGP, and the Edge)](../prerequisite_concepts/09_dns_bgp_and_the_edge.md)  |  **Next:** [1. Fundamentals & Building Blocks](../01_fundamentals/tutorial.md)

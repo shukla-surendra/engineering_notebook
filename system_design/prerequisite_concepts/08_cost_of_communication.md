@@ -87,7 +87,7 @@ the entries that Parts 3 and 6 don't already own in depth.
 
 | Tax | What it is | Covered in depth |
 |---|---|---|
-| DNS resolution | Resolving a hostname to an IP before anything else can happen | [Part 3](03_communication_and_resilience.md#what-actually-happens-when-you-hit-enter) |
+| DNS resolution | Resolving a hostname to an IP before anything else can happen | [Part 3](03_communication_and_resilience.md#what-actually-happens-when-you-hit-enter), [Part 9](09_dns_bgp_and_the_edge.md#dns-fully-unpacked-the-hierarchy-behind-one-bullet-point) |
 | TCP handshake | SYN / SYN-ACK / ACK before any application byte flows | [Part 3](03_communication_and_resilience.md#what-actually-happens-when-you-hit-enter) |
 | TLS handshake | Negotiating encryption before any application byte flows | [Part 3](03_communication_and_resilience.md#what-actually-happens-when-you-hit-enter) |
 | Kernel / syscall | Crossing the privilege boundary between your process and the NIC | This doc |
@@ -454,4 +454,4 @@ fallacy this whole doc is named after.
 
 ---
 
-**Previous:** [Part 7: Saturation, Amdahl's Law & Hedged Requests](07_saturation_amdahls_law_and_hedged_requests.md)  |  **Next:** [0. The Interview Framework](../00_interview_framework/tutorial.md)
+**Previous:** [Part 7: Saturation, Amdahl's Law & Hedged Requests](07_saturation_amdahls_law_and_hedged_requests.md)  |  **Next:** [Part 9: The Anatomy of a Request (DNS, BGP, and the Edge)](09_dns_bgp_and_the_edge.md)
