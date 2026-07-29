@@ -24,6 +24,45 @@ through what happens when you hit enter" answer is actually expected to go on to
 | Why does a stale DNS entry linger after a fix? | Not covered | TTL is a *hint*, not a guarantee — caching resolvers can ignore it |
 | How does a packet find the server once you have an IP? | Not covered | BGP — the routing protocol that stitches independently-owned networks into one internet |
 | How does a CDN answer requests from wherever you are? | Not covered | Anycast + GeoDNS, and edge PoPs that terminate TLS close to the user |
+| What does a request actually look like on the wire, before any of that? | Not covered | A byte tax paid per packet — MTU limits and header overhead |
+| What happens to a request between the edge and your application code? | Not covered | WAF inspection, L4/L7 load-balancer ordering, and the API gateway |
+
+## Before Any of This: Turning a String Into a Packet
+
+[Part 8's kernel tax
+section](08_cost_of_communication.md#the-kernel-tax-every-byte-crosses-a-privilege-boundary)
+already covers *why* an application has to hand its bytes to the kernel via a syscall — a
+userspace process has no permission to touch a NIC directly. What that section doesn't
+cover is what the kernel actually does with those bytes before anything leaves the
+machine — the first place a byte tax gets paid, before DNS, BGP, or TLS ever enter the
+picture.
+
+Every physical link enforces a **Maximum Transmission Unit (MTU)** — the largest single
+frame it will carry. For the overwhelming majority of the internet, that ceiling is
+**1,500 bytes**, a number that traces back to early Ethernet hardware limits and has
+simply stuck. A payload larger than the MTU doesn't get shrunk — it gets split into
+multiple packets before the first byte ever reaches the network, each independently routed
+and reassembled only at the destination.
+
+Each of those packets, in turn, isn't just payload — it carries a header at every layer it
+passes through, and none of them are optional:
+
+| Header | Approx. size | What it identifies |
+|---|---|---|
+| Ethernet frame | ~14 bytes | The next physical hop's hardware (MAC) address — typically your own router, not the destination server |
+| IP | ~20 bytes | The source and destination IP address |
+| TCP | ~20 bytes | Sequence number, flags, and which connection this packet belongs to |
+
+Illustrative and approximate (exact sizes vary with options like IPv6 or TCP extensions) —
+roughly **~54 bytes** spent on addressing and bookkeeping before a single byte of the
+actual request has been carried. This is a small, *fixed* tax per packet, which is exactly
+why it matters more, not less, as individual messages get smaller: 1,000 separate 10-byte
+messages each pay that ~54-byte header cost — more overhead than payload — while [Part 8's
+batching
+argument](08_cost_of_communication.md#paying-less-tax-data-locality-batching-coarse-apis-and-caching)
+amortizes that same fixed cost across one larger packet instead. The MTU and header tax
+are the mechanical reason "send fewer, larger messages" is a real performance rule, not
+just a rule of thumb.
 
 ## DNS, Fully Unpacked: The Hierarchy Behind One Bullet Point
 
@@ -262,6 +301,50 @@ that Part 6 and Part 8 both identify as the dominant cost from ~85 ms-per-hop do
 effectively local-network numbers, for every single request that hits cache, without the
 application changing a single line of code.
 
+## Beyond Caching: The Security and Routing Layer at the Edge
+
+A CDN PoP in a production architecture usually does more than cache bytes and terminate
+TLS — it's typically also where a request passes through a security and routing layer
+before it ever reaches application code, and each piece of that layer has its own
+first-principles cost worth naming explicitly.
+
+**Web Application Firewalls (WAF) and the cost of looking inside the packet.** Everything
+covered so far in this doc — DNS, BGP, anycast — operates on the envelope: an IP address, a
+prefix, a destination, nothing more. A WAF is different: it performs **deep packet
+inspection (DPI)**, reading the actual request payload and comparing it against a library
+of attack signatures (SQL-injection patterns, script-injection payloads) before deciding
+whether to let the request through at all. That comparison is real, non-free CPU work, run
+against every byte of every request — which means a WAF's cost scales with *both* its rule
+count and the size of the payload being scanned, and a large request body checked against
+thousands of rules can add meaningfully more latency than the database query the request
+was actually for. Security here is a per-rule, per-byte tax, not a free switch, and the
+practical implication is to push that filtering as far upstream — as close to the edge — as
+possible, so only traffic that's already passed inspection reaches the more expensive
+layers behind it.
+
+**L4 before L7: an ordering decision, not just an either/or choice.** [Part 1's
+Fundamentals](../01_fundamentals/tutorial.md#load-balancing) already introduces L4 (IP/port
+only) and L7 (HTTP-content-aware) load balancing as two distinct algorithms; the design
+point worth adding here is that production systems don't usually pick one — they **layer**
+both, in a specific order. An L4 balancer is blind to a request's content, which is exactly
+why it's cheap enough to sit at the very front, absorbing raw connection volume and a
+DDoS's worth of garbage traffic. An L7 balancer has to buffer and parse a request before it
+can route on path or header, making it comparatively expensive to run — so it belongs
+*behind* the L4 tier, spending its real cost only on traffic that's already survived the
+cheap filter in front of it. Reversing that order means paying L7's parsing cost on every
+hostile packet, not just the legitimate remainder.
+
+**The API gateway as a shield, not just a router.** The last stop before application code
+typically handles authentication (validating a token), rate limiting, and protocol
+translation (REST/JSON at the edge, gRPC internally) — and the reason this belongs in a
+dedicated gateway (Envoy, Kong) rather than inside application code isn't only separation
+of concerns. A malformed or oversized request, or an invalid token, can be rejected by a
+gateway built specifically to parse and discard it cheaply; the same bad input handed
+straight to an application process means that process has to allocate memory and run real
+code paths just to arrive at the same rejection. Moving the check earlier isn't only
+cleaner — it keeps the most expensive, most stateful part of the system (the application
+itself) from ever spending a cycle on input that was never going to be accepted.
+
 ## Putting the Full Anatomy Together
 
 Combining this doc with Parts 3, 6, and 8 into the complete sequence a "hit enter" answer
@@ -269,18 +352,21 @@ is actually expected to walk through at a staff bar:
 
 ```mermaid
 flowchart TD
-    A["1. DNS resolution\n(recursive -> root -> TLD -> authoritative,\npossibly anycast/GeoDNS to nearest PoP)"] --> B["2. BGP-determined path\n(the physical AS-hops to that IP)"]
-    B --> C["3. TCP + TLS handshake\n(Part 3), possibly terminated at a nearby edge"]
-    C --> D["4. Application request\n(Part 8's tax stack: serialization, kernel, queueing)"]
-    D --> E["5. Response, possibly served\nentirely from edge cache"]
+    A["1. Packet framing\n(MTU + header tax, this doc)"] --> B["2. DNS resolution\n(recursive -> root -> TLD -> authoritative,\npossibly anycast/GeoDNS to nearest PoP)"]
+    B --> C["3. BGP-determined path\n(the physical AS-hops to that IP)"]
+    C --> D["4. TCP + TLS handshake\n(Part 3), possibly terminated at a nearby edge"]
+    D --> E["5. WAF, L4/L7 load balancing,\nAPI gateway (this doc)"]
+    E --> F["6. Application request\n(Part 8's tax stack: serialization, kernel, queueing)"]
+    F --> G["7. Response, possibly served\nentirely from edge cache"]
 ```
 
-Steps 1-2 are this doc's contribution: *finding* the IP and the physical path to it. Step 3
-is [Part 3](03_communication_and_resilience.md)'s territory. Step 4 is [Part
+Steps 1-3 and 5 are this doc's contribution: how a request is physically packaged, how it
+finds an IP and a path to it, and what it passes through immediately before your code runs.
+Step 4 is [Part 3](03_communication_and_resilience.md)'s territory. Step 6 is [Part
 8](08_cost_of_communication.md)'s stack of taxes. A senior answer to "what happens when you
-hit enter" usually starts at step 3; a staff-level answer names steps 1-2 explicitly,
-because that's frequently where a real "why is this slow" or "why did failover take so
-long" investigation actually needs to look.
+hit enter" usually starts around step 4; a staff-level answer names steps 1-3 and 5
+explicitly, because that's frequently where a real "why is this slow" or "why did failover
+take so long" investigation actually needs to look.
 
 ## Designing and Operating From First Principles
 
@@ -300,6 +386,13 @@ long" investigation actually needs to look.
    (RPKI), given how little of that trust model is enforced by default?
 8. Does my DR/multi-region runbook's RTO account for BGP convergence and DNS-propagation
    floors measured in minutes, or does it assume failover is instantaneous?
+9. Am I sending many small messages that each pay a fixed per-packet header tax, when
+   batching them would amortize that cost instead?
+10. Is expensive, content-aware filtering (a WAF, L7 routing) sitting behind a cheap,
+    blind filter (L4, a CDN's cache), or is it exposed directly to raw, unfiltered traffic?
+11. Is authentication, rate limiting, and input validation happening at a gateway before
+    application code runs, or is a hostile request only rejected after my application has
+    already spent memory and CPU parsing it?
 
 ## Key Takeaways
 
@@ -319,6 +412,15 @@ long" investigation actually needs to look.
 - BGP convergence and DNS propagation both have real floors measured in minutes — a
   multi-region failover plan that assumes faster than that is assuming away physics and
   protocol behavior, not being conservative.
+- Every packet pays a small, fixed header tax (~54 bytes) regardless of payload size,
+  which is why many small messages are disproportionately more expensive than one batched
+  one.
+- A WAF's cost scales with rule count and payload size — deep packet inspection is real,
+  non-free CPU work, not a security feature you get for free.
+- L4 and L7 load balancing are usually layered, not chosen between — cheap, blind L4
+  filtering belongs in front of expensive, content-aware L7 routing.
+- An API gateway is a cost-saving shield as much as a routing convenience — rejecting bad
+  input before it reaches application code is cheaper than letting the application do it.
 
 ## Quick Self-Check
 
@@ -334,6 +436,12 @@ long" investigation actually needs to look.
 - Walk through what changes, mechanically, between a cache-hit and a cache-miss request at
   a CDN edge PoP — which of Part 8's "taxes" does the cache-hit path skip entirely, and
   which does the cache-miss path still have to pay?
+- Why does the ~54-byte header tax matter more for a stream of tiny messages than for one
+  large one, and how does batching change that math?
+- Why does putting an L7 load balancer in front of an L4 one (instead of behind it) make a
+  DDoS attack more expensive to absorb, not less?
+- Why is rejecting a malformed request at an API gateway cheaper than rejecting the same
+  request inside application code?
 
 ## Articulate It: Interview Framing & Vocabulary
 
@@ -349,10 +457,16 @@ long" investigation actually needs to look.
   convergence both have real floors measured in minutes, not milliseconds — so when a
   failover runbook promises a five-minute RTO, I'd ask whether that number was tested
   against how DNS caching actually behaves in the wild, not just what the TTL field says."
-- **Mechanism-of-scale framing (good for CDN/global-service design questions):** "A CDN
-  isn't magic — it's the same anycast trick root DNS servers use, applied to content: one
-  IP, announced from everywhere, so ordinary internet routing sends each user to whichever
-  copy is topologically closest, with no explicit failover logic required at all."
+- **Cost-ordering framing (good for CDN/global-service and edge-security design
+  questions):** "A CDN PoP is the same anycast trick root DNS servers use — one IP,
+  announced everywhere, so ordinary routing sends each user to the nearest copy — but once
+  a PoP already sits on the path, it's also the cheapest place to order defense: blind L4
+  filtering absorbs raw volume first, expensive L7 parsing only runs on what survives that,
+  and a WAF's deep packet inspection — the priciest, most content-aware check of all — only
+  ever touches what's already earned its way through both. Even before any of that, every
+  packet on the wire already paid a fixed ~54-byte tax just to exist, which is the
+  mechanical throughline connecting 'shorten the distance' all the way down to 'don't pay
+  more per packet than you have to.'"
 
 ### Vocabulary Builder
 
@@ -372,6 +486,12 @@ long" investigation actually needs to look.
 - **GeoDNS** (n.) — returning a different IP from the same DNS name based on the
   resolver's apparent location, an alternative to anycast for routing clients to a nearby
   PoP.
+- **MTU (Maximum Transmission Unit)** (n. phrase) — the largest single frame a physical
+  link will carry (~1,500 bytes for most of the internet); larger payloads are split into
+  multiple packets before they ever leave the sending machine.
+- **deep packet inspection (DPI)** (n. phrase) — reading and pattern-matching a request's
+  actual payload (as a WAF does), as opposed to routing decisions (BGP, L4 load balancing)
+  that only ever look at the envelope.
 
 **Expressive phrases — for stating a trade-off fluently instead of listing pros/cons:**
 
@@ -381,6 +501,12 @@ long" investigation actually needs to look.
   isn't necessarily the physically shortest one available.
 - **"…no explicit failover logic required"** — a fluent way to credit anycast's resilience
   property without implying someone had to hand-write a failover mechanism for it.
+- **"…a per-rule, per-byte tax, not a free switch"** — a fluent way to push back on
+  treating a security layer (a WAF, extra validation) as costless just because it's
+  correct to have.
+- **"…earn the right to reach the next layer"** — a fluent way to describe defense-in-depth
+  ordering (L4 before L7, a cache before origin) without reciting a bullet-pointed list of
+  every layer involved.
 
 ---
 

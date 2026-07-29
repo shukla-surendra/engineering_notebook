@@ -261,6 +261,56 @@ encrypted request in its very first packet, skipping the handshake round trips e
 for the mobile and cross-region cases where every RTT is expensive (per the worked example
 above), this is a large, direct performance win rather than a marginal one.
 
+### Version Negotiation: Who Decides, and How to Check
+
+None of the versions above is something either side unilaterally imposes — the version used
+on a given connection is **negotiated as an intersection of what both sides support**,
+decided once at connection-setup time, not set as some global switch.
+
+**For HTTPS, negotiation happens via ALPN (Application-Layer Protocol Negotiation), inside
+the TLS handshake itself**: the client's `ClientHello` carries an ordered list of protocols
+it's willing to speak (e.g., `h2, http/1.1`), and the server's response picks the highest one
+it also supports. Whatever gets picked is what that connection speaks for its entire
+lifetime — a browser that supports HTTP/2 talking to a server that's never had it enabled
+falls back to HTTP/1.1 automatically, with neither side needing any explicit configuration
+to make that fallback happen.
+
+**HTTP/3 (QUIC) is discovered differently**, since it runs over UDP and can't ride TLS's
+ALPN inside an existing TCP connection: a server first responds over HTTP/1.1 or HTTP/2 with
+an `Alt-Svc` header advertising that it also speaks HTTP/3 on a given port, and a supporting
+client can then opportunistically try QUIC on a subsequent connection to that host.
+
+**Plain, unencrypted HTTP has no ALPN to negotiate through at all** — HTTP/1.1 is the
+default, and while an HTTP/2-over-cleartext mode (`h2c`) technically exists in the spec, no
+browser implements it, so in practice HTTP/2 is TLS-only outside of internal/service-mesh
+traffic where both ends are controlled.
+
+**Who actually decides which versions are even on the table:**
+
+- The **server operator** decides what's enabled — an nginx/Envoy/load-balancer config turns
+  HTTP/2 listening on or off; a backend framework decides whether it speaks HTTP/2 at all.
+- The **client** decides what it offers to try — a browser offers `h2` by default; a plain
+  HTTP client library (`requests`, vanilla `axios`) usually defaults to HTTP/1.1 unless an
+  HTTP/2-capable transport is explicitly enabled (e.g., `httpx` with `http2=True`).
+- Neither side can force a version the other doesn't support — it's always the best
+  mutually-supported option, picked automatically, per connection.
+
+**How to actually check what version a connection used:**
+
+- **Browser DevTools** — Network tab, add the "Protocol" column: shows `http/1.1`, `h2`, or
+  `h3` per request.
+- **curl** — `curl -Iv https://example.com` shows the ALPN negotiation in its verbose output
+  (`ALPN: server accepted h2`) and the response status line's version (`HTTP/2 200`);
+  `curl --http1.1` or `--http2` forces a specific version to test what the server actually
+  supports.
+- **`curl -w '%{http_version}\n' -o /dev/null -s <url>`** — prints just the negotiated
+  version, useful for a quick scripted check.
+
+This is worth checking as part of the same "why is this slow" investigations this doc is
+about — a service silently falling back to HTTP/1.1 that you assumed was on HTTP/2 (and
+therefore paying one handshake for many concurrent calls) is a common, invisible way
+concurrency gets more expensive than expected.
+
 ### gRPC: Multiplexing the Tax Away at the Application Layer
 
 Plain REST over HTTP/1.1 often pays a fresh `Request → TCP → Close → Repeat` cycle per call.
@@ -269,6 +319,45 @@ connection — fewer handshakes, less congestion, lower latency, native streamin
 serialization (Protocol Buffers) instead of JSON. This combination is exactly why Discord,
 Google, and most cloud-native service meshes lean on gRPC for internal service-to-service
 traffic rather than REST.
+
+## Concurrency and Locality: How Many Handshakes Actually Happen
+
+A common point of confusion: if a client fires N concurrent REST calls at the same server,
+does that mean N TCP handshakes and N TLS handshakes? **It depends entirely on whether the
+connection is reused, not on the request count itself:**
+
+- **No connection reuse** (a client that opens a fresh socket per call, or a server response
+  with `Connection: close`) — every one of the N concurrent requests pays its own TCP
+  handshake, and its own TLS handshake if HTTPS, all happening in parallel with each other.
+  N requests really does mean N handshakes here.
+- **HTTP/1.1 with keep-alive and a connection pool** (the default in most real HTTP client
+  libraries — `requests.Session()`, `axios` with an agent, most server-side SDKs) — the
+  client maintains a small number of already-open connections and reuses them across
+  requests. But HTTP/1.1 allows only one request in flight per connection at a time, so
+  *concurrent* requests beyond the pool's size still have to wait for a free connection
+  rather than automatically getting a new one — a pool of 6 connections serving 100
+  concurrent requests pays roughly 6 handshakes total, with the other 94 requests queued,
+  not re-handshaking.
+- **HTTP/2 (and gRPC, which runs on it)** — one TCP handshake and one TLS handshake, full
+  stop, regardless of concurrency. Every concurrent request rides as an independent
+  multiplexed stream over that single already-open connection — the protocol-evolution
+  argument above, applied directly to concurrent traffic rather than just sequential reuse.
+
+**The special case of localhost.** A TCP socket connecting to `127.0.0.1` still runs the
+exact same three-way handshake — TCP has no concept of "this peer happens to be on the same
+machine," so the SYN/SYN-ACK/ACK exchange still happens as a protocol formality. What
+changes is the cost: the packets never reach a NIC or a physical wire — they're routed
+through the kernel's **loopback interface**, a purely in-memory path, so none of [Part 6's
+physical-distance
+model](06_mechanical_sympathy_and_physics_of_latency.md#distance-of-data-one-physical-idea-two-different-scales)
+or [Part 9's DNS/BGP path-finding](09_dns_bgp_and_the_edge.md) is in play at all, and the
+round trip is measured in microseconds instead of milliseconds. It's the same handshake,
+paid at a cost close to zero.
+
+If even that formality is worth avoiding for same-host inter-process communication, **Unix
+domain sockets** (as opposed to TCP over `127.0.0.1`) skip the TCP handshake and IP-layer
+machinery entirely — many databases and local RPC setups default to one for exactly this
+reason when the client and server are guaranteed to share a host.
 
 ## Microservices: A Communication Tax by Design Choice
 
@@ -360,6 +449,10 @@ often, than the choice of language or framework:
    [Part 2](02_data_and_consistency.md) covers in depth)?
 10. Given the tail-latency risk any single hop carries, does this call even need to be
     synchronous (per [Part 3](03_communication_and_resilience.md#synchronous-vs-asynchronous-communication))?
+11. Is my connection pool sized for actual concurrency, or am I assuming keep-alive alone
+    means concurrent requests never re-pay the handshake?
+12. Have I actually checked (via ALPN/DevTools/`curl`) which HTTP version a given service
+    negotiates, or am I assuming HTTP/2 because the server config says it's enabled?
 
 **The mental model that ties it together**: a local function call is handing a note to the
 person sitting next to you — instant, no packaging required. A remote call is an
@@ -382,6 +475,16 @@ fallacy this whole doc is named after.
   performance, not just human readability, is the goal.
 - Reusing connections (HTTP/2, gRPC, HTTP/3/QUIC) amortizes handshake cost across many
   requests instead of re-paying it every time.
+- Whether concurrent requests re-pay the handshake depends on connection reuse, not request
+  count — no pooling means N requests pay N handshakes; a connection pool caps it at the
+  pool size; HTTP/2 caps it at one, period.
+- A handshake to `127.0.0.1` still happens structurally (TCP doesn't know the peer is
+  local), but costs almost nothing — it never leaves the loopback interface, so none of the
+  physical-network taxes apply.
+- The HTTP version a connection uses is negotiated, not configured globally — ALPN (inside
+  the TLS handshake) picks the best version both client and server support, and either side
+  falling back silently (no HTTP/2 enabled server-side, no HTTP/2-capable client library) is
+  easy to miss without actually checking.
 - Move computation to the data, not the other way around.
 - Batch operations and prefer coarse-grained APIs to amortize round-trip cost.
 - Cache aggressively — the fastest network request is the one that never happens.
@@ -403,6 +506,14 @@ fallacy this whole doc is named after.
   decision just introduce, and what would justify paying it?
 - Why does caching eliminate *more* than just the data-fetch time — what specific taxes
   from the request lifecycle table does a cache hit skip entirely?
+- If a client fires 100 concurrent requests at the same server over HTTP/1.1 with a
+  connection pool of 6, roughly how many TCP+TLS handshakes actually happen, and what
+  happens to the other 94 requests while they wait?
+- Why does a TCP connection to `127.0.0.1` still perform a three-way handshake at all, and
+  why is its cost negligible compared to the same handshake over a real network?
+- Who actually decides whether a given connection speaks HTTP/1.1, HTTP/2, or HTTP/3 — and
+  what specifically would make a client that supports HTTP/2 silently fall back to HTTP/1.1
+  without either side raising an error?
 
 ## Articulate It: Interview Framing & Vocabulary
 
@@ -419,10 +530,15 @@ fallacy this whole doc is named after.
   either. Naming the specific fallacy in play tells you which fix applies: retries for
   'the network is reliable,' caching or a CDN for 'latency is zero,' mTLS for 'the network
   is secure.'"
-- **Amortization framing (good for batching/coarse-API/protocol questions):** "Almost every
-  fix here is really the same move: pay the fixed cost of a round trip once and spread more
-  work across it — batching spreads it across items, gRPC/HTTP2 spread it across requests,
-  a coarse API spreads it across what would've been several client calls."
+- **Amortization framing (good for batching/coarse-API/protocol/concurrency questions):**
+  "Almost every fix here is really the same move: pay the fixed cost of a round trip once
+  and spread more work across it — batching spreads it across items, a coarse API spreads
+  it across what would've been several client calls, and connection reuse spreads it across
+  requests, whether those requests are sequential (keep-alive) or concurrent (HTTP/2
+  multiplexing over one connection instead of one handshake per in-flight request). Which
+  version is even available to multiplex over isn't a setting either side controls alone —
+  it's whatever both client and server negotiate via ALPN, so I'd verify it rather than
+  assume it."
 
 ### Vocabulary Builder
 
@@ -441,6 +557,18 @@ fallacy this whole doc is named after.
 - **latency amplification** (n. phrase) — the compounding effect of chaining several
   network hops (as in a microservice fan-out), where the slowest hop, not the average,
   determines user-visible latency.
+- **connection pool** (n. phrase) — a client-maintained set of already-open connections
+  reused across requests; its size, not keep-alive alone, is what caps how many handshakes
+  concurrent traffic actually pays.
+- **loopback interface** (n. phrase) — the kernel's purely in-memory network path for
+  traffic to `127.0.0.1`/`localhost`; a TCP handshake over it is still real but costs
+  microseconds, not milliseconds, since no NIC or physical wire is ever involved.
+- **ALPN (Application-Layer Protocol Negotiation)** (n. phrase) — the TLS-handshake
+  extension where client and server agree on which application protocol (`h2` vs.
+  `http/1.1`) the connection will speak, before any HTTP data is exchanged.
+- **Alt-Svc** (n. phrase) — a response header a server uses to advertise that it also
+  speaks HTTP/3 on a given port, since QUIC can't be negotiated via TLS ALPN on an existing
+  TCP connection the way HTTP/2 is.
 
 **Expressive phrases — for stating a trade-off fluently instead of listing pros/cons:**
 
@@ -451,6 +579,11 @@ fallacy this whole doc is named after.
   push back on a microservice split that isn't backed by an actual team or scaling reason.
 - **"…the fastest network request is the one you never make"** — a compact, quotable
   argument for caching, batching, or data locality over optimizing the call itself.
+- **"…the same handshake, paid at a cost close to zero"** — a precise way to explain
+  localhost/loopback traffic without implying it skips the protocol entirely.
+- **"…the best mutually-supported option, not something either side can force"** — a
+  precise way to describe any negotiated protocol choice (HTTP version, TLS cipher suite)
+  without implying the client or server unilaterally decides it.
 
 ---
 
