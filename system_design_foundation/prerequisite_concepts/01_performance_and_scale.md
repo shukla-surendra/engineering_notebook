@@ -31,7 +31,7 @@ both spend real time on batching trade-offs — it's never free.
 requirement until you've said whether you mean low latency (each user waits less) or high
 throughput (the system serves more users overall) — a design that's excellent on one axis
 can be mediocre on the other, and clarifying which one actually matters is exactly the kind
-of question the [interview framework](../00_interview_framework/tutorial.md#step-1-clarify-requirements)
+of question the [interview framework](../00_interview_framework/00_interview_framework.md#step-1-clarify-requirements)
 asks you to ask before designing anything.
 
 ## Percentiles: Why "Average" Lies to You
@@ -184,7 +184,7 @@ Two fundamentally different answers to "this system needs to handle more load":
   outage away from everything going down.
 - **Horizontal scaling (scale out)**: add more machines, and distribute load across them
   (via the load balancing covered in
-  [Fundamentals](../01_fundamentals/tutorial.md#load-balancing)). No hard ceiling —
+  [Fundamentals](../00_interview_framework/01_fundamentals.md#load-balancing)). No hard ceiling —
   theoretically add machines indefinitely — and naturally more fault-tolerant (one machine
   dying doesn't take down the whole system). The cost is real architectural complexity:
   the system now has to coordinate state across machines, which is where sharding,

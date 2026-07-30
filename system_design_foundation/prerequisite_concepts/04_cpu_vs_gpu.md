@@ -76,7 +76,7 @@ data from the CPU's system RAM over the connecting bus (PCIe), they'd spend most
 time idle, waiting on data — a GPU computing at massive parallel throughput needs data
 delivered at a matching rate, and a general-purpose link designed to connect arbitrary
 peripherals to a CPU isn't built for that. This is the exact same first-principles idea as
-[caching from Fundamentals](../01_fundamentals/tutorial.md#caching) — data physically close
+[caching from Fundamentals](../00_interview_framework/01_fundamentals.md#caching) — data physically close
 to where it's consumed is fast, data far away is slow — just realized in hardware instead
 of software.
 

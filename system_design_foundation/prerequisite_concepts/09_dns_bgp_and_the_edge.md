@@ -412,7 +412,7 @@ possible, so only traffic that's already passed inspection reaches the more expe
 layers behind it.
 
 **L4 before L7: an ordering decision, not just an either/or choice.** [Part 1's
-Fundamentals](../01_fundamentals/tutorial.md#load-balancing) already introduces L4 (IP/port
+Fundamentals](../00_interview_framework/01_fundamentals.md#load-balancing) already introduces L4 (IP/port
 only) and L7 (HTTP-content-aware) load balancing as two distinct algorithms; the design
 point worth adding here is that production systems don't usually pick one — they **layer**
 both, in a specific order. An L4 balancer is blind to a request's content, which is exactly
@@ -635,4 +635,4 @@ take so long" investigation actually needs to look.
 
 ---
 
-**Previous:** [Part 8: The Cost of Communication](08_cost_of_communication.md)  |  **Next:** [0. The Interview Framework](../00_interview_framework/tutorial.md)
+**Previous:** [Part 8: The Cost of Communication](08_cost_of_communication.md)  |  **Next:** [Part 10: The Physics of Persistence (B-Trees vs. LSM-Trees)](10_physics_of_persistence.md)

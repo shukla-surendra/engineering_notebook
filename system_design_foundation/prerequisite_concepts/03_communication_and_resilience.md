@@ -71,7 +71,7 @@ the correct default for almost everything else (HTTP, database connections, anyt
   from the callee's latency.
 
 **The direct link to the [message queue concept in
-Fundamentals](../01_fundamentals/tutorial.md#message-queues)**: a queue is the
+Fundamentals](../00_interview_framework/01_fundamentals.md#message-queues)**: a queue is the
 infrastructure pattern that makes asynchronous communication reliable at scale — the
 producer doesn't wait for the consumer to process a message, it just enqueues it and moves
 on, and the queue absorbs the timing mismatch between how fast producers produce and how
@@ -98,7 +98,7 @@ A related but distinct axis: **who initiates** the transfer of new information.
 
 ## Caching and Load Balancing, Briefly
 
-Both covered in full depth in [Fundamentals](../01_fundamentals/tutorial.md) — flagged
+Both covered in full depth in [Fundamentals](../00_interview_framework/01_fundamentals.md) — flagged
 here only so the vocabulary is complete before you read further: **caching** trades
 freshness for speed by storing frequently-accessed data closer to where it's needed (the
 hard part is invalidation, not storage); **load balancing** distributes incoming requests
@@ -149,7 +149,7 @@ turns "this could fail" into an actual design decision.
 
 ## Rate Limiting, Briefly
 
-Covered as a full worked example in [Fundamentals](../01_fundamentals/tutorial.md#worked-example-design-a-rate-limiter)
+Covered as a full worked example in [Fundamentals](../00_interview_framework/01_fundamentals.md#worked-example-design-a-rate-limiter)
 and extended to global/multi-region scale in the [staff-level rate limiter case
 study](http://127.0.0.1:8002/07_design_rate_limiter_at_scale/tutorial/) — flagged here for
 completeness: the general purpose of a rate limiter is protecting a system's own
@@ -162,7 +162,7 @@ under a fail-open-vs-fail-closed decision).
 ## Quick Self-Check
 
 You've now covered the vocabulary every tutorial in this repo assumes. Before starting
-[0. The Interview Framework](../00_interview_framework/tutorial.md), you should be able to
+[0. The Interview Framework](../00_interview_framework/00_interview_framework.md), you should be able to
 answer:
 
 - Why does understanding the DNS → TCP → TLS → HTTP sequence help you debug "why is this

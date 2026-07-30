@@ -163,4 +163,4 @@ adjust, or a hardcoded assumption baked into the schema?
 
 ---
 
-**Previous:** [1. Distributed Systems Foundations](../01_distributed_systems_foundations/tutorial.md)  |  **Next:** [3. Design a Chat System](../03_design_chat_system/tutorial.md)
+**Previous:** [1. Distributed Systems Foundations](http://127.0.0.1:8001/prerequisite_concepts/01_distributed_systems_foundations/)  |  **Next:** [3. Design a Chat System](../03_design_chat_system/tutorial.md)

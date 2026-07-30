@@ -11,7 +11,7 @@ original plan — plus a bank of scenario-debugging problems.
 If terms like **p99 latency**, **the nines**, **sharding vs. replication**, or
 **idempotency** aren't things you could explain from first principles yet, start with the
 **[Prerequisite Concepts](prerequisite_concepts/01_performance_and_scale.md)** primer
-(nine short parts: [Performance & Scale](prerequisite_concepts/01_performance_and_scale.md),
+(ten short parts: [Performance & Scale](prerequisite_concepts/01_performance_and_scale.md),
 [Data & Consistency](prerequisite_concepts/02_data_and_consistency.md),
 [Communication & Resilience](prerequisite_concepts/03_communication_and_resilience.md),
 [CPU vs. GPU](prerequisite_concepts/04_cpu_vs_gpu.md),
@@ -19,7 +19,8 @@ If terms like **p99 latency**, **the nines**, **sharding vs. replication**, or
 [Mechanical Sympathy & the Physics of Latency](prerequisite_concepts/06_mechanical_sympathy_and_physics_of_latency.md),
 [Saturation, Amdahl's Law & Hedged Requests](prerequisite_concepts/07_saturation_amdahls_law_and_hedged_requests.md),
 [The Cost of Communication](prerequisite_concepts/08_cost_of_communication.md),
-[The Anatomy of a Request (DNS, BGP, and the Edge)](prerequisite_concepts/09_dns_bgp_and_the_edge.md))
+[The Anatomy of a Request (DNS, BGP, and the Edge)](prerequisite_concepts/09_dns_bgp_and_the_edge.md),
+[The Physics of Persistence (B-Trees vs. LSM-Trees)](prerequisite_concepts/10_physics_of_persistence.md))
 before the Interview Framework below. It's the shared vocabulary every tutorial in this
 section — and in the [Distributed Systems Design track](http://127.0.0.1:8002/) — assumes
 without re-explaining.
@@ -28,14 +29,14 @@ without re-explaining.
 
 | Weeks | Tutorial | Anchor it to |
 |---|---|---|
-| 1-2 | [Fundamentals: Building Blocks](01_fundamentals/tutorial.md) | General warm-up (URL shortener, rate limiter) |
+| 1-2 | [Fundamentals: Building Blocks](00_interview_framework/01_fundamentals.md) | General warm-up (URL shortener, rate limiter) |
 | 3-4 | [High-Throughput Ingestion Pipelines](02_ingestion_pipeline/tutorial.md) (+ [deep-dive: Lambda vs. EKS cost/speed](02_ingestion_pipeline/serverless_vs_eks_receipt_processing.md)) | Your production-style pipeline: Step Functions/Lambda/S3/Databricks |
 | 5-6 | [Feature Store + Model Promotion](03_feature_store_model_promotion/tutorial.md) (+ [deep-dive: is it worth it when reuse is low?](03_feature_store_model_promotion/is_a_feature_store_worth_it.md)) | Your production ML platform: dev/qa/stage/prod/ml-prod, Unity Catalog, MLflow, Feast |
 | 7-8 | [Model Serving & Deployment](04_model_serving_deployment/tutorial.md) | Extending a production serving layer with canary/shadow, KServe/Seldon |
 | 9-10 | [ML/LLM Observability & Drift](05_observability_drift/tutorial.md) (+ [deep-dive: promotion and observability as one closed-loop system](05_observability_drift/closed_loop_promotion_and_monitoring.md)) | Generalizing a production drift/monitoring setup; Prometheus/Grafana + Evidently/Arize |
 | 11-12 | [RAG + LLM-Serving at Scale](06_rag_llm_serving_at_scale/tutorial.md) | Your Track C project: vector DB, LangChain, vLLM/Triton serving |
 
-Read **[00 — The Interview Framework](00_interview_framework/tutorial.md)** before any of
+Read **[00 — The Interview Framework](00_interview_framework/00_interview_framework.md)** before any of
 the topic tutorials — it's the four-step structure (clarify → high-level design → deep-dive
 → trade-offs) every tutorial in this section is written around, plus a clarifying-question
 bank and a trade-off vocabulary cheat sheet you'll reuse in every round.

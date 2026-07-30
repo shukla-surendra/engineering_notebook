@@ -35,7 +35,7 @@ flowchart TB
 ## Deep-Dive: Consistent Hashing in Practice
 
 Covered mechanically in the
-[foundations tutorial](../01_distributed_systems_foundations/tutorial.md#consistent-hashing-advanced-sharding)
+[foundations tutorial](http://127.0.0.1:8001/prerequisite_concepts/01_distributed_systems_foundations/#consistent-hashing-advanced-sharding)
 — here's how it actually shows up in a real cache cluster's design:
 
 - **Redis Cluster specifically uses a fixed 16384 "hash slots"** rather than a pure
@@ -129,7 +129,7 @@ concern from steady-state read/write performance.
 - **A node failure during active resharding** — the migration state itself needs to be
   resumable/idempotent, not left in a half-migrated, ambiguous-ownership state.
 - **Split-brain during a network partition** between the cluster's nodes — needs a
-  consensus-backed mechanism (per the [foundations tutorial](../01_distributed_systems_foundations/tutorial.md#consensus-making-multiple-nodes-agree-on-one-truth))
+  consensus-backed mechanism (per the [foundations tutorial](http://127.0.0.1:8001/prerequisite_concepts/01_distributed_systems_foundations/#consensus-making-multiple-nodes-agree-on-one-truth))
   to agree on which side of a partition is authoritative, to avoid two nodes both
   believing they own the same slot range.
 - **Memory pressure evicting keys faster than expected** under a workload change —

@@ -29,9 +29,9 @@ failure instead of one.
 
 ## Sharding / Partitioning, Briefly
 
-Covered in depth in [Fundamentals](../01_fundamentals/tutorial.md#sharding-partitioning)
+Covered in depth in [Fundamentals](../00_interview_framework/01_fundamentals.md#sharding-partitioning)
 and extended further in the [distributed systems foundations
-tutorial](http://127.0.0.1:8002/01_distributed_systems_foundations/tutorial/#consistent-hashing-advanced-sharding)
+tutorial](01_distributed_systems_foundations.md#consistent-hashing-advanced-sharding)
 (consistent hashing, virtual nodes) — the short version: split data across machines by
 some key (range-based, hash-based, or directory-based), and watch for **hot shards**
 (uneven access concentrating load on one partition despite even data distribution) as the
@@ -39,7 +39,7 @@ recurring failure mode to name proactively.
 
 ## Replication, Briefly
 
-Also covered in [Fundamentals](../01_fundamentals/tutorial.md#replication) — the short
+Also covered in [Fundamentals](../00_interview_framework/01_fundamentals.md#replication) — the short
 version: leader-follower replication is the standard pattern (writes go to a leader, reads
 can be served from followers, at the cost of replication lag), and multi-leader/leaderless
 setups trade that simplicity for higher write availability at the cost of needing an
@@ -77,12 +77,12 @@ deliver.
 
 ## CAP Theorem, Briefly
 
-Covered in depth in [Fundamentals](../01_fundamentals/tutorial.md#cap-theorem-consistency-models)
+Covered in depth in [Fundamentals](../00_interview_framework/01_fundamentals.md#cap-theorem-consistency-models)
 — the short version, for continuity: under a network partition, a distributed system must
 choose between **C**onsistency (every read sees the latest write) and **A**vailability
 (every request gets a response) — you cannot have both. Naming which side a given stateful
 component of your design lands on, and why, is exactly the [trade-off vocabulary the
-interview framework](../00_interview_framework/tutorial.md#the-trade-off-vocabulary-cheat-sheet)
+interview framework](../00_interview_framework/00_interview_framework.md#the-trade-off-vocabulary-cheat-sheet)
 expects you to use fluently.
 
 ## The Consistency Spectrum: It's Not Just Strong vs. Eventual

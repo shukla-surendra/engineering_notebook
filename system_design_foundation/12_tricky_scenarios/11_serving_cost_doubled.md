@@ -29,7 +29,7 @@ and nobody connected it to the model update at the time.
    or ensemble without an equally rigorous cost/latency evaluation, because cost isn't
    part of their model-selection criteria by default. This ties directly to the
    accuracy-vs-latency trade-off axis in the
-   [interview framework's trade-off cheat sheet](../00_interview_framework/tutorial.md#the-trade-off-vocabulary-cheat-sheet).
+   [interview framework's trade-off cheat sheet](../00_interview_framework/00_interview_framework.md#the-trade-off-vocabulary-cheat-sheet).
 2. **A batching or autoscaling regression introduced alongside the update** — e.g. the new
    model's different input/output shape broke an assumption in the batching logic,
    reducing effective batch size and thus GPU utilization efficiency per request, even if
@@ -75,7 +75,7 @@ and nobody connected it to the model update at the time.
 The systemic lesson: **"routine" model updates aren't routine from a cost perspective
 unless cost is explicitly checked as part of the routine** — accuracy improvements are
 almost never free, and the accuracy-vs-latency/cost trade-off (from the
-[interview framework](../00_interview_framework/tutorial.md)) needs to be an explicit,
+[interview framework](../00_interview_framework/00_interview_framework.md)) needs to be an explicit,
 monitored gate in the promotion process, not an implicit assumption that "same
 architecture family" means "same cost."
 

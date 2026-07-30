@@ -86,7 +86,7 @@ write) and availability (every request gets a response). You can't have both.
 - **Eventual consistency** is the common middle ground: writes propagate asynchronously,
   and the system converges given enough time without new writes.
 - Naming *which* of these your design chose, and why, for each stateful component is
-  exactly the trade-off vocabulary from [the framework guide](../00_interview_framework/tutorial.md#the-trade-off-vocabulary-cheat-sheet).
+  exactly the trade-off vocabulary from [the framework guide](00_interview_framework.md#the-trade-off-vocabulary-cheat-sheet).
 
 ## Reference Architecture: A Generic Scalable Service
 
@@ -209,4 +209,4 @@ answering each:
 
 ---
 
-**Previous:** [0. The Interview Framework](../00_interview_framework/tutorial.md)  |  **Next:** [2. High-Throughput Ingestion Pipelines](../02_ingestion_pipeline/tutorial.md)
+**Previous:** [0. The Interview Framework](00_interview_framework.md)  |  **Next:** [2. High-Throughput Ingestion Pipelines](../02_ingestion_pipeline/tutorial.md)

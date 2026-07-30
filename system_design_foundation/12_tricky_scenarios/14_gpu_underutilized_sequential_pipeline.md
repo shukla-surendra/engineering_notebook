@@ -85,7 +85,7 @@ growing volume.
   [custom-metric autoscaling pattern in the model-serving
   tutorial](../04_model_serving_deployment/tutorial.md#autoscaling-for-model-serving)).
   This is the [message-queue decoupling pattern from
-  Fundamentals](../01_fundamentals/tutorial.md#message-queues) applied directly: the CPU
+  Fundamentals](../00_interview_framework/01_fundamentals.md#message-queues) applied directly: the CPU
   stages stop holding a GPU hostage for work that never touches it, and the GPU tier can
   batch, scale, and be sized independently of everything upstream of it.
 - **Further optimization once decoupled**: evaluate whether multiple pipeline instances

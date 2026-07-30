@@ -1,7 +1,7 @@
 # Distributed Systems Foundations at Staff Depth
 
 The mechanics every case study in this section draws on. The
-[fundamentals covered in the ML track](http://127.0.0.1:8001/01_fundamentals/tutorial/)
+[fundamentals covered in the ML track](../00_interview_framework/01_fundamentals.md)
 (load balancing, caching, basic sharding, CAP theorem) are assumed background — this
 tutorial goes one level deeper into the machinery staff-level rounds expect you to
 actually understand, not just name.
@@ -93,7 +93,7 @@ what happens?
 
 ## Consistent Hashing & Advanced Sharding
 
-Beyond the [basic sharding covered in the ML fundamentals tutorial](http://127.0.0.1:8001/01_fundamentals/tutorial/#sharding-partitioning):
+Beyond the [basic sharding covered in the ML fundamentals tutorial](../00_interview_framework/01_fundamentals.md#sharding-partitioning):
 
 - **The problem with naive `hash(key) % N` sharding**: adding or removing a node changes
   `N`, which reshuffles the mapping for *almost every key* — a massive, unnecessary data
@@ -110,7 +110,7 @@ Beyond the [basic sharding covered in the ML fundamentals tutorial](http://127.0
 - **The staff-level framing**: this is the mechanism underneath *every* "distributed
   cache" or "distributed database" case study's horizontal scaling story — being able to
   explain consistent hashing precisely (not just name it) is what makes the deep-dive in
-  the [distributed cache case study](../05_design_distributed_cache/tutorial.md)
+  the [distributed cache case study](http://127.0.0.1:8002/05_design_distributed_cache/tutorial/)
   land as staff-level rather than a name-drop.
 
 ## Service Mesh: Cross-Cutting Concerns Without Cross-Cutting Code
@@ -134,11 +134,11 @@ inconsistently over time.
   different teams, without requiring every team to individually implement retry logic
   correctly. Naming it as an organizational-scaling tool, not just a technical one, is
   exactly the staff-altitude framing from the
-  [staff-level signal tutorial](../00_staff_level_signal/tutorial.md).
+  [staff-level signal tutorial](00_staff_level_signal.md).
 
 ## Multi-Region Active-Active
 
-Extends the [active-passive DR discussion in the ML track](http://127.0.0.1:8001/10_cost_security_multiregion/tutorial/#multi-region-disaster-recovery)
+Extends the [active-passive DR discussion in the ML track](../10_cost_security_multiregion/tutorial.md#multi-region-disaster-recovery)
 to the harder, fuller case: multiple regions **simultaneously serving live writes**, not
 just one active region with a standby.
 
@@ -216,4 +216,4 @@ just one active region with a standby.
 
 ---
 
-**Previous:** [0. The Staff-Level Signal](../00_staff_level_signal/tutorial.md)  |  **Next:** [2. Design Twitter/X Feed](../02_design_twitter_feed/tutorial.md)
+**Previous:** [The Staff-Level Signal](00_staff_level_signal.md)  |  **Next:** [Design Twitter/X Feed (Distributed Systems Design track)](http://127.0.0.1:8002/02_design_twitter_feed/tutorial/)

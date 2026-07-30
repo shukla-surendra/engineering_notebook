@@ -90,7 +90,7 @@ dominate the actual useful compute time.
 the launch overhead once instead of N times, and keeping intermediate results in fast
 on-chip memory (registers/shared memory, several tiers faster than VRAM, the same
 locality principle as [caching from
-Fundamentals](../01_fundamentals/tutorial.md#caching)) instead of writing them out to
+Fundamentals](../00_interview_framework/01_fundamentals.md#caching)) instead of writing them out to
 VRAM and reading them back for the next op.
 
 **You rarely hand-write fused kernels yourself** — the practical version of this is

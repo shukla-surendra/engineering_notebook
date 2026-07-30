@@ -25,13 +25,13 @@ short parts covering measurement/scaling, data/consistency, and communication/re
 — it's the shared vocabulary this track assumes too, even though the case studies below
 are ML-independent.
 
-**[0. The Staff-Level Signal](00_staff_level_signal/tutorial.md)** — what actually
+**[0. The Staff-Level Signal](http://127.0.0.1:8001/prerequisite_concepts/00_staff_level_signal/)** — what actually
 separates a staff-level answer from a senior one in these rounds. It's not "bigger
 numbers" — it's organizational scope, ambiguity handling, and trade-off framing at a
 different altitude. Read this before any case study; it's the lens the rest of this
 section is evaluated through.
 
-**[1. Distributed Systems Foundations](01_distributed_systems_foundations/tutorial.md)** —
+**[1. Distributed Systems Foundations](http://127.0.0.1:8001/prerequisite_concepts/01_distributed_systems_foundations/)** —
 the underlying mechanics every case study below draws on: consensus (Raft/Paxos),
 distributed transactions (2PC vs. Saga), CRDTs and vector clocks, consistent hashing,
 service mesh, and multi-region active-active replication. Read this second.

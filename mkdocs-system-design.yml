@@ -1,6 +1,6 @@
 site_name: ML Systems Design Notes
 site_description: ML/LLM systems design notes covering MLOps, LLMOps, RAG, and production ML infrastructure.
-docs_dir: system_design
+docs_dir: system_design_foundation
 site_dir: site-system-design
 
 theme:
@@ -59,9 +59,13 @@ nav:
       - "7. Saturation, Amdahl's Law & Hedged Requests": prerequisite_concepts/07_saturation_amdahls_law_and_hedged_requests.md
       - "8. The Cost of Communication": prerequisite_concepts/08_cost_of_communication.md
       - "9. The Anatomy of a Request (DNS, BGP, and the Edge)": prerequisite_concepts/09_dns_bgp_and_the_edge.md
+      - "10. The Physics of Persistence (B-Trees vs. LSM-Trees)": prerequisite_concepts/10_physics_of_persistence.md
+  - Staff-Level Foundations:
+      - 0. The Staff-Level Signal: prerequisite_concepts/00_staff_level_signal.md
+      - 1. Distributed Systems Foundations: prerequisite_concepts/01_distributed_systems_foundations.md
   - Tutorials:
-      - 0. Interview Framework: 00_interview_framework/tutorial.md
-      - 1. Fundamentals & Building Blocks: 01_fundamentals/tutorial.md
+      - 0. Interview Framework: 00_interview_framework/00_interview_framework.md
+      - 1. Fundamentals & Building Blocks: 00_interview_framework/01_fundamentals.md
       - 2. High-Throughput Ingestion Pipelines:
           - Tutorial: 02_ingestion_pipeline/tutorial.md
           - "Deep-Dive: Lambda vs. EKS for Receipt Processing": 02_ingestion_pipeline/serverless_vs_eks_receipt_processing.md

@@ -65,7 +65,7 @@ asked.
 ### Multi-Region & Disaster Recovery
 
 - **The core trade-off is the same CAP-theorem axis from the
-  [fundamentals tutorial](../01_fundamentals/tutorial.md)**, applied to ML infrastructure
+  [fundamentals tutorial](../00_interview_framework/01_fundamentals.md)**, applied to ML infrastructure
   specifically: can the model registry / feature store tolerate being briefly
   inconsistent across regions during a failover, or does it need strong consistency at
   the cost of availability during a partition?

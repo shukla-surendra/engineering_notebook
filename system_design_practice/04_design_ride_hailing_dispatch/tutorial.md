@@ -75,7 +75,7 @@ fails).
 
 - **Optimistic offer with a short lock**: when the matching engine selects a candidate
   driver, it acquires a short-TTL lock on that driver (a distributed lock, per the
-  [foundations tutorial](../01_distributed_systems_foundations/tutorial.md#distributed-locks-zookeeper-etcd))
+  [foundations tutorial](http://127.0.0.1:8001/prerequisite_concepts/01_distributed_systems_foundations/#distributed-locks-zookeeper-etcd))
   before sending the offer — other simultaneous match attempts skip a locked driver and
   move to the next candidate. The TTL must be short enough that a driver who doesn't
   respond (app crashed, no signal) doesn't block that slot indefinitely — this is
@@ -112,7 +112,7 @@ conversation, not a purely technical call made unilaterally; and (3) explicitly 
 full road-network routing as its own system with its own team/ownership boundary, rather
 than hand-waving it as a detail of this design — recognizing organizational scope
 boundaries is itself the staff-level skill from the
-[staff-level signal tutorial](../00_staff_level_signal/tutorial.md).
+[staff-level signal tutorial](http://127.0.0.1:8001/prerequisite_concepts/00_staff_level_signal/).
 
 ## Failure Modes to Raise Proactively
 

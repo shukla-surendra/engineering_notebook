@@ -2,7 +2,7 @@
 
 **Primarily tests**: distributed counting, clock synchronization, and the
 approximate-vs-exact enforcement trade-off. Extends the
-[single-node rate limiter in the ML track's fundamentals tutorial](http://127.0.0.1:8001/01_fundamentals/tutorial/#worked-example-design-a-rate-limiter)
+[single-node rate limiter in the ML track's fundamentals tutorial](http://127.0.0.1:8001/00_interview_framework/01_fundamentals/#worked-example-design-a-rate-limiter)
 (one Redis instance, one counting algorithm) to the genuinely harder problem: enforcing
 one global limit per user/API-key when requests land on servers spread across multiple
 regions.
@@ -46,7 +46,7 @@ global counter for every request?**
   a perfectly accurate global count requires either a single source of truth (a latency
   and availability bottleneck) or synchronous cross-region coordination on every request
   (a consensus-style cost, per the
-  [foundations tutorial](../01_distributed_systems_foundations/tutorial.md#consensus-making-multiple-nodes-agree-on-one-truth)) —
+  [foundations tutorial](http://127.0.0.1:8001/prerequisite_concepts/01_distributed_systems_foundations/#consensus-making-multiple-nodes-agree-on-one-truth)) —
   neither is acceptable at the latency budget a rate limiter needs to operate within
   (it must add negligible overhead to every request it protects).
 
@@ -77,7 +77,7 @@ global counter for every request?**
 ## Deep-Dive: Clock Synchronization
 
 Any rate-limiting algorithm using time windows (fixed window, sliding window — see the
-[fundamentals tutorial's algorithm table](http://127.0.0.1:8001/01_fundamentals/tutorial/#worked-example-design-a-rate-limiter))
+[fundamentals tutorial's algorithm table](http://127.0.0.1:8001/00_interview_framework/01_fundamentals/#worked-example-design-a-rate-limiter))
 depends on consistent notions of time across regions:
 
 - **Clock drift between regions' servers** can cause a window boundary to be interpreted
@@ -86,7 +86,7 @@ depends on consistent notions of time across regions:
   another place this design is inherently approximate, not a precision instrument.
 - **NTP-synchronized clocks** are the practical baseline expectation; for anything
   requiring tighter guarantees, logical/vector clocks (per the
-  [foundations tutorial](../01_distributed_systems_foundations/tutorial.md#crdts-vector-clocks-resolving-conflicts-without-coordination))
+  [foundations tutorial](http://127.0.0.1:8001/prerequisite_concepts/01_distributed_systems_foundations/#crdts-vector-clocks-resolving-conflicts-without-coordination))
   establish relative ordering without depending on wall-clock precision at all — worth
   mentioning as the "if we truly needed it" answer, while noting it's usually overkill for
   a rate limiter's actual accuracy requirements.

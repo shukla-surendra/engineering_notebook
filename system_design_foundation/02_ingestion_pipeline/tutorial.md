@@ -202,4 +202,4 @@ where most real ingestion outages actually originate.
 
 ---
 
-**Previous:** [1. Fundamentals & Building Blocks](../01_fundamentals/tutorial.md)  |  **Next:** [3. Feature Store & Model Promotion](../03_feature_store_model_promotion/tutorial.md)
+**Previous:** [1. Fundamentals & Building Blocks](../00_interview_framework/01_fundamentals.md)  |  **Next:** [3. Feature Store & Model Promotion](../03_feature_store_model_promotion/tutorial.md)

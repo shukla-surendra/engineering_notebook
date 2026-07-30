@@ -176,4 +176,4 @@ prompting you to attach your own production-system specifics → practice questi
 
 ---
 
-**Previous:** [Prerequisite Concepts, Part 9: The Anatomy of a Request (DNS, BGP, and the Edge)](../prerequisite_concepts/09_dns_bgp_and_the_edge.md)  |  **Next:** [1. Fundamentals & Building Blocks](../01_fundamentals/tutorial.md)
+**Previous:** [Prerequisite Concepts, Part 10: The Physics of Persistence (B-Trees vs. LSM-Trees)](../prerequisite_concepts/10_physics_of_persistence.md)  |  **Next:** [1. Fundamentals & Building Blocks](01_fundamentals.md)
