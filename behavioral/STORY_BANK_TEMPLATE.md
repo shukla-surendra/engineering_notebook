@@ -65,12 +65,12 @@ at least one box in each column without stretching:
 | A time you changed your mind based on new evidence | |
 | Your proudest technical decision | |
 | A time you said no / pushed back on scope | |
-| A time you gave tough/direct feedback (Netflix) | |
-| A time you received tough feedback and changed your behavior (Netflix) | |
-| A time you refused to accept "good enough" on craft/detail (Apple) | |
-| A time you owned something with no clear owner (Stripe — extreme ownership) | |
-| A time you caught a subtle correctness/trust issue before it hit users (Stripe) | |
-| A time you shipped a smaller version deliberately instead of waiting (Stripe — urgency) | |
+| A time you gave tough/direct feedback (candor culture) | |
+| A time you received tough feedback and changed your behavior (candor culture) | |
+| A time you refused to accept "good enough" on craft/detail (craft & discretion) | |
+| A time you owned something with no clear owner (writing culture — extreme ownership) | |
+| A time you caught a subtle correctness/trust issue before it hit users (writing culture) | |
+| A time you shipped a smaller version deliberately instead of waiting (writing culture — urgency) | |
 
 If any row is empty after you've populated your bank, that's a gap — go back to the
 brain-dump step and look specifically for an incident that fills it, rather than
