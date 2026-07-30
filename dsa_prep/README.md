@@ -1,12 +1,12 @@
 # DSA Interview Prep
 
 This is **Track A** from the `product-company-transition-plan_1.md` transition plan. Track
-B (ML/LLM System Design) lives in its own top-level `../system_design/` project as a
-separate MkDocs site — see its README, or open it directly at
-[127.0.0.1:8001](http://127.0.0.1:8001/) (also linked in the nav above) once it's running.
+B (ML/LLM System Design) lives in `../system_design_foundation/` — both are part of the
+same single MkDocs site (see the repo root README), reachable from the nav tabs above
+rather than a separate server.
 
-Run `make docs` from the repo root to serve both sites together (this one on `:8000`,
-System Design on `:8001`), or `make dsa-serve` / `make sd-serve` individually.
+Run `make serve` from the repo root to preview the whole site, or `make build` for a
+static build.
 
 A curated, topic-organized set of the highest-frequency coding interview problems
 (roughly the well-known "Top 150" tier — Blind 75 + NeetCode 150 extras), each with:

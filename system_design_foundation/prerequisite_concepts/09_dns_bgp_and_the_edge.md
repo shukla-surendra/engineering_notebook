@@ -334,7 +334,7 @@ flowchart TD
 - **Cache hit vs. cache miss** — a hit is served entirely from the PoP, paying none of
   Part 8's cross-region taxes at all; a miss has to reach back to origin, which is exactly
   the [cache-population strategy the video-streaming case study's CDN
-  deep-dive](http://127.0.0.1:8002/08_design_video_streaming/tutorial/#deep-dive-cdn-architecture-and-cache-invalidation)
+  deep-dive](../../system_design_practice/08_design_video_streaming/tutorial.md#deep-dive-cdn-architecture-and-cache-invalidation)
   covers — including **origin shield**, an intermediate layer that deduplicates concurrent
   misses across many edge nodes so a sudden spike in popularity doesn't send a thundering
   herd of identical requests at the origin simultaneously.

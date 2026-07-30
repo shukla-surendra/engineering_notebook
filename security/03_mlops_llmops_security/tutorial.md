@@ -117,7 +117,7 @@ which walks a real extraction attempt end-to-end.
 
 ### LLM Gateway Security Specifically
 
-The [LLM gateway](http://127.0.0.1:8001/11_llmops/tutorial/#llm-gateway-routing-fallback-and-cost-control)
+The [LLM gateway](../../system_design_foundation/11_llmops/tutorial.md#llm-gateway-routing-fallback-and-cost-control)
 from the LLMOps tutorial centralizes routing, fallback, and cost control; it's also the
 single natural place to centralize the security responsibilities that would otherwise be
 duplicated (or forgotten) in every service that calls a model:
@@ -131,7 +131,7 @@ duplicated (or forgotten) in every service that calls a model:
   guardrail-trigger monitoring, since it's the one point every call is guaranteed to pass
   through.
 - **Centralized guardrail enforcement** — the gateway is where input/output guardrails
-  from the [LLMOps tutorial](http://127.0.0.1:8001/11_llmops/tutorial/#guardrails--safety)
+  from the [LLMOps tutorial](../../system_design_foundation/11_llmops/tutorial.md#guardrails-safety)
   actually get enforced, on the condition that **no direct-to-provider path bypasses it** —
   if any service holds its own provider API key and calls the model directly, that call
   gets none of the gateway's auth, logging, or guardrail enforcement, silently, and the
@@ -148,7 +148,7 @@ from Foundations to the ML pipeline specifically: an action (a prediction that a
 real decision) needs to be conclusively attributable after the fact, not reconstructed
 from best-effort logs and tribal memory.
 
-[system_design's Reconstructing Model Lineage for an Audit](http://127.0.0.1:8001/12_tricky_scenarios/10_audit_lineage_reconstruction/)
+[system_design's Reconstructing Model Lineage for an Audit](../../system_design_foundation/12_tricky_scenarios/10_audit_lineage_reconstruction.md)
 is a worked example of exactly this problem from the *operations* angle — what breaks when
 serving logs don't capture exact model version, registry retention prunes old lineage, or
 promotion approval was never a structured record. This tutorial adds the **access-control**

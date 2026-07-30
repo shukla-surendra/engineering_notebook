@@ -1,13 +1,13 @@
 # Low-Level Design (LLD) / Object-Oriented Design Prep
 
-The fifth track alongside `dsa_prep/` (algorithms), `system_design/` (ML/LLM systems),
-`system_design_practice/` (general distributed systems), and `security/`. This one covers
-the **class-design round** — "design a parking lot," "design an elevator system" — which
-tests OOP judgment (SOLID, design patterns, extensibility) rather than distributed-systems
-trade-offs or algorithmic complexity.
+The fifth track alongside `dsa_prep/` (algorithms), `system_design_foundation/` (ML/LLM
+systems), `system_design_practice/` (general distributed systems), and `security/`. This
+one covers the **class-design round** — "design a parking lot," "design an elevator
+system" — which tests OOP judgment (SOLID, design patterns, extensibility) rather than
+distributed-systems trade-offs or algorithmic complexity.
 
-Run `make docs` from the repo root to serve all five sites together, or `make lld-serve`
-for this one individually (http://127.0.0.1:8004).
+All five tracks are one MkDocs site now — run `make serve` from the repo root to preview
+it, or `make build` for a static build. This section is its own nav tab.
 
 Each problem folder has:
 
@@ -54,7 +54,7 @@ API design + extensibility rather than a single function.
 Note: `05_rate_limiter/` is the **class-level** design question ("design a `RateLimiter`
 you'd import into one process") — for the **distributed** version ("design a rate limiter
 service in front of a fleet of API servers"), see
-[System Design Practice: Design a Rate Limiter at Global Scale](http://127.0.0.1:8002/07_design_rate_limiter_at_scale/tutorial/).
+[System Design Practice: Design a Rate Limiter at Global Scale](../system_design_practice/07_design_rate_limiter_at_scale/tutorial.md).
 Interviewers sometimes ask the class-level version first, then escalate to the distributed
 one as a follow-up — recognizing that pivot in the room is itself a signal.
 

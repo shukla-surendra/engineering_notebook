@@ -22,7 +22,7 @@ If terms like **p99 latency**, **the nines**, **sharding vs. replication**, or
 [The Anatomy of a Request (DNS, BGP, and the Edge)](prerequisite_concepts/09_dns_bgp_and_the_edge.md),
 [The Physics of Persistence (B-Trees vs. LSM-Trees)](prerequisite_concepts/10_physics_of_persistence.md))
 before the Interview Framework below. It's the shared vocabulary every tutorial in this
-section — and in the [Distributed Systems Design track](http://127.0.0.1:8002/) — assumes
+section — and in the [Distributed Systems Design track](../system_design_practice/README.md) — assumes
 without re-explaining.
 
 ## How the core six map to the transition plan

@@ -74,7 +74,7 @@ much higher write throughput than a traditional database-backed queue.
   "committed" once it's been replicated to enough of the ISR (configurable), directly
   trading off durability against write latency.
 - **Leader election on broker failure** uses the same consensus mechanism discussed in the
-  [foundations tutorial](http://127.0.0.1:8001/prerequisite_concepts/01_distributed_systems_foundations/#consensus-making-multiple-nodes-agree-on-one-truth) —
+  [foundations tutorial](../../system_design_foundation/prerequisite_concepts/01_distributed_systems_foundations.md#consensus-making-multiple-nodes-agree-on-one-truth) —
   modern Kafka uses a Raft-based controller quorum specifically to decide which ISR member
   becomes the new leader when the current leader fails, ensuring no committed message is
   lost in the process (only a replica that was fully caught up is eligible to become
@@ -103,7 +103,7 @@ does); explaining *why* exactly-once is hard and what it actually requires is th
   **not** extend automatically to side effects outside it (a consumer that processes a
   message and then calls an external API) — that still requires the consumer's own
   idempotency handling, exactly the pattern discussed in the
-  [ingestion pipeline tutorial](http://127.0.0.1:8001/02_ingestion_pipeline/tutorial/#idempotency).
+  [ingestion pipeline tutorial](../../system_design_foundation/02_ingestion_pipeline/tutorial.md#idempotency).
   Naming this boundary explicitly — "exactly-once inside Kafka, still your responsibility
   at the edges" — is what separates understanding the mechanism from reciting the term.
 
@@ -140,7 +140,7 @@ parameter to casually adjust later.
   from "broker is down," since the partition is still serving traffic while degraded.
 - **A "poison pill" message** that a consumer can never successfully process, blocking
   that partition's consumption indefinitely — needs a dead-letter/skip mechanism, the same
-  pattern from the [ingestion pipeline tutorial](http://127.0.0.1:8001/02_ingestion_pipeline/tutorial/#retry-failure-handling).
+  pattern from the [ingestion pipeline tutorial](../../system_design_foundation/02_ingestion_pipeline/tutorial.md#retry-failure-handling).
 
 ## Staff Follow-Ups
 

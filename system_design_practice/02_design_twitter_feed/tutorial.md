@@ -74,7 +74,7 @@ expensive in aggregate for the common case.
 
 A ranked (not purely chronological) feed needs a scoring model — at a system-design level,
 the important part isn't the ML model itself (see the
-[ML System Design track](http://127.0.0.1:8001/) for that), it's **where ranking happens
+[ML System Design track](../../system_design_foundation/README.md) for that), it's **where ranking happens
 in the pipeline and what it costs**:
 
 - Candidate generation (the merged set from fan-out-on-write cache + celebrity fan-in)
@@ -163,4 +163,4 @@ adjust, or a hardcoded assumption baked into the schema?
 
 ---
 
-**Previous:** [1. Distributed Systems Foundations](http://127.0.0.1:8001/prerequisite_concepts/01_distributed_systems_foundations/)  |  **Next:** [3. Design a Chat System](../03_design_chat_system/tutorial.md)
+**Previous:** [1. Distributed Systems Foundations](../../system_design_foundation/prerequisite_concepts/01_distributed_systems_foundations.md)  |  **Next:** [3. Design a Chat System](../03_design_chat_system/tutorial.md)

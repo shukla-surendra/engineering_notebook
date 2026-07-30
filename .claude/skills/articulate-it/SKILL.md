@@ -95,9 +95,12 @@ belongs in this repo, not just when appending a closing section to an existing f
   example in `04_cpu_vs_gpu.md` as calibration).
 - Cross-reference relentlessly, both to earlier Parts in this same primer and to the
   tutorials/tricky-scenarios elsewhere in the repo that assume the concept — this is what
-  keeps the primer from being a disconnected glossary. Use relative links within
-  `system_design/`, and the established absolute-URL pattern
-  (`http://127.0.0.1:8002/...`) when crossing into `system_design_practice/`.
+  keeps the primer from being a disconnected glossary. The whole repo is one MkDocs site
+  (`docs_dir: .` in `mkdocs.yml`), so use plain relative links everywhere, including when
+  crossing from `system_design_foundation/` into `system_design_practice/` or any other
+  top-level folder (e.g. `../../system_design_practice/02_design_twitter_feed/tutorial.md`
+  from a file two levels deep) — never a hardcoded `127.0.0.1:PORT` URL; those broke
+  repeatedly under refactors and were removed.
 - State numeric claims (hardware specs, cloud pricing, bandwidth figures) as **illustrative
   and approximate**, explicitly — this repo's convention (see the GPU catalog table in
   `05_gpu_selection_and_code_optimization.md`) is "the relationship, not the specific

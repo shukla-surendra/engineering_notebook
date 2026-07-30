@@ -61,7 +61,7 @@ glance, it doesn't even look like a jailbreak attempt at all.
    didn't catch the resulting response independently of the input-side miss.
 5. **For context on a related but distinct failure mode** — an eval-gate promoting a prompt
    change without adversarial coverage, rather than an encoding bypass — see
-   [the ops-gap version of this problem](http://127.0.0.1:8001/12_tricky_scenarios/13_eval_passed_guardrail_bypassed/)
+   [the ops-gap version of this problem](../../system_design_foundation/12_tricky_scenarios/13_eval_passed_guardrail_bypassed.md)
    in the MLOps tricky-scenarios bank; useful for contrasting "guardrail wasn't re-validated
    after a prompt change" against "guardrail was never built to see this representation of
    the input" as two different ways a guardrail's paper coverage doesn't match its actual

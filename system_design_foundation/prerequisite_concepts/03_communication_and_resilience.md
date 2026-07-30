@@ -92,7 +92,7 @@ A related but distinct axis: **who initiates** the transfer of new information.
   the usual client-initiates-requests model.
 - **Streaming**: a persistent, held-open connection (as opposed to discrete push
   notifications) over which a continuous flow of updates arrives — the mechanism underneath
-  the [chat system case study's](http://127.0.0.1:8002/03_design_chat_system/tutorial/#deep-dive-connection-management-at-scale)
+  the [chat system case study's](../../system_design_practice/03_design_chat_system/tutorial.md#deep-dive-connection-management-at-scale)
   entire connection-management design, and the reason that case study is a genuinely
   different problem from a typical request/response API.
 
@@ -151,7 +151,7 @@ turns "this could fail" into an actual design decision.
 
 Covered as a full worked example in [Fundamentals](../00_interview_framework/01_fundamentals.md#worked-example-design-a-rate-limiter)
 and extended to global/multi-region scale in the [staff-level rate limiter case
-study](http://127.0.0.1:8002/07_design_rate_limiter_at_scale/tutorial/) — flagged here for
+study](../../system_design_practice/07_design_rate_limiter_at_scale/tutorial.md) — flagged here for
 completeness: the general purpose of a rate limiter is protecting a system's own
 availability by rejecting or throttling excess load before it degrades service for
 everyone, and it's one of the most common "design a small system" warm-up questions

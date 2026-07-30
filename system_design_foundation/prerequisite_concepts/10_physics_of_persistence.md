@@ -315,6 +315,46 @@ distribution, and which of B-tree or LSM-tree actually fits that shape,"** which
 question Part 2's CAP/consistency axis and this doc's storage-engine axis both feed into
 independently, not a question either axis answers alone.
 
+## Real-World Usage: Which Systems Choose What, and Why
+
+The table in the previous section showed *that* the storage engine and the SQL/NoSQL label
+are separable; this section widens the lens to the full landscape of production systems,
+organized by **workload archetype** rather than by marketing category — because workload
+archetype, not label, is what actually predicts which structure a system picked and why.
+
+| Workload archetype | Systems that use it | Storage engine | Why this fits |
+|---|---|---|---|
+| **OLTP / transactional** (banking, e-commerce, ERP — many small reads, point updates, strong consistency) | PostgreSQL, MySQL/InnoDB, Oracle, SQL Server | B-tree | Read-heavy-relative-to-write, point lookups and range scans on indexed columns are the dominant access pattern — exactly the B-tree's strength, and the cost of in-place updates is acceptable at this scale |
+| **Embedded / mobile local storage** (an app's own on-device data, no server round-trip) | SQLite, Realm | B-tree | Single-writer, modest write volume, and the read path's simplicity matters more than write throughput on a phone's flash storage |
+| **Wide-column / high-write telemetry** (chat/message storage, IoT sensor data, activity feeds) | Cassandra, ScyllaDB (Discord's message-storage migration from Cassandra is a publicly documented case) | LSM-tree | Extremely high write volume, near-random keys (message ID, device ID), few updates after insert — the textbook LSM-tree shape from the worked example above |
+| **Big-data / Hadoop-ecosystem wide-column store** | HBase, Google Bigtable (the paper that coined the terms *SSTable* and *memtable* used throughout this doc) | LSM-tree | Same write-throughput logic as Cassandra, at a scale (petabytes, thousands of nodes) where B-tree write amplification would be prohibitive |
+| **Managed cloud key-value at massive scale** | Amazon DynamoDB | Log-structured / LSM-family internals (per AWS's public architecture discussions) | Same throughput-over-strict-per-row-cost trade-off, packaged as a managed service rather than self-operated |
+| **Embedded engine inside other distributed systems** | RocksDB (Facebook's LevelDB fork) inside MySQL as **MyRocks**, inside TiKV (PingCAP's distributed KV store), as Kafka Streams' and Flink's local state-store backend; **Pebble** (CockroachDB's own Go-native LSM engine, built to replace RocksDB) inside CockroachDB; a RocksDB fork (**DocDB**) inside YugabyteDB | LSM-tree | Once a team needs an embeddable, crash-safe, high-write KV engine as a *component* rather than a standalone database, LSM-tree implementations dominate — this is the same engine choice as the row above, just reused as a building block instead of exposed directly |
+| **Distributed SQL / NewSQL** (SQL semantics at horizontally-scaled write volume) | CockroachDB (SQL over Pebble), YugabyteDB (SQL over DocDB) | LSM-tree, with a relational query layer on top | The MyRocks argument generalized: a SQL front end is a data-model/query-language choice, entirely separable from the storage engine underneath, and these systems pick LSM specifically because horizontal write scale is the design goal |
+| **Browser/local application storage** | Chrome's IndexedDB (LevelDB-backed), Bitcoin Core's UTXO/chainstate database (LevelDB) | LSM-tree | Even single-machine, non-networked software picks an LSM-tree when its workload is write-heavy with little need for complex range queries — the choice is about access pattern, not distributed scale |
+| **Full-text search** | Elasticsearch / Apache Lucene | Not literally a B-tree or LSM-tree, but the *same underlying idea*: immutable, sorted segments written once, merged in the background — Lucene's "segment merge" is functionally compaction under a different name | Worth knowing because it shows the append-then-merge principle this doc covers generalizes beyond classic KV/relational storage into search indexing entirely |
+
+**The instructive exception — TimescaleDB.** Time-series data (the worked example's
+canonical LSM-tree shape) is exactly the workload archetype that should favor an LSM-tree.
+TimescaleDB is a PostgreSQL extension — **B-tree underneath, by inheritance from Postgres**
+— and is nonetheless a legitimate, widely-used choice for time-series workloads. The reason
+isn't a mechanical exception to anything in this doc; it's that the team chose to trade
+some write-path efficiency for full SQL compatibility, Postgres's mature tooling/ecosystem,
+and operational familiarity — a deliberate, named trade against pure throughput, not proof
+that the read/write analysis above doesn't apply. **This is the real lesson of the whole
+real-world survey**: the mapping from workload to engine is a strong default, not a law —
+a team can and sometimes should pick "the wrong one" for the workload shape in exchange for
+something the mechanical analysis doesn't capture (ecosystem maturity, staffing familiarity,
+existing tooling), as long as that trade is made consciously rather than by accident.
+
+**Scope note — a third camp this doc doesn't cover.** Columnar/OLAP formats and warehouses
+(Parquet, ClickHouse, Snowflake, BigQuery) are neither B-trees nor LSM-trees — they organize
+data by *column* rather than by *row*, optimized for scanning millions of rows of a handful
+of columns at once (an aggregation query) rather than finding or updating one row precisely.
+That's a genuinely different problem (analytical scans vs. point lookups/range queries) with
+its own first-principles treatment; naming it here only so the B-tree/LSM-tree framework
+isn't mistakenly stretched to cover every storage engine that exists.
+
 ## Designing and Operating From First Principles
 
 1. Is my workload write-heavy with a wide or random keyspace (favors an LSM-tree), or
@@ -341,6 +381,10 @@ independently, not a question either axis answers alone.
 8. Have I named which of the three RUM-conjecture costs (read, write/update, space
    amplification) I'm deliberately accepting for this specific table, rather than assuming
    a single engine choice optimizes all three?
+9. If I'm picking a system whose workload archetype has a strong real-world default (e.g.
+   time-series usually favors LSM-tree stores like Cassandra), and I'm leaning the other
+   way, can I name the specific thing I'm trading for (ecosystem, tooling, team
+   familiarity) — or am I just defaulting to what I already know?
 
 ## Key Takeaways
 
@@ -377,6 +421,18 @@ independently, not a question either axis answers alone.
 - The only question that actually predicts performance is read/write ratio and key
   distribution against B-tree vs. LSM-tree — not which marketing category a database falls
   into.
+- Real-world usage clusters by workload archetype, not by label: OLTP and embedded/mobile
+  storage lean B-tree (Postgres, MySQL/InnoDB, SQLite); high-write telemetry, wide-column,
+  and embedded-engine-inside-another-system use cases lean LSM-tree (Cassandra, HBase,
+  Bigtable, RocksDB/Pebble/DocDB inside MyRocks, TiKV, CockroachDB, YugabyteDB, Kafka
+  Streams, Flink).
+- Exceptions like TimescaleDB (B-tree, via Postgres, for a time-series workload that would
+  otherwise favor LSM-tree) prove the mapping is a strong default, not a law — a
+  consciously named trade (ecosystem, tooling) against pure throughput is a legitimate
+  reason to pick "the wrong one" for the workload shape.
+- Columnar/OLAP warehouses (Parquet, ClickHouse, Snowflake, BigQuery) are a third storage
+  camp entirely — organized by column for analytical scans, not by row for point
+  lookups — and aren't a B-tree/LSM-tree choice at all.
 
 ## Quick Self-Check
 
@@ -395,6 +451,11 @@ independently, not a question either axis answers alone.
   WAL — not the B-tree or the memtable — is the true source of record?
 - Why does MySQL running on RocksDB (MyRocks) prove that "SQL vs. NoSQL" and "B-tree vs.
   LSM-tree" are different, independent axes rather than the same choice under two names?
+- Why does TimescaleDB choosing a B-tree (via Postgres) for a time-series workload not
+  contradict the write-heavy-favors-LSM-tree argument made earlier in this doc?
+- Name three real systems where an LSM-tree engine (RocksDB, Pebble, or a fork of one) is
+  embedded *inside* another system rather than exposed as a standalone database — what do
+  all three have in common that made an LSM-tree the right embeddable component?
 
 ## Articulate It: Interview Framing & Vocabulary
 
@@ -419,6 +480,14 @@ independently, not a question either axis answers alone.
   MongoDB defaults to a B-tree, so the real question I'd actually ask is what our read/write
   ratio and key distribution look like, and pick a storage engine — B-tree or LSM-tree —
   based on that, independent of whatever the marketing label says."
+- **Real-world-pattern framing (good for demonstrating you're not just reciting theory):**
+  "I'd point at what's already shipped in production: Cassandra, HBase, and Bigtable pick
+  LSM-trees for the same reason — near-random keys at huge write volume — and that's also
+  why RocksDB and its forks (Pebble, DocDB) end up embedded *inside* MyRocks, TiKV,
+  CockroachDB, and YugabyteDB as a component rather than a standalone database. TimescaleDB
+  is the instructive exception — B-tree, via Postgres, for a workload that would otherwise
+  favor LSM — and it's a legitimate choice precisely because the team named what they were
+  trading (SQL compatibility, ecosystem) against pure write throughput."
 
 ### Vocabulary Builder
 
@@ -443,6 +512,12 @@ independently, not a question either axis answers alone.
   physical flush to amortize `fsync`'s cost across more work.
 - **page cache** (n. phrase) — the OS's in-RAM buffer for disk I/O; a `write()` call lands
   here first, which is exactly the gap `fsync` exists to close.
+- **workload archetype** (n. phrase) — a named shape of access pattern (OLTP, high-write
+  telemetry, embedded/mobile) used to predict which storage engine a real system picked,
+  instead of reasoning from its marketing label.
+- **embedded storage engine** (n. phrase) — a KV engine (RocksDB, Pebble) used as an
+  internal component inside a larger system (MyRocks, TiKV, CockroachDB) rather than
+  exposed directly as a standalone database.
 
 **Expressive phrases — for stating a trade-off fluently instead of listing pros/cons:**
 
@@ -455,6 +530,9 @@ independently, not a question either axis answers alone.
   a precise way to explain what WAL-based crash recovery actually means mechanically.
 - **"…a data-model label, not a storage-engine guarantee"** — a reusable way to push back on
   treating "NoSQL" as if it implies a specific performance profile.
+- **"…a strong default, not a law"** — a fluent way to acknowledge a real-world pattern
+  (workload archetype → engine choice) holds most of the time while still leaving room for
+  a consciously named exception.
 
 ---
 

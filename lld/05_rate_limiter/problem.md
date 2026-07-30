@@ -15,7 +15,7 @@ algorithms, not on any single implementation being clever.
 This is **not** the same question as *"design a rate limiter service in front of a fleet
 of API servers"* — that's a distributed-systems question about shared state (Redis,
 consistency across nodes, clock skew) and lives in
-[System Design Practice: Design a Rate Limiter at Global Scale](http://127.0.0.1:8002/07_design_rate_limiter_at_scale/tutorial/).
+[System Design Practice: Design a Rate Limiter at Global Scale](../../system_design_practice/07_design_rate_limiter_at_scale/tutorial.md).
 Interviewers sometimes start with this class-level version and escalate to the distributed
 one as a follow-up — noticing that pivot and re-framing your answer (shared state instead
 of an in-memory dict) is itself a signal worth naming out loud.

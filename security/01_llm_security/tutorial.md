@@ -61,7 +61,7 @@ directly from that: prompt injection and jailbreaks.
   syntactic boundary between "code" and "data," and once you use them, no string content can
   ever be reinterpreted as a command. An LLM has no equivalent parser boundary. Structural
   role separation (system / user / tool / retrieved-context as distinct fields, per the
-  [LLMOps tutorial's prompt-engineering discussion](http://127.0.0.1:8001/11_llmops/tutorial/#prompt-engineering-as-a-versioned-artifact))
+  [LLMOps tutorial's prompt-engineering discussion](../../system_design_foundation/11_llmops/tutorial.md#prompt-engineering-as-a-versioned-artifact))
   reduces the attack surface by making the model *more likely* to weight instructions in the
   system role over content in a data role, but it's a strong steer, not a hard guarantee —
   a sufficiently crafted injection can still get weighted as an instruction. This is the
@@ -130,7 +130,7 @@ Two related but distinct supply-chain risks, both landing in LLM03/LLM05 above:
   weights rather than in data it learns from at your organization — a compromised base
   model pulled from a public hub, or a malicious LoRA adapter/fine-tune (the same
   lightweight-adapter mechanism covered for legitimate use in the [LLMOps
-  tutorial](http://127.0.0.1:8001/11_llmops/tutorial/#peft-lora-qlora-why-full-fine-tuning-isnt-the-default))
+  tutorial](../../system_design_foundation/11_llmops/tutorial.md#peft-lora-qlora-why-full-fine-tuning-isnt-the-default))
   that behaves identically to the honest version on every normal input and only diverges on
   a specific trigger phrase the attacker chose. This is exactly why artifact provenance and
   signature verification (LLM05, supply chain) matters as much for a model or adapter as it
@@ -212,7 +212,7 @@ RAG introduces two risks beyond the general prompt-injection surface above:
   high-risk input patterns) and **output guardrails** (PII redaction, toxicity filtering,
   schema validation) are the same defense-in-depth layering from
   [00. Foundations](../00_foundations/tutorial.md#the-cia-triad-and-the-vocabulary-built-on-it)
-  applied to an LLM request path. The [LLMOps tutorial](http://127.0.0.1:8001/11_llmops/tutorial/#guardrails-safety)
+  applied to an LLM request path. The [LLMOps tutorial](../../system_design_foundation/11_llmops/tutorial.md#guardrails-safety)
   covers this same mechanism from an *ops/latency* angle (which checks run synchronously vs.
   async, what a guardrail costs the request path); this tutorial's angle is *security*: what
   each guardrail is actually defending against and how confidently it can be trusted to.
@@ -228,7 +228,7 @@ RAG introduces two risks beyond the general prompt-injection surface above:
   probabilistic, "we shipped the classifier" is not evidence it holds; only actively
   attacking it (varying phrasing, encoding, framing, multi-turn erosion) and measuring the
   bypass rate is. Red-team findings should feed back into the guardrail's training/rule set
-  and into the eval golden set from the [LLMOps tutorial](http://127.0.0.1:8001/11_llmops/tutorial/#evaluation-golden-sets-llm-as-judge-regression-gates)
+  and into the eval golden set from the [LLMOps tutorial](../../system_design_foundation/11_llmops/tutorial.md#evaluation-golden-sets-llm-as-judge-regression-gates)
   the same way a production incident does — every successful red-team bypass becomes a
   permanent regression case, not a one-off patch.
 
@@ -317,7 +317,7 @@ documentation the support team pulls in periodically).
    executing; and **red-teaming**, since this exact pattern — a planted instruction in
    third-party ingested content — is precisely the probe a red team should run against the
    ingestion pipeline before a real attacker finds the same gap, becoming a permanent
-   regression case in the [LLMOps golden set](http://127.0.0.1:8001/11_llmops/tutorial/#evaluation-golden-sets-llm-as-judge-regression-gates)
+   regression case in the [LLMOps golden set](../../system_design_foundation/11_llmops/tutorial.md#evaluation-golden-sets-llm-as-judge-regression-gates)
    once found.
 
 The pattern worth stating explicitly at the end of this walkthrough: **no single layer

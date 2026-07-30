@@ -1,0 +1,282 @@
+site_name: Engineering Notebook — Interview Prep
+site_description: Algorithms & data structures, ML/LLM and distributed systems design, security engineering, and low-level design — one site, organized by track.
+docs_dir: docs
+site_dir: site
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - navigation.indexes
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.code.annotate
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.snippets:
+      base_path: ["dsa_prep", "lld"]
+      check_paths: true
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - toc:
+      permalink: true
+  - tables
+
+nav:
+  - Home: README.md
+
+  - Algorithms & Data Structures:
+      - Overview: dsa_prep/README.md
+      - Priority Checklist: dsa_prep/TOP_LIST.md
+      - Patterns:
+          - Arrays & Hashing:
+              - Pattern: dsa_prep/arrays_hashing/PATTERN.md
+              - "1. Contains Duplicate": dsa_prep/arrays_hashing/01_contains_duplicate/problem.md
+              - "2. Valid Anagram": dsa_prep/arrays_hashing/02_valid_anagram/problem.md
+              - "3. Two Sum": dsa_prep/arrays_hashing/03_two_sum/problem.md
+              - "4. Group Anagrams": dsa_prep/arrays_hashing/04_group_anagrams/problem.md
+              - "5. Top K Frequent Elements": dsa_prep/arrays_hashing/05_top_k_frequent_elements/problem.md
+              - "6. Product of Array Except Self": dsa_prep/arrays_hashing/06_product_of_array_except_self/problem.md
+              - "7. Longest Consecutive Sequence": dsa_prep/arrays_hashing/07_longest_consecutive_sequence/problem.md
+          - Two Pointers:
+              - Pattern: dsa_prep/two_pointers/PATTERN.md
+              - "1. Valid Palindrome": dsa_prep/two_pointers/01_valid_palindrome/problem.md
+              - "2. 3Sum": dsa_prep/two_pointers/02_3sum/problem.md
+              - "3. Container With Most Water": dsa_prep/two_pointers/03_container_with_most_water/problem.md
+              - "4. Trapping Rain Water": dsa_prep/two_pointers/04_trapping_rain_water/problem.md
+          - Sliding Window:
+              - Pattern: dsa_prep/sliding_window/PATTERN.md
+              - "1. Best Time to Buy and Sell Stock": dsa_prep/sliding_window/01_best_time_to_buy_sell_stock/problem.md
+              - "2. Longest Substring Without Repeating Characters": dsa_prep/sliding_window/02_longest_substring_without_repeating_characters/problem.md
+              - "3. Longest Repeating Character Replacement": dsa_prep/sliding_window/03_longest_repeating_character_replacement/problem.md
+              - "4. Permutation in String": dsa_prep/sliding_window/04_permutation_in_string/problem.md
+              - "5. Minimum Window Substring": dsa_prep/sliding_window/05_minimum_window_substring/problem.md
+          - Stack:
+              - Pattern: dsa_prep/stack/PATTERN.md
+              - "1. Valid Parentheses": dsa_prep/stack/01_valid_parentheses/problem.md
+              - "2. Min Stack": dsa_prep/stack/02_min_stack/problem.md
+              - "3. Evaluate Reverse Polish Notation": dsa_prep/stack/03_evaluate_reverse_polish_notation/problem.md
+              - "4. Daily Temperatures": dsa_prep/stack/04_daily_temperatures/problem.md
+          - Binary Search:
+              - Pattern: dsa_prep/binary_search/PATTERN.md
+              - "1. Binary Search": dsa_prep/binary_search/01_binary_search/problem.md
+              - "2. Search in Rotated Sorted Array": dsa_prep/binary_search/02_search_in_rotated_sorted_array/problem.md
+              - "3. Find Minimum in Rotated Sorted Array": dsa_prep/binary_search/03_find_minimum_in_rotated_sorted_array/problem.md
+              - "4. Koko Eating Bananas": dsa_prep/binary_search/04_koko_eating_bananas/problem.md
+          - Linked List:
+              - Pattern: dsa_prep/linked_list/PATTERN.md
+              - "1. Reverse Linked List": dsa_prep/linked_list/01_reverse_linked_list/problem.md
+              - "2. Merge Two Sorted Lists": dsa_prep/linked_list/02_merge_two_sorted_lists/problem.md
+              - "3. Reorder List": dsa_prep/linked_list/03_reorder_list/problem.md
+              - "4. Remove Nth Node From End of List": dsa_prep/linked_list/04_remove_nth_node_from_end/problem.md
+              - "5. Linked List Cycle": dsa_prep/linked_list/05_linked_list_cycle/problem.md
+              - "6. Merge k Sorted Lists": dsa_prep/linked_list/06_merge_k_sorted_lists/problem.md
+          - Trees:
+              - Pattern: dsa_prep/trees/PATTERN.md
+              - "1. Invert Binary Tree": dsa_prep/trees/01_invert_binary_tree/problem.md
+              - "2. Maximum Depth of Binary Tree": dsa_prep/trees/02_maximum_depth_of_binary_tree/problem.md
+              - "3. Same Tree": dsa_prep/trees/03_same_tree/problem.md
+              - "4. Subtree of Another Tree": dsa_prep/trees/04_subtree_of_another_tree/problem.md
+              - "5. Lowest Common Ancestor of a Binary Search Tree": dsa_prep/trees/05_lowest_common_ancestor_bst/problem.md
+              - "6. Binary Tree Level Order Traversal": dsa_prep/trees/06_binary_tree_level_order_traversal/problem.md
+              - "7. Validate Binary Search Tree": dsa_prep/trees/07_validate_binary_search_tree/problem.md
+              - "8. Kth Smallest Element in a BST": dsa_prep/trees/08_kth_smallest_element_in_bst/problem.md
+              - "9. Binary Tree Maximum Path Sum": dsa_prep/trees/09_binary_tree_maximum_path_sum/problem.md
+          - Tries:
+              - Pattern: dsa_prep/tries/PATTERN.md
+              - "1. Implement Trie (Prefix Tree)": dsa_prep/tries/01_implement_trie/problem.md
+              - "2. Design Add and Search Words Data Structure": dsa_prep/tries/02_design_add_and_search_words/problem.md
+              - "3. Word Search II": dsa_prep/tries/03_word_search_ii/problem.md
+          - Heap / Priority Queue:
+              - Pattern: dsa_prep/heap_priority_queue/PATTERN.md
+              - "1. Kth Largest Element in a Stream": dsa_prep/heap_priority_queue/01_kth_largest_element_in_a_stream/problem.md
+              - "2. Last Stone Weight": dsa_prep/heap_priority_queue/02_last_stone_weight/problem.md
+              - "3. K Closest Points to Origin": dsa_prep/heap_priority_queue/03_k_closest_points_to_origin/problem.md
+              - "4. Task Scheduler": dsa_prep/heap_priority_queue/04_task_scheduler/problem.md
+              - "5. Find Median from Data Stream": dsa_prep/heap_priority_queue/05_find_median_from_data_stream/problem.md
+          - Backtracking:
+              - Pattern: dsa_prep/backtracking/PATTERN.md
+              - "1. Subsets": dsa_prep/backtracking/01_subsets/problem.md
+              - "2. Combination Sum": dsa_prep/backtracking/02_combination_sum/problem.md
+              - "3. Permutations": dsa_prep/backtracking/03_permutations/problem.md
+              - "4. Word Search": dsa_prep/backtracking/04_word_search/problem.md
+              - "5. N-Queens": dsa_prep/backtracking/05_n_queens/problem.md
+          - Graphs:
+              - Pattern: dsa_prep/graphs/PATTERN.md
+              - "1. Number of Islands": dsa_prep/graphs/01_number_of_islands/problem.md
+              - "2. Clone Graph": dsa_prep/graphs/02_clone_graph/problem.md
+              - "3. Pacific Atlantic Water Flow": dsa_prep/graphs/03_pacific_atlantic_water_flow/problem.md
+              - "4. Course Schedule": dsa_prep/graphs/04_course_schedule/problem.md
+              - "5. Number of Connected Components in an Undirected Graph": dsa_prep/graphs/05_number_of_connected_components/problem.md
+              - "6. Graph Valid Tree": dsa_prep/graphs/06_graph_valid_tree/problem.md
+              - "7. Word Ladder": dsa_prep/graphs/07_word_ladder/problem.md
+          - 1-D Dynamic Programming:
+              - Pattern: dsa_prep/dp_1d/PATTERN.md
+              - "1. Climbing Stairs": dsa_prep/dp_1d/01_climbing_stairs/problem.md
+              - "2. House Robber": dsa_prep/dp_1d/02_house_robber/problem.md
+              - "3. House Robber II": dsa_prep/dp_1d/03_house_robber_ii/problem.md
+              - "4. Longest Palindromic Substring": dsa_prep/dp_1d/04_longest_palindromic_substring/problem.md
+              - "5. Palindromic Substrings": dsa_prep/dp_1d/05_palindromic_substrings/problem.md
+              - "6. Decode Ways": dsa_prep/dp_1d/06_decode_ways/problem.md
+              - "7. Coin Change": dsa_prep/dp_1d/07_coin_change/problem.md
+              - "8. Word Break": dsa_prep/dp_1d/08_word_break/problem.md
+              - "9. Longest Increasing Subsequence": dsa_prep/dp_1d/09_longest_increasing_subsequence/problem.md
+          - 2-D Dynamic Programming:
+              - Pattern: dsa_prep/dp_2d/PATTERN.md
+              - "1. Unique Paths": dsa_prep/dp_2d/01_unique_paths/problem.md
+              - "2. Longest Common Subsequence": dsa_prep/dp_2d/02_longest_common_subsequence/problem.md
+              - "3. Edit Distance": dsa_prep/dp_2d/03_edit_distance/problem.md
+              - "4. 0/1 Knapsack": dsa_prep/dp_2d/04_zero_one_knapsack/problem.md
+          - Greedy:
+              - Pattern: dsa_prep/greedy/PATTERN.md
+              - "1. Maximum Subarray": dsa_prep/greedy/01_maximum_subarray/problem.md
+              - "2. Jump Game": dsa_prep/greedy/02_jump_game/problem.md
+              - "3. Gas Station": dsa_prep/greedy/03_gas_station/problem.md
+              - "4. Hand of Straights": dsa_prep/greedy/04_hand_of_straights/problem.md
+          - Intervals:
+              - Pattern: dsa_prep/intervals/PATTERN.md
+              - "1. Insert Interval": dsa_prep/intervals/01_insert_interval/problem.md
+              - "2. Merge Intervals": dsa_prep/intervals/02_merge_intervals/problem.md
+              - "3. Non-overlapping Intervals": dsa_prep/intervals/03_non_overlapping_intervals/problem.md
+              - "4. Meeting Rooms": dsa_prep/intervals/04_meeting_rooms/problem.md
+              - "5. Meeting Rooms II": dsa_prep/intervals/05_meeting_rooms_ii/problem.md
+          - Math & Geometry:
+              - Pattern: dsa_prep/math_geometry/PATTERN.md
+              - "1. Rotate Image": dsa_prep/math_geometry/01_rotate_image/problem.md
+              - "2. Spiral Matrix": dsa_prep/math_geometry/02_spiral_matrix/problem.md
+              - "3. Set Matrix Zeroes": dsa_prep/math_geometry/03_set_matrix_zeroes/problem.md
+          - Bit Manipulation:
+              - Pattern: dsa_prep/bit_manipulation/PATTERN.md
+              - "1. Single Number": dsa_prep/bit_manipulation/01_single_number/problem.md
+              - "2. Number of 1 Bits (Hamming Weight)": dsa_prep/bit_manipulation/02_number_of_1_bits/problem.md
+              - "3. Counting Bits": dsa_prep/bit_manipulation/03_counting_bits/problem.md
+              - "4. Reverse Bits": dsa_prep/bit_manipulation/04_reverse_bits/problem.md
+              - "5. Missing Number": dsa_prep/bit_manipulation/05_missing_number/problem.md
+
+  - System Design Foundation:
+      - Overview: system_design_foundation/README.md
+      - Prerequisite Concepts:
+          - "1. Performance & Scale": system_design_foundation/prerequisite_concepts/01_performance_and_scale.md
+          - "2. Data & Consistency": system_design_foundation/prerequisite_concepts/02_data_and_consistency.md
+          - "3. Communication & Resilience": system_design_foundation/prerequisite_concepts/03_communication_and_resilience.md
+          - "4. CPU vs. GPU": system_design_foundation/prerequisite_concepts/04_cpu_vs_gpu.md
+          - "5. Choosing a GPU & Code Optimization": system_design_foundation/prerequisite_concepts/05_gpu_selection_and_code_optimization.md
+          - "6. Mechanical Sympathy & the Physics of Latency": system_design_foundation/prerequisite_concepts/06_mechanical_sympathy_and_physics_of_latency.md
+          - "7. Saturation, Amdahl's Law & Hedged Requests": system_design_foundation/prerequisite_concepts/07_saturation_amdahls_law_and_hedged_requests.md
+          - "8. The Cost of Communication": system_design_foundation/prerequisite_concepts/08_cost_of_communication.md
+          - "9. The Anatomy of a Request (DNS, BGP, and the Edge)": system_design_foundation/prerequisite_concepts/09_dns_bgp_and_the_edge.md
+          - "10. The Physics of Persistence (B-Trees vs. LSM-Trees)": system_design_foundation/prerequisite_concepts/10_physics_of_persistence.md
+      - Staff-Level Foundations:
+          - 0. The Staff-Level Signal: system_design_foundation/prerequisite_concepts/00_staff_level_signal.md
+          - 1. Distributed Systems Foundations: system_design_foundation/prerequisite_concepts/01_distributed_systems_foundations.md
+      - Tutorials:
+          - 0. Interview Framework: system_design_foundation/00_interview_framework/00_interview_framework.md
+          - 1. Fundamentals & Building Blocks: system_design_foundation/00_interview_framework/01_fundamentals.md
+          - 2. High-Throughput Ingestion Pipelines:
+              - Tutorial: system_design_foundation/02_ingestion_pipeline/tutorial.md
+              - "Deep-Dive: Lambda vs. EKS for Receipt Processing": system_design_foundation/02_ingestion_pipeline/serverless_vs_eks_receipt_processing.md
+          - 3. Feature Store & Model Promotion:
+              - Tutorial: system_design_foundation/03_feature_store_model_promotion/tutorial.md
+              - "Deep-Dive: Is a Feature Store Worth It When Reuse Is Low?": system_design_foundation/03_feature_store_model_promotion/is_a_feature_store_worth_it.md
+          - 4. Model Serving & Deployment: system_design_foundation/04_model_serving_deployment/tutorial.md
+          - 5. ML/LLM Observability & Drift:
+              - Tutorial: system_design_foundation/05_observability_drift/tutorial.md
+              - "Deep-Dive: Promotion & Observability as One Closed-Loop System": system_design_foundation/05_observability_drift/closed_loop_promotion_and_monitoring.md
+          - 6. RAG + LLM-Serving at Scale: system_design_foundation/06_rag_llm_serving_at_scale/tutorial.md
+          - 7. Distributed Training & Ray/Ray Serve: system_design_foundation/07_distributed_training_serving/tutorial.md
+          - 8. ML Orchestration (Kubeflow/Argo vs Airflow): system_design_foundation/08_ml_orchestration/tutorial.md
+          - 9. GitOps & CI/CD for ML:
+              - Tutorial: system_design_foundation/09_gitops_ml_cicd/tutorial.md
+              - "Hands-On: ArgoCD": system_design_foundation/09_gitops_ml_cicd/argocd_hands_on.md
+              - "Hands-On: DVC": system_design_foundation/09_gitops_ml_cicd/dvc_hands_on.md
+          - 10. Cost, Security & Multi-Region Governance:
+              - Tutorial: system_design_foundation/10_cost_security_multiregion/tutorial.md
+              - "Deep-Dive: Data Governance in Practice": system_design_foundation/10_cost_security_multiregion/data_governance_deep_dive.md
+          - 11. LLMOps (Prompting, Fine-Tuning, Evals & Guardrails): system_design_foundation/11_llmops/tutorial.md
+      - Tricky MLOps Scenarios:
+          - Overview: system_design_foundation/12_tricky_scenarios/README.md
+          - "1. Regional Feature Staleness": system_design_foundation/12_tricky_scenarios/01_regional_feature_staleness.md
+          - "2. Canary Passed, P1 Two Days Later": system_design_foundation/12_tricky_scenarios/02_canary_passed_p1_later.md
+          - "3. Silent Drift, No Alert": system_design_foundation/12_tricky_scenarios/03_silent_drift_no_alert.md
+          - "4. Overnight GPU Cost Spike": system_design_foundation/12_tricky_scenarios/04_gpu_cost_spike.md
+          - "5. Retrieval Looks Right, Answers Wrong": system_design_foundation/12_tricky_scenarios/05_rag_retrieval_correct_answers_wrong.md
+          - "6. Silently Duplicated Training Data": system_design_foundation/12_tricky_scenarios/06_duplicate_training_data.md
+          - "7. Multi-GPU Training Plateau": system_design_foundation/12_tricky_scenarios/07_distributed_training_plateau.md
+          - "8. Stale Checkpoint After Preemption": system_design_foundation/12_tricky_scenarios/08_stale_checkpoint_resume.md
+          - "9. GitOps Rollout, Wrong Predictions": system_design_foundation/12_tricky_scenarios/09_gitops_rollout_wrong_predictions.md
+          - "10. Reconstructing Model Lineage for an Audit": system_design_foundation/12_tricky_scenarios/10_audit_lineage_reconstruction.md
+          - "11. Serving Cost Doubled After a Routine Upgrade": system_design_foundation/12_tricky_scenarios/11_serving_cost_doubled.md
+          - "12. DR Failover Took 8x Longer Than Planned": system_design_foundation/12_tricky_scenarios/12_dr_failover_slow.md
+          - "13. Eval Passed, Guardrail Bypassed in Production": system_design_foundation/12_tricky_scenarios/13_eval_passed_guardrail_bypassed.md
+          - "14. GPU Sitting Idle 75% of the Time": system_design_foundation/12_tricky_scenarios/14_gpu_underutilized_sequential_pipeline.md
+
+  - System Design Practice:
+      - Overview: system_design_practice/README.md
+      - Foundations:
+          - 0. The Staff-Level Signal: system_design_foundation/prerequisite_concepts/00_staff_level_signal.md
+          - 1. Distributed Systems Foundations: system_design_foundation/prerequisite_concepts/01_distributed_systems_foundations.md
+      - Case Studies:
+          - "2. Design Twitter/X Feed": system_design_practice/02_design_twitter_feed/tutorial.md
+          - "3. Design a Chat System": system_design_practice/03_design_chat_system/tutorial.md
+          - "4. Design Ride-Hailing Dispatch": system_design_practice/04_design_ride_hailing_dispatch/tutorial.md
+          - "5. Design a Distributed Cache": system_design_practice/05_design_distributed_cache/tutorial.md
+          - "6. Design a Distributed Message Queue": system_design_practice/06_design_distributed_message_queue/tutorial.md
+          - "7. Design a Rate Limiter at Global Scale": system_design_practice/07_design_rate_limiter_at_scale/tutorial.md
+          - "8. Design a Video Streaming Service": system_design_practice/08_design_video_streaming/tutorial.md
+          - "9. Design a Web Crawler": system_design_practice/09_design_web_crawler/tutorial.md
+          - "10. Design Search Autocomplete": system_design_practice/10_design_search_autocomplete/tutorial.md
+
+  - Security Engineering:
+      - Overview: security/README.md
+      - Tutorials:
+          - 0. Foundations (AppSec, Network, Crypto, IAM): security/00_foundations/tutorial.md
+          - 1. LLM Security: security/01_llm_security/tutorial.md
+          - 2. Cloud Security: security/02_cloud_security/tutorial.md
+          - 3. MLOps/LLMOps Security: security/03_mlops_llmops_security/tutorial.md
+          - 4. Security System Design:
+              - Tutorial: security/04_security_system_design/tutorial.md
+              - "Case Study: Secure RAG Pipeline": security/04_security_system_design/design_secure_rag_pipeline.md
+              - "Case Study: Secure Multi-Tenant ML Platform": security/04_security_system_design/design_secure_multi_tenant_ml_platform.md
+      - Security Incident Scenarios:
+          - Overview: security/05_scenarios/README.md
+          - "1. Leaked Cloud Credential via CI": security/05_scenarios/01_leaked_cloud_credential_via_ci.md
+          - "2. Indirect Prompt Injection Exfiltrated Internal Data": security/05_scenarios/02_indirect_prompt_injection_exfiltration.md
+          - "3. A Fine-Tuned Model Has a Backdoor Trigger": security/05_scenarios/03_poisoned_training_data_backdoor.md
+          - "4. Jailbreak Bypassed Guardrail in Production": security/05_scenarios/04_jailbreak_bypassed_guardrail_in_prod.md
+          - "5. An Agent's Tool Call Triggered SSRF": security/05_scenarios/05_agent_tool_call_ssrf.md
+          - "6. An Overprivileged Service Account Enabled Lateral Movement": security/05_scenarios/06_overprivileged_service_account_lateral_movement.md
+          - "7. Model Extraction via the Public Inference API": security/05_scenarios/07_model_extraction_via_public_api.md
+          - "8. A Compromised Dependency Shipped to Production": security/05_scenarios/08_dependency_supply_chain_compromise.md
+
+  - Low-Level Design:
+      - Overview: lld/README.md
+      - Framework: lld/OOD_FRAMEWORK.md
+      - Problems:
+          - "1. Parking Lot System": lld/01_parking_lot/problem.md
+          - "2. Elevator System": lld/02_elevator_system/problem.md
+          - "3. Vending Machine": lld/03_vending_machine/problem.md
+          - "4. LRU Cache": lld/04_lru_cache/problem.md
+          - "5. Rate Limiter": lld/05_rate_limiter/problem.md

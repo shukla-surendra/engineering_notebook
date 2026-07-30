@@ -1,7 +1,5 @@
-site-*
+site/
 hand_notes/*.md
-site-system-design
-site-system-design-practice
 __pycache__/
 *.pyc
 product-company-transition-plan_1.md

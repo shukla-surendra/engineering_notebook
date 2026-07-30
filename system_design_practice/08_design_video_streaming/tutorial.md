@@ -47,7 +47,7 @@ serving path.
   [distributed message queue case study](../06_design_distributed_message_queue/tutorial.md))
   coordinates work distribution across the transcoder fleet, with the same retry/dead-
   letter handling discipline from the
-  [ingestion pipeline tutorial](http://127.0.0.1:8001/02_ingestion_pipeline/tutorial/#retry--failure-handling)
+  [ingestion pipeline tutorial](../../system_design_foundation/02_ingestion_pipeline/tutorial.md#retry-failure-handling)
   for segments that fail to transcode.
 - **Priority tiers**: a popular creator's upload, or content flagged for faster
   availability, can jump the queue — this is a real product requirement (not just a
@@ -84,7 +84,7 @@ seamlessly without the viewer noticing a hard cut or buffering stall.
   static video segments instead of dynamic key-value data. The mechanics of how a viewer's
   request actually finds the nearest edge node in the first place — anycast, GeoDNS, and
   the BGP routing underneath both — are covered in depth in the [DNS/BGP/edge prerequisite
-  primer](http://127.0.0.1:8001/prerequisite_concepts/09_dns_bgp_and_the_edge/#the-edge-where-dns-anycast-and-bgp-meet-a-cdn).
+  primer](../../system_design_foundation/prerequisite_concepts/09_dns_bgp_and_the_edge.md#the-edge-where-dns-anycast-and-bgp-meet-a-cdn).
 - **Cache warming for anticipated popular content**: rather than waiting for organic cache
   misses to populate edge caches (which would mean the *first* viewers in a region get
   origin-latency performance), a platform can proactively push newly-published, expected-

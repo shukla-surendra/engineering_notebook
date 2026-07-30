@@ -1,12 +1,12 @@
 # Security Engineering
 
 Security depth for a cloud/MLOps/LLMOps engineer, organized the same way the
-[ML System Design](http://127.0.0.1:8001/) and
-[Distributed Systems Design](http://127.0.0.1:8002/) tracks are: tutorials that build
+[ML System Design](../system_design_foundation/README.md) and
+[Distributed Systems Design](../system_design_practice/README.md) tracks are: tutorials that build
 vocabulary and mental models, worked "design a secure X" case studies, and a bank of
 incident-debugging scenarios. Independent of those two tracks, but written to assume the
 same shared vocabulary (p99 latency, sharding, idempotency — see the [Prerequisite
-Concepts primer](http://127.0.0.1:8001/prerequisite_concepts/01_performance_and_scale/)
+Concepts primer](../system_design_foundation/prerequisite_concepts/01_performance_and_scale.md)
 if any of that isn't second nature yet).
 
 ## Why Security Gets Its Own Track
@@ -38,7 +38,7 @@ incidents (a leaked cloud credential, an indirect prompt injection that exfiltra
 jailbreak that slipped past a guardrail in production, a poisoned training set) with a
 structured walkthrough of clarifying questions, ranked hypotheses, diagnostic steps, the
 fix, and the systemic lesson — the same format as
-[system_design's Tricky MLOps Scenarios](http://127.0.0.1:8001/12_tricky_scenarios/). Every
+[system_design's Tricky MLOps Scenarios](../system_design_foundation/12_tricky_scenarios/README.md). Every
 scenario cross-references the tutorial covering its underlying pattern.
 
 ## How to Practice This

@@ -1,110 +1,28 @@
-.PHONY: help install docs mkdocs sd-serve sd-build sd-clean dsa-serve dsa-build dsa-clean practice-serve practice-build practice-clean security-serve security-build security-clean lld-serve lld-build lld-clean build clean
+.PHONY: help install serve build clean docs mkdocs
 
 help:
-	@echo "  make docs        - (alias: make mkdocs) build (--strict) then serve ALL FIVE sites together, live-reloading:"
-	@echo "                       DSA                    -> http://127.0.0.1:8000"
-	@echo "                       ML System Design       -> http://127.0.0.1:8001"
-	@echo "                       System Design Practice -> http://127.0.0.1:8002"
-	@echo "                       Security Engineering   -> http://127.0.0.1:8003"
-	@echo "                       Low-Level Design       -> http://127.0.0.1:8004"
-	@echo "                     (Ctrl+C stops all five)"
+	@echo "  make serve   - serve the whole site (live-reloading) at http://127.0.0.1:8000"
+	@echo "  make build   - build (--strict) the static site into site/"
+	@echo "  make clean   - remove site/"
+	@echo "  make install - install mkdocs + mkdocs-material + pymdown-extensions"
 	@echo ""
-	@echo "System Design Practice docs (system_design_practice/, mkdocs-system-design-practice.yml):"
-	@echo "  make practice-serve - serve at http://127.0.0.1:8002"
-	@echo "  make practice-build - build static site into site-system-design-practice/"
-	@echo "  make practice-clean - remove site-system-design-practice/"
-	@echo ""
-	@echo "ML System Design docs (system_design/, mkdocs-system-design.yml):"
-	@echo "  make sd-serve    - serve at http://127.0.0.1:8001"
-	@echo "  make sd-build    - build static site into site-system-design/"
-	@echo "  make sd-clean    - remove site-system-design/"
-	@echo ""
-	@echo "DSA docs (dsa_prep/, mkdocs-dsa.yml):"
-	@echo "  make dsa-serve   - serve at http://127.0.0.1:8000"
-	@echo "  make dsa-build   - build static site into site-dsa/"
-	@echo "  make dsa-clean   - remove site-dsa/"
-	@echo ""
-	@echo "Security Engineering docs (security/, mkdocs-security.yml):"
-	@echo "  make security-serve - serve at http://127.0.0.1:8003"
-	@echo "  make security-build - build static site into site-security/"
-	@echo "  make security-clean - remove site-security/"
-	@echo ""
-	@echo "Low-Level Design docs (lld/, mkdocs-lld.yml):"
-	@echo "  make lld-serve   - serve at http://127.0.0.1:8004"
-	@echo "  make lld-build   - build static site into site-lld/"
-	@echo "  make lld-clean   - remove site-lld/"
-	@echo ""
-	@echo "  make build       - build all five sites (static, --strict)"
-	@echo "  make clean       - remove all five built sites"
-	@echo "  make install     - install mkdocs + mkdocs-material + pymdown-extensions"
+	@echo "All five tracks (DSA, System Design Foundation, System Design Practice,"
+	@echo "Security, Low-Level Design) are one MkDocs site (mkdocs.yml), each its own nav tab."
 
 install:
 	python3 -m pip install mkdocs mkdocs-material pymdown-extensions
 
-sd-serve:
-	mkdocs serve -f mkdocs-system-design.yml -a 127.0.0.1:8001
+serve:
+	mkdocs serve -a 127.0.0.1:8000
 
-sd-build:
-	mkdocs build -f mkdocs-system-design.yml --strict
+build:
+	mkdocs build --strict
 
-sd-clean:
-	rm -rf site-system-design
-
-dsa-serve:
-	mkdocs serve -f mkdocs-dsa.yml -a 127.0.0.1:8000
-
-dsa-build:
-	mkdocs build -f mkdocs-dsa.yml --strict
-
-dsa-clean:
-	rm -rf site-dsa
-
-practice-serve:
-	mkdocs serve -f mkdocs-system-design-practice.yml -a 127.0.0.1:8002
-
-practice-build:
-	mkdocs build -f mkdocs-system-design-practice.yml --strict
-
-practice-clean:
-	rm -rf site-system-design-practice
-
-security-serve:
-	mkdocs serve -f mkdocs-security.yml -a 127.0.0.1:8003
-
-security-build:
-	mkdocs build -f mkdocs-security.yml --strict
-
-security-clean:
-	rm -rf site-security
-
-lld-serve:
-	mkdocs serve -f mkdocs-lld.yml -a 127.0.0.1:8004
-
-lld-build:
-	mkdocs build -f mkdocs-lld.yml --strict
-
-lld-clean:
-	rm -rf site-lld
-
-build: dsa-build sd-build practice-build security-build lld-build
-
-clean: dsa-clean sd-clean practice-clean security-clean lld-clean
-
-mkdocs: docs
+clean:
+	rm -rf site
 
 docs: build
 	@echo ""
-	@echo "DSA docs:                  http://127.0.0.1:8000"
-	@echo "ML System Design docs:     http://127.0.0.1:8001"
-	@echo "System Design Practice docs: http://127.0.0.1:8002"
-	@echo "Security Engineering docs: http://127.0.0.1:8003"
-	@echo "Low-Level Design docs:     http://127.0.0.1:8004"
-	@echo "(Ctrl+C stops all five)"
-	@echo ""
-	@trap 'kill 0' EXIT INT TERM; \
-	mkdocs serve -f mkdocs-dsa.yml -a 127.0.0.1:8000 & \
-	mkdocs serve -f mkdocs-system-design.yml -a 127.0.0.1:8001 & \
-	mkdocs serve -f mkdocs-system-design-practice.yml -a 127.0.0.1:8002 & \
-	mkdocs serve -f mkdocs-security.yml -a 127.0.0.1:8003 & \
-	mkdocs serve -f mkdocs-lld.yml -a 127.0.0.1:8004 & \
-	wait
+	@echo "Built. Run 'make serve' to preview at http://127.0.0.1:8000"
+
+mkdocs: docs

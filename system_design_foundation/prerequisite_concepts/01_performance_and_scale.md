@@ -23,7 +23,7 @@ thousands pass per hour). **They're not the same axis, and optimizing one can ac
 hurt the other** — batching requests together to raise throughput (do more work per
 round-trip) typically *increases* the latency any individual request experiences, since it
 now waits for the batch to fill. This exact tension is why the [rate limiter case
-study](http://127.0.0.1:8002/07_design_rate_limiter_at_scale/tutorial/) and the [LLM
+study](../../system_design_practice/07_design_rate_limiter_at_scale/tutorial.md) and the [LLM
 serving deep-dive](../06_rag_llm_serving_at_scale/tutorial.md#deep-dive-llm-serving-internals-vllm-on-triton)
 both spend real time on batching trade-offs — it's never free.
 
