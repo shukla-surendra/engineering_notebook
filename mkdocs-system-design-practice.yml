@@ -48,6 +48,7 @@ nav:
       - Algorithms & Data Structures: http://127.0.0.1:8000/
       - ML Systems Design: http://127.0.0.1:8001/
       - Security Engineering: http://127.0.0.1:8003/
+      - Low-Level Design: http://127.0.0.1:8004/
   - Foundations:
       - 0. The Staff-Level Signal: 00_staff_level_signal/tutorial.md
       - 1. Distributed Systems Foundations: 01_distributed_systems_foundations/tutorial.md

@@ -52,6 +52,7 @@ nav:
       - ML Systems Design: http://127.0.0.1:8001/
       - Distributed Systems Design: http://127.0.0.1:8002/
       - Security Engineering: http://127.0.0.1:8003/
+      - Low-Level Design: http://127.0.0.1:8004/
   - Patterns:
       - Arrays & Hashing:
           - Pattern: arrays_hashing/PATTERN.md

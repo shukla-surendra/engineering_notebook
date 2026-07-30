@@ -1,5 +1,5 @@
 site-*
-local_notes/*
+hand_notes/*.md
 site-system-design
 site-system-design-practice
 __pycache__/

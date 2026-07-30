@@ -48,6 +48,7 @@ nav:
       - Algorithms & Data Structures: http://127.0.0.1:8000/
       - ML Systems Design: http://127.0.0.1:8001/
       - Distributed Systems Design: http://127.0.0.1:8002/
+      - Low-Level Design: http://127.0.0.1:8004/
   - Tutorials:
       - 0. Foundations (AppSec, Network, Crypto, IAM): 00_foundations/tutorial.md
       - 1. LLM Security: 01_llm_security/tutorial.md

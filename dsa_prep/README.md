@@ -53,13 +53,41 @@ click faster.
 
 Each problem folder is numbered `NN_problem_name/` for a sensible working order within the topic.
 
+## Difficulty ranking: toughest → medium
+
+If you're short on time and sampling a subset of topics (e.g. two problems per pattern),
+weight your time toward the top of this list — this is roughly where FAANG/MAANG loops
+actually separate candidates, based on each topic's actual Hard/Medium/Easy mix and how
+consistently it shows up across companies. Ranks 11-17 are still universal and asked
+everywhere, but rarely the "hard" question in a loop.
+
+| Rank | Folder | Easy/Med/Hard | Why |
+|---|---|---|---|
+| 1 | `dp_2d/` | 0/3/1 | 2D DP (edit distance, knapsack) — hardest to derive live. |
+| 2 | `graphs/` | 0/6/1 | Topological sort, multi-source BFS — high variance. |
+| 3 | `dp_1d/` | 1/8/0 | No Hard-tagged problems, but 8 mediums (LIS, coin change, word break) — deep, heavily tested. |
+| 4 | `backtracking/` | 0/4/1 | N-Queens, word search — recursion + pruning under time pressure. |
+| 5 | `trees/` | 4/4/1 | Max path sum, validate BST are genuinely hard; rest is core. |
+| 6 | `heap_priority_queue/` | 2/2/1 | Median-from-stream is a real differentiator. |
+| 7 | `tries/` | 0/2/1 | Word Search II is hard; shows up less outside Google/Amazon. |
+| 8 | `two_pointers/` | 1/2/1 | Trapping Rain Water is the hard end; otherwise foundational. |
+| 9 | `sliding_window/` | 1/3/1 | Min Window Substring is hard; extremely common pattern. |
+| 10 | `linked_list/` | 3/2/1 | Merge K Sorted Lists is hard; rest skews easy/medium. |
+| 11 | `intervals/` | 1/4/0 | All medium, no hard — asked at nearly every company. |
+| 12 | `arrays_hashing/` | 3/4/0 | Foundational, medium-heavy, asked in round 1 everywhere. |
+| 13 | `binary_search/` | 1/3/0 | "Search on the answer" variants trip people up, capped at medium. |
+| 14 | `stack/` | 1/3/0 | Medium-heavy, universal (valid parens, daily temps). |
+| 15 | `greedy/` | 0/4/0 | All medium — proving correctness is the hard part, no Hard-tagged problems. |
+| 16 | `math_geometry/` | 0/3/0 | Medium only; less universal — matrix/geometry-heavy products. |
+| 17 | `bit_manipulation/` | 5/0/0 | All easy — a round-1 filter, not a differentiator. |
+
 ## Status
 
-**Complete — 88 problems across all 17 topics.** Every `solution.py` has been run and its
-sample tests pass (`88/88` green as of the last full sweep).
+**Complete — 89 problems across all 17 topics.** Every `solution.py` has been run and its
+sample tests pass (`89/89` green as of the last full sweep).
 
 - [x] arrays_hashing (7)
-- [x] two_pointers (3)
+- [x] two_pointers (4)
 - [x] sliding_window (5)
 - [x] stack (4)
 - [x] binary_search (4)

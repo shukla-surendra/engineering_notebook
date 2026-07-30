@@ -64,6 +64,74 @@ amortizes that same fixed cost across one larger packet instead. The MTU and hea
 are the mechanical reason "send fewer, larger messages" is a real performance rule, not
 just a rule of thumb.
 
+### Inside the Headers: What Each Layer Actually Encodes
+
+The three headers aren't opaque overhead — each one is answering a specific question the
+next hop needs answered, and they nest inside one another rather than sitting side by side.
+A REST request's JSON body ends up wrapped like this before it ever leaves the machine:
+
+```
+┌────────────────────────────────────────────────────────────────┐
+│ Ethernet Frame  (dest MAC, src MAC, EtherType)                  │
+│ ┌──────────────────────────────────────────────────────────┐   │
+│ │ IP Packet  (dest IP, src IP, TTL, protocol)               │   │
+│ │ ┌──────────────────────────────────────────────────────┐ │   │
+│ │ │ TCP Segment  (dest port, src port, seq/ack, flags)    │ │   │
+│ │ │ ┌────────────────────────────────────────────────┐   │ │   │
+│ │ │ │ HTTP Payload — the actual request               │   │ │   │
+│ │ │ │ POST /api/orders HTTP/1.1                        │   │ │   │
+│ │ │ │ Host: api.example.com                            │   │ │   │
+│ │ │ │ Content-Type: application/json                   │   │ │   │
+│ │ │ │                                                   │   │ │   │
+│ │ │ │ {"item":"widget","qty":3}                         │   │ │   │
+│ │ │ └────────────────────────────────────────────────┘   │ │   │
+│ │ └──────────────────────────────────────────────────────┘ │   │
+│ └──────────────────────────────────────────────────────────┘   │
+└────────────────────────────────────────────────────────────────┘
+```
+
+Each layer only ever reads its own header and hands the rest off unopened — a router
+forwarding this packet never looks past the IP header; it has no idea an HTTP request, let
+alone JSON, is inside. That's what "layers" means in practice: strict information hiding,
+not just a diagram convention.
+
+**Ethernet frame (~14-byte header)** — answers "which physical device is next":
+
+| Field | Size | Purpose |
+|---|---|---|
+| Destination MAC | 6 bytes | The *next hop's* hardware address — your router, not the destination server, since this header gets rewritten at every hop |
+| Source MAC | 6 bytes | The sending NIC's hardware address |
+| EtherType | 2 bytes | Which protocol follows (`0x0800` = IPv4) |
+
+**IP header (~20 bytes, IPv4, no options)** — answers "which host, and how do I survive fragmentation":
+
+| Field | Size | Purpose |
+|---|---|---|
+| Total Length | 2 bytes | Full packet size, header included |
+| Identification | 2 bytes | Groups fragments of one oversized packet back together |
+| Flags / Fragment Offset | 2 bytes | Whether this piece was split, and where it belongs in the reassembly |
+| TTL | 1 byte | A hop counter, decremented at every router and dropped at 0 — this is literally what `traceroute` abuses to map a path. **Same name, unrelated mechanism** to the DNS TTL earlier in this doc — one caps hops, the other caps cache lifetime; don't conflate them in an interview. |
+| Protocol | 1 byte | What's nested inside (`6` = TCP, `17` = UDP) |
+| Source / Destination IP | 4 bytes each | The two hosts's addresses — unlike the MAC pair, these stay unchanged for the packet's entire journey |
+
+**TCP header (~20 bytes, no options)** — answers "which process, and is this reliable and in order":
+
+| Field | Size | Purpose |
+|---|---|---|
+| Source / Destination Port | 2 bytes each | Which process on each host — destination `443` is how HTTPS traffic is even identified as HTTPS |
+| Sequence Number | 4 bytes | This segment's position in the byte stream — how the receiver reassembles packets that arrive out of order |
+| Acknowledgment Number | 4 bytes | The next byte the sender is expecting back — the mechanism behind retransmission when a packet is lost |
+| Flags (`SYN`, `ACK`, `FIN`, …) | bits | Connection lifecycle state — `SYN` opens [Part 3](03_communication_and_resilience.md)'s handshake, `FIN` closes it |
+| Window Size | 2 bytes | How many more bytes the receiver can buffer *right now* — this is what actually throttles [Part 8's sliding-window](08_cost_of_communication.md) "several packets in flight" behavior, not a fixed count |
+
+**Why this matters beyond trivia:** the tuple `{source IP, source port, destination IP,
+destination port, protocol}` is how the OS, NAT devices, and load balancers all identify
+"these packets belong to the same connection" — it's the literal mechanism behind [Part
+8's connection-pooling
+discussion](08_cost_of_communication.md#concurrency-and-locality-how-many-handshakes-actually-happen):
+a "connection" isn't a thing that exists on the wire, it's just every packet sharing this
+same 5-tuple, tracked in a table on both ends.
+
 ## DNS, Fully Unpacked: The Hierarchy Behind One Bullet Point
 
 DNS is a **distributed, hierarchical database** — no single server holds the whole
@@ -283,6 +351,27 @@ flowchart TD
   (authentication checks, A/B routing, request rewriting) so even *dynamic* logic pays the
   short, local round trip instead of a long one to origin.
 
+### CDN vs. "The Edge": Not the Same Thing
+
+The two terms get used interchangeably in casual conversation, but they name different
+levels of the stack, and the distinction is worth stating precisely rather than
+hand-waving:
+
+| | **CDN** | **The edge** |
+|---|---|---|
+| What it is | A *product/service* — a network of PoPs specifically built to cache and deliver content | A general *architectural concept* — any infrastructure placed physically close to the user instead of centralized at one origin |
+| Scope | Primarily caching static (and some dynamic) content | Broader — caching, but also TLS termination, WAF/security filtering, L4/L7 load balancing, and running arbitrary application logic |
+| Relationship | A CDN **is one implementation of edge architecture** | "Edge" is the category; a CDN's PoPs are one specific instance of edge locations |
+
+**Every CDN PoP is "at the edge," but not everything at the edge is a CDN.** The bullets
+above already illustrate this: caching a static asset at a PoP is classic CDN behavior; a
+PoP terminating TLS, running a WAF, or executing edge-compute logic (the bullet just above)
+is edge infrastructure doing something a traditional "just serve cached bytes" CDN doesn't
+do on its own. If someone says "we're using a CDN," they mean caching and delivery. If they
+say "we're pushing logic to the edge," they mean running actual code physically near the
+user — a move a CDN vendor's PoP network often makes *possible*, but that isn't what "CDN"
+means by itself.
+
 ### Worked Example: A Static Asset, With and Without a CDN
 
 Reusing [Part 8's SF↔London worked
@@ -393,6 +482,10 @@ take so long" investigation actually needs to look.
 11. Is authentication, rate limiting, and input validation happening at a gateway before
     application code runs, or is a hostile request only rejected after my application has
     already spent memory and CPU parsing it?
+12. When I'm debugging with `tcpdump`/Wireshark or reasoning about a NAT/load-balancer
+    issue, am I thinking in terms of the actual 5-tuple (source/destination IP and port,
+    protocol) that identifies a connection, or vaguely about "the connection" as if it were
+    one thing on the wire rather than a shared label on many independent packets?
 
 ## Key Takeaways
 
@@ -421,6 +514,17 @@ take so long" investigation actually needs to look.
   filtering belongs in front of expensive, content-aware L7 routing.
 - An API gateway is a cost-saving shield as much as a routing convenience — rejecting bad
   input before it reaches application code is cheaper than letting the application do it.
+- Ethernet, IP, and TCP headers **nest** rather than sit side by side — each layer reads
+  only its own header and hands the rest off unopened, which is what "layering" means
+  mechanically, not just as a diagram convention.
+- A "connection" has no independent existence on the wire — it's just every packet sharing
+  the same 5-tuple (source/destination IP, source/destination port, protocol), tracked in a
+  table on both ends and at any NAT/load balancer in between.
+- IP TTL (a hop counter, decremented per router) and DNS TTL (a cache-expiry hint) share a
+  name but are unrelated mechanisms — conflating them is an easy, avoidable mistake.
+- "CDN" and "the edge" aren't synonyms — a CDN is a product built for caching/delivery; the
+  edge is the broader architectural layer that also hosts TLS termination, WAFs, load
+  balancers, and edge compute at the same physical PoPs.
 
 ## Quick Self-Check
 
@@ -436,12 +540,22 @@ take so long" investigation actually needs to look.
 - Walk through what changes, mechanically, between a cache-hit and a cache-miss request at
   a CDN edge PoP — which of Part 8's "taxes" does the cache-hit path skip entirely, and
   which does the cache-miss path still have to pay?
+- If a PoP is running a WAF check and executing edge-compute auth logic, is that PoP still
+  accurately described as "a CDN," or is that the wrong word for what's happening there?
 - Why does the ~54-byte header tax matter more for a stream of tiny messages than for one
   large one, and how does batching change that math?
 - Why does putting an L7 load balancer in front of an L4 one (instead of behind it) make a
   DDoS attack more expensive to absorb, not less?
 - Why is rejecting a malformed request at an API gateway cheaper than rejecting the same
   request inside application code?
+- What does it mean, mechanically, for a router forwarding a packet to "never look past the
+  IP header" — and why does that matter for what a router can and can't ever inspect or
+  filter on?
+- What five fields make up the tuple that identifies a single TCP connection, and why is
+  that the right answer to "what actually is a connection" rather than something more
+  physical?
+- Why do IP TTL and DNS TTL sound like the same concept but actually protect against two
+  completely different failure modes?
 
 ## Articulate It: Interview Framing & Vocabulary
 
@@ -452,7 +566,9 @@ take so long" investigation actually needs to look.
   what IP am I even talking to — that's DNS's hierarchy, root to TLD to authoritative —
   and second, what physical path gets a packet there — that's BGP, stitching independently
   owned networks into one internet. Only after both are answered does the TCP/TLS/HTTP
-  stack from earlier in this primer even start."
+  stack from earlier in this primer even start, and even that stack is itself nested
+  headers — Ethernet inside IP inside TCP inside your actual HTTP request — where every
+  layer only ever reads its own header and hands the rest off unopened."
 - **Failure-mode framing (good for incident/DR-style questions):** "DNS TTLs and BGP
   convergence both have real floors measured in minutes, not milliseconds — so when a
   failover runbook promises a five-minute RTO, I'd ask whether that number was tested
@@ -492,6 +608,12 @@ take so long" investigation actually needs to look.
 - **deep packet inspection (DPI)** (n. phrase) — reading and pattern-matching a request's
   actual payload (as a WAF does), as opposed to routing decisions (BGP, L4 load balancing)
   that only ever look at the envelope.
+- **encapsulation** (n.) — wrapping one layer's whole unit (a TCP segment) as the payload
+  of the layer below it (an IP packet), each header nested inside the last rather than
+  concatenated beside it — the mechanical basis for "layers" in networking.
+- **5-tuple** (n. phrase) — {source IP, source port, destination IP, destination port,
+  protocol}; the set of fields an OS, NAT device, or load balancer actually uses to decide
+  which packets belong to the same connection.
 
 **Expressive phrases — for stating a trade-off fluently instead of listing pros/cons:**
 
@@ -507,6 +629,9 @@ take so long" investigation actually needs to look.
 - **"…earn the right to reach the next layer"** — a fluent way to describe defense-in-depth
   ordering (L4 before L7, a cache before origin) without reciting a bullet-pointed list of
   every layer involved.
+- **"…reads its own header and hands the rest off unopened"** — a precise way to describe
+  what "layering" actually enforces mechanically (strict information hiding between
+  Ethernet/IP/TCP/HTTP), not just a convenient diagram convention.
 
 ---
 
