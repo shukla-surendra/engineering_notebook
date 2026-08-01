@@ -49,6 +49,7 @@ service mesh, and multi-region active-active replication. Read this second.
 | 8 | [Video Streaming (YouTube/Netflix)](08_design_video_streaming/tutorial.md) | Transcoding pipelines, adaptive bitrate, CDN architecture |
 | 9 | [Web Crawler](09_design_web_crawler/tutorial.md) | URL frontier design, politeness, dedup at scale |
 | 10 | [Search Autocomplete](10_design_search_autocomplete/tutorial.md) | Distributed trie structures, ranking, real-time trending updates |
+| 11 | [URL Shortener](11_design_url_shortener/tutorial.md) | Key generation as access control, revocation vs. edge caching, conflict-free multi-region writes |
 
 Each case study follows the same four-step structure from the staff-signal tutorial:
 clarify → high-level design → deep-dive → trade-offs, with an explicit staff-altitude

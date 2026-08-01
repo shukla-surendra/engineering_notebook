@@ -70,10 +70,22 @@ the locking logic in `ParkingLot` — which is the payoff of putting the assignm
 behind an interface in the first place.
 
 ## Solution
+
+### Python
 Runnable, with sample test cases at the bottom (`python3 lld/01_parking_lot/solution.py`):
 
 ```python
 --8<-- "01_parking_lot/solution.py"
+```
+
+### Rust
+Same design, translated idiomatically (`Vehicle`/`SpotAssignmentStrategy`/
+`PaymentProcessor` become traits; the coordinator's `&mut self` methods replace
+solution.py's explicit `threading.Lock` — see the module doc comment for why). Runnable
+via `cd lld/01_parking_lot/parking_lot_rusty && cargo test`:
+
+```rust
+--8<-- "01_parking_lot/parking_lot_rusty/src/main.rs"
 ```
 
 ## Articulate It: Interview Framing & Vocabulary

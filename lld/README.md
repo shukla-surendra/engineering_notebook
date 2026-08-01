@@ -16,12 +16,30 @@ Each problem folder has:
   would ask next.
 - `solution.py` — a working Python implementation of the class design, runnable with a
   small demo at the bottom (`python3 solution.py`).
+- `<name>_rusty/` — the same class design translated to Rust as a small Cargo binary
+  crate, runnable via `cargo test` (assertions mirror `solution.py`'s `__main__` block).
+  Where Python's freeform aliasing (a trait-object State pattern whose methods take
+  `&mut` access to the very object holding them; a doubly linked list with mutually
+  aliased `prev`/`next` pointers) can't translate directly under Rust's ownership rules,
+  each crate's module doc comment explains the idiomatic Rust alternative used instead
+  (an `enum` + `match` in place of trait-object State; `Rc<RefCell<Node>>` + `Weak` in
+  place of raw aliased pointers) and *why* — this is usually the most interesting part of
+  translating an OOP design into Rust, and worth reading even if you don't write Rust
+  day-to-day, since it surfaces assumptions the Python version leaves invisible.
 
-Start with [`OOD_FRAMEWORK.md`](OOD_FRAMEWORK.md) — a problem-agnostic writeup of how to
-approach *any* LLD prompt (the step-by-step process, SOLID applied concretely, the
-recurring pattern shapes, and common pitfalls). Read it once; it's what makes the reasoning
-in every problem below feel inevitable instead of memorized, the same way `PATTERN.md`
-works in `dsa_prep/`.
+If OOP pillars, SOLID, or design patterns aren't things you could teach from scratch yet,
+start with [`FUNDAMENTALS.md`](FUNDAMENTALS.md) — a first-principles primer covering each
+one problem → mechanism → why it matters, with a short runnable code example. Then read
+[`OOD_FRAMEWORK.md`](OOD_FRAMEWORK.md) — a problem-agnostic writeup of how to approach *any*
+LLD prompt (the step-by-step process, SOLID applied concretely, the recurring pattern
+shapes, and common pitfalls). Read both once; they're what make the reasoning in every
+problem below feel inevitable instead of memorized, the same way `PATTERN.md` works in
+`dsa_prep/`.
+
+For the full concept checklist plus a comprehensive, generalized question bank spanning
+**both** LLD and HLD (grouped by underlying shape, with a side-by-side table for prompts
+that appear in both rounds under the same noun — e.g. "rate limiter"), see
+[`LLD_VS_HLD.md`](LLD_VS_HLD.md).
 
 ## How to use this
 
@@ -31,7 +49,8 @@ works in `dsa_prep/`.
    this round is evaluated on your derivation, not your final answer.
 3. Compare against the rest of `problem.md`, then read `solution.py` to see it as working
    code.
-4. Run the solution: `python3 lld/<NN>_<name>/solution.py`.
+4. Run the solution: `python3 lld/<NN>_<name>/solution.py`, or the Rust translation:
+   `cd lld/<NN>_<name>/<name>_rusty && cargo test`.
 5. For each problem, try answering the "extension follow-up" named at the end of its
    `problem.md` *before* looking at how the existing design accommodates it — that's the
    real test of whether the abstractions were chosen well.
@@ -62,7 +81,8 @@ one as a follow-up — recognizing that pivot in the room is itself a signal.
 
 **5 problems across the core recurring LLD shapes: entity modeling, state machines, and
 data-structure-as-a-class.** Every `solution.py` has been run and its demo executes
-cleanly.
+cleanly. Every problem also has a Rust translation (`<name>_rusty/`); `cargo test` passes
+cleanly (no warnings) in all five.
 
 - [x] 01_parking_lot
 - [x] 02_elevator_system

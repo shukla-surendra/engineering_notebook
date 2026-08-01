@@ -70,10 +70,21 @@ been paid, not *how*. The states' logic is payment-method-agnostic by constructi
 is what makes this extension cheap.
 
 ## Solution
+
+### Python
 Runnable, with sample test cases at the bottom (`python3 lld/03_vending_machine/solution.py`):
 
 ```python
 --8<-- "03_vending_machine/solution.py"
+```
+
+### Rust
+Same self-referential-mutation issue as the elevator's motion state, translated the same
+way — a closed `enum` + `match` in place of a trait-object state hierarchy. Runnable via
+`cd lld/03_vending_machine/vending_machine_rusty && cargo test`:
+
+```rust
+--8<-- "03_vending_machine/vending_machine_rusty/src/main.rs"
 ```
 
 ## Articulate It: Interview Framing & Vocabulary

@@ -67,10 +67,25 @@ composition paying off again.
 - Space: O(capacity).
 
 ## Solution
+
+### Python
 Runnable, with sample test cases at the bottom (`python3 lld/04_lru_cache/solution.py`):
 
 ```python
 --8<-- "04_lru_cache/solution.py"
+```
+
+### Rust
+solution.py's doubly linked list freely aliases mutable `prev`/`next` references, which
+Rust's ownership model forbids by default. This translation uses `Rc<RefCell<Node>>` for
+forward links and `Weak<RefCell<Node>>` for backward links — the standard safe-Rust
+answer for a structure that needs shared, mutable, cyclic-shaped node references without
+reaching for `unsafe` raw pointers (which is what production crates like `lru` actually
+do, for the same reason). See the module doc comment for the full trade-off. Runnable via
+`cd lld/04_lru_cache/lru_cache_rusty && cargo test`:
+
+```rust
+--8<-- "04_lru_cache/lru_cache_rusty/src/main.rs"
 ```
 
 ## Articulate It: Interview Framing & Vocabulary

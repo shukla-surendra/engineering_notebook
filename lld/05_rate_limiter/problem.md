@@ -84,10 +84,22 @@ choice is already isolated behind the interface, this extension touches all thre
 implementations identically and doesn't touch any calling code.
 
 ## Solution
+
+### Python
 Runnable, with sample test cases at the bottom (`python3 lld/05_rate_limiter/solution.py`):
 
 ```python
 --8<-- "05_rate_limiter/solution.py"
+```
+
+### Rust
+Same design, translated directly — no self-referential mutation issue here (each
+algorithm only reads/writes its own internal map), so a plain `trait RateLimiter` with
+three implementing structs works exactly like solution.py's ABC. Runnable via
+`cd lld/05_rate_limiter/rate_limiter_rusty && cargo test`:
+
+```rust
+--8<-- "05_rate_limiter/rate_limiter_rusty/src/main.rs"
 ```
 
 ## Articulate It: Interview Framing & Vocabulary

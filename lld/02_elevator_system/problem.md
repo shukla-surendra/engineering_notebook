@@ -72,10 +72,25 @@ a new hall call. No change to `IdleState`, `MovingUpState`, `MovingDownState`, o
 `ElevatorSystem`'s core loop.
 
 ## Solution
+
+### Python
 Runnable, with sample test cases at the bottom (`python3 lld/02_elevator_system/solution.py`):
 
 ```python
 --8<-- "02_elevator_system/solution.py"
+```
+
+### Rust
+solution.py's State pattern uses a trait-object hierarchy whose methods take `&mut
+Elevator` — the very object holding a reference to that state. Rust's borrow checker
+rejects that shape (you can't hold `&mut self.state` as a trait object *and* pass `&mut
+self` into one of its methods at once), so this translation uses a closed `enum` +
+`match` instead — the idiomatic Rust answer for a self-referential State pattern; see
+the module doc comment for the full reasoning. Runnable via
+`cd lld/02_elevator_system/elevator_rusty && cargo test`:
+
+```rust
+--8<-- "02_elevator_system/elevator_rusty/src/main.rs"
 ```
 
 ## Articulate It: Interview Framing & Vocabulary

@@ -188,4 +188,4 @@ correctly sequencing which problem to solve first is itself a staff-level judgme
 
 ---
 
-**Previous:** [9. Design a Web Crawler](../09_design_web_crawler/tutorial.md)  |  **Next:** [Back to Overview](../README.md)
+**Previous:** [9. Design a Web Crawler](../09_design_web_crawler/tutorial.md)  |  **Next:** [11. Design a URL Shortener](../11_design_url_shortener/tutorial.md)

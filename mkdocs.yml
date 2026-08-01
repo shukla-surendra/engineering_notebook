@@ -248,6 +248,7 @@ nav:
           - "8. Design a Video Streaming Service": system_design_practice/08_design_video_streaming/tutorial.md
           - "9. Design a Web Crawler": system_design_practice/09_design_web_crawler/tutorial.md
           - "10. Design Search Autocomplete": system_design_practice/10_design_search_autocomplete/tutorial.md
+          - "11. Design a URL Shortener": system_design_practice/11_design_url_shortener/tutorial.md
 
   - Security Engineering:
       - Overview: security/README.md
@@ -273,7 +274,9 @@ nav:
 
   - Low-Level Design:
       - Overview: lld/README.md
+      - Fundamentals: lld/FUNDAMENTALS.md
       - Framework: lld/OOD_FRAMEWORK.md
+      - "LLD vs. HLD: Concepts & Question Bank": lld/LLD_VS_HLD.md
       - Problems:
           - "1. Parking Lot System": lld/01_parking_lot/problem.md
           - "2. Elevator System": lld/02_elevator_system/problem.md
