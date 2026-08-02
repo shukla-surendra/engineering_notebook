@@ -6,8 +6,8 @@ help:
 	@echo "  make clean   - remove site/"
 	@echo "  make install - install mkdocs + mkdocs-material + pymdown-extensions"
 	@echo ""
-	@echo "All five tracks (DSA, System Design Foundation, System Design Practice,"
-	@echo "Security, Low-Level Design) are one MkDocs site (mkdocs.yml), each its own nav tab."
+	@echo "All six tracks (DSA, Operating Systems, System Design Foundation, System Design"
+	@echo "Practice, Security, Low-Level Design) are one MkDocs site (mkdocs.yml), each its own nav tab."
 
 install:
 	python3 -m pip install mkdocs mkdocs-material pymdown-extensions

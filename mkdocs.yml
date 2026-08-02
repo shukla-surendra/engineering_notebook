@@ -176,6 +176,15 @@ nav:
               - "4. Reverse Bits": dsa_prep/bit_manipulation/04_reverse_bits/problem.md
               - "5. Missing Number": dsa_prep/bit_manipulation/05_missing_number/problem.md
 
+  - Operating Systems:
+      - Overview: os_concepts/README.md
+      - "1. Processes vs. Threads": os_concepts/01_processes_and_threads.md
+      - "2. CPU Scheduling": os_concepts/02_cpu_scheduling.md
+      - "3. Virtual Memory & Paging": os_concepts/03_virtual_memory_and_paging.md
+      - "4. Concurrency: Race Conditions, Locks & Deadlock": os_concepts/04_concurrency_locks_and_deadlock.md
+      - "5. Context Switching & the Kernel/User Boundary": os_concepts/05_context_switching_and_kernel_boundary.md
+      - "6. Inter-Process Communication (IPC)": os_concepts/06_interprocess_communication.md
+
   - System Design Foundation:
       - Overview: system_design_foundation/README.md
       - Prerequisite Concepts:

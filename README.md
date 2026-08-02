@@ -5,6 +5,7 @@ design, and security engineering — one MkDocs site (`mkdocs.yml`, `docs_dir: .
 each track as its own top-level nav tab:
 
 - **`dsa_prep/`** — Algorithms & Data Structures.
+- **`os_concepts/`** — Operating Systems fundamentals (processes/threads, scheduling, virtual memory, concurrency, context switching, IPC).
 - **`system_design_foundation/`** — ML/LLM Systems Design (prerequisite concepts, tutorials, tricky scenarios) plus the staff-level/distributed-systems foundations shared with the practice track.
 - **`system_design_practice/`** — General Distributed Systems Design (practice case studies).
 - **`security/`** — Cybersecurity, LLM Security & Cloud/MLOps/LLMOps Security.
